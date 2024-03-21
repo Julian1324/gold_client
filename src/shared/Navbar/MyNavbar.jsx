@@ -91,7 +91,7 @@ const MyNavbar = () => {
 
   return (
     <>
-      <Navbar expand="lg" className="d-flex bg-dark flex-column">
+      <Navbar expand="lg" className="d-flex bg-color-black flex-column">
         <Container>
           <Navbar.Brand href="#home" className='d-flex text-light cont'>
             <Image src={goldServiceLogo} rounded className='goldServiceLogo' />
@@ -122,29 +122,10 @@ const MyNavbar = () => {
           <div className='d-flex text-light ms-3 w-25 justify-content-around'>
             {!token ?
               <NavLink to='./signin' className='d-flex onHover' style={{ cursor: 'pointer' }}>
-                <div className='d-flex align-items-center'>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                  </svg>
-                </div>
-                <div className='d-flex flex-column align-items-start ms-2'>
-                  <span>Inicio de sesión</span>
-                  <span>Mi cuenta</span>
-                </div>
+                <UserNav userName={userName}/>
               </NavLink>
               :
-              // <UserNav name={'Julian'}/>
-              <div className='d-flex onHover' style={{ cursor: 'pointer' }}>
-                <div className='d-flex align-items-center'>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                  </svg>
-                </div>
-                <div className='d-flex flex-column align-items-start ms-2'>
-                  <span>{userName}</span>
-                  <span>Mi cuenta</span>
-                </div>
-              </div>
+              <UserNav userName={userName}/>
             }
             <NavLink to='./cart' className='d-flex onHover' style={{ cursor: 'pointer' }}>
               <div className='d-flex align-items-center ms-3'>
@@ -160,7 +141,7 @@ const MyNavbar = () => {
           </div>
         </Container>
         <hr />
-        <Container className='navContainer bg-dark' ref={myNavbarRef} >
+        <Container className='navContainer bg-color-black' ref={myNavbarRef} >
           {services.map((service, serviceIndex) => {
             const imageStyle = {
               width: '2.5rem',

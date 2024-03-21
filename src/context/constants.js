@@ -5,6 +5,7 @@ const MODAL_TITLE_SUCCCESS = '¡Se ha realizado con éxito!';
 const USER_CREATED = '¡Usuario creado con éxito! Bienvenido a nuestra comunidad. A continuación puedes ingresar con tu cuenta.';
 const USER_LOGGED = '¡Bienvenid@ a Gold Service!';
 const MODAL_TITLE_ERROR = '¡Oops, error en la solicitud!';
+const KEY_STORAGE_BASE = 'GLDST0';
 
 export const constants = {
     API_URL,
@@ -13,5 +14,6 @@ export const constants = {
     MODAL_TITLE_SUCCCESS,
     USER_CREATED,
     USER_LOGGED,
-    MODAL_TITLE_ERROR
+    MODAL_TITLE_ERROR,
+    KEY_STORAGE_BASE
 };

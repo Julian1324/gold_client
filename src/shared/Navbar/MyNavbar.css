@@ -52,3 +52,7 @@ hr {
 .onHover:hover *{
     filter: invert(0.4) sepia(1) hue-rotate(20deg) saturate(100%);
 }
+
+.bg-color-black{
+    background-color: #111410;
+}
