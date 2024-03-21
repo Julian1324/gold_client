@@ -1,0 +1,54 @@
+hr {
+    border-color: white;
+    background-color: white;
+    height: 1.5px;
+    width: 88%;
+    margin: 0 !important;
+}
+
+.navbar a {
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.cont{
+    height: 6rem;
+    overflow: hidden;
+}
+
+.goldServiceLogo{
+    margin-top: -1.1rem;
+    width: 8rem;
+    height: 8rem;
+    background-size: cover;
+}
+
+.divContainer{
+    display: flex;
+    height: 4rem;
+    width: 12%;
+    margin-left: 1rem;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.divContainer:hover *{
+    filter: invert(0.4) sepia(1) hue-rotate(20deg) saturate(100%);
+}
+
+.nameStyle{
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    color: white;
+}
+
+.navContainer{
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+}
+
+.onHover:hover *{
+    filter: invert(0.4) sepia(1) hue-rotate(20deg) saturate(100%);
+}

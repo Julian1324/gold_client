@@ -1,0 +1,17 @@
+.imgLogo{
+    width: 10vw;
+}
+
+.myBackground{
+    background-image: url(../../assets/loginBackground.jpeg);
+    background-size: cover;
+}
+
+.myOpacity{
+    opacity: 0.9;
+}
+
+a{
+    text-decoration: underline;
+    color: white;
+}
