@@ -32,7 +32,7 @@ const Account = () => {
         const getUserInfo = async () => {
             try {
                 setLoadingReq(true);
-                const response = await getUser({ headers });
+                const response = await getUser({headers});
                 setValue('name', response.data.name);
                 setValue('email', response.data.email);
                 setLoadingReq(response.loadingReq);
@@ -65,11 +65,11 @@ const Account = () => {
     const onCloseModal = () => {
         setAlertModalShow(false);
         setLoadingReq(false);
-        if (messagesToModal.title === constants.MODAL_TITLE_ERROR) {
-            updateToken('');
-            updateUserName('');
-            navigator('/');
-        }
+        // if (messagesToModal.title === constants.MODAL_TITLE_ERROR) {
+        //     updateToken('');
+        //     updateUserName('');
+        //     navigator('/');
+        // }
     }
 
     return (

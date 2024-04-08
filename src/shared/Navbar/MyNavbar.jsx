@@ -98,7 +98,7 @@ const MyNavbar = () => {
 
   return (
     <>
-      <Navbar expand="lg" className="d-flex bg-color-black flex-column">
+      <Navbar expand="lg" className="d-flex background-color-dark flex-column">
         <Container>
           <Navbar.Brand href="/" className='d-flex text-light cont'>
             <Image src={goldServiceLogo} rounded className='goldServiceLogo' />

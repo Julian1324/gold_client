@@ -1,5 +1,6 @@
 import axios from "axios";
 import { constants } from "../context/constants";
+import axiosInstance from "./axiosInstance";
 
 export const signUpUser = async ({ name, email, password }) => {
     try {
@@ -35,9 +36,9 @@ export const signInUser = async ({ email, password }) => {
 
 export const getUser = async ({ headers }) => {
     try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
             `${constants.API_URL + constants.USER_INFO}`,
-            { headers }
+            // { headers }
         );
         if (response.status === 200) return {
             data: response.data,
