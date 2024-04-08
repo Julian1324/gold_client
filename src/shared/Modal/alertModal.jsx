@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function AlertModal({show, onHide, title, bodyText}) {
+function AlertModal({ show, onHide, title, bodyText }) {
   return (
     <Modal
       show={show}
@@ -12,12 +12,11 @@ function AlertModal({show, onHide, title, bodyText}) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          
           <h4>{title}</h4>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        
+
         <p>
           {bodyText}
         </p>
@@ -29,4 +28,4 @@ function AlertModal({show, onHide, title, bodyText}) {
   );
 }
 
-export default AlertModal;
+export { AlertModal };

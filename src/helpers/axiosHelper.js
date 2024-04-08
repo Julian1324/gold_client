@@ -11,7 +11,6 @@ export const signUpUser = async ({ name, email, password }) => {
             data: response.data,
             loadingRegister: false,
             alertModalShow: true,
-            reset: true
         }
     } catch (error) {
         throw error;
@@ -28,7 +27,53 @@ export const signInUser = async ({ email, password }) => {
             data: response.data,
             loadingLogin: false,
             alertModalShow: true,
-            reset: true
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getUser = async ({ headers }) => {
+    try {
+        const response = await axios.get(
+            `${constants.API_URL + constants.USER_INFO}`,
+            { headers }
+        );
+        if (response.status === 200) return {
+            data: response.data,
+            loadingReq: false,
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const setUser = async ({ name, email, headers }) => {
+    try {
+        const response = await axios.post(
+            `${constants.API_URL + constants.USER_INFO}`,
+            { name, email },
+            { headers }
+        );
+        if (response.status === 200) return {
+            data: response.data,
+            loadingReq: false,
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const setPassword = async ({ currentPassword, newPassword, headers }) => {
+    try {
+        const response = await axios.post(
+            `${constants.API_URL + constants.USER_SETPASSWORD}`,
+            { currentPassword, newPassword },
+            { headers }
+        );
+        if (response.status === 200) return {
+            data: response.data,
+            loadingReq: false,
         }
     } catch (error) {
         throw error;

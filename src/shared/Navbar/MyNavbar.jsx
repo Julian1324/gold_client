@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image';
@@ -22,10 +22,11 @@ import { getUserSlice } from '../../context/store/store';
 import { UserNav } from '../UserNav/UserNav';
 
 const MyNavbar = () => {
+  const navigator = useNavigate();
   const myNavbarRef = useRef(null);
-  const { userName, token } = getUserSlice();
+  const { token } = getUserSlice();
 
-  const services = [
+  const categories = [
     {
       name: 'Inicio',
       pathImage: homeImage
@@ -72,13 +73,19 @@ const MyNavbar = () => {
     },
   ];
 
+  const onCategory = (categoryName) => {
+    if(categoryName === 'Inicio') return navigator('/');
+    if(categoryName === 'Tienda') return navigator('/cart');
+    navigator('/category');
+  }
+
   window.onscroll = function () {
     if (!myNavbarRef.current) return;
     const currentScrollPos = window.scrollY;
     const navContainer = myNavbarRef.current;
     if (currentScrollPos > 110) {
       navContainer.style.position = "fixed";
-      navContainer.style.zIndex = "99";
+      navContainer.style.zIndex = "9";
       navContainer.style.top = "0";
       navContainer.style.maxWidth = "100vw";
     } else {
@@ -91,9 +98,9 @@ const MyNavbar = () => {
 
   return (
     <>
-      <Navbar expand="lg" className="d-flex bg-dark flex-column">
+      <Navbar expand="lg" className="d-flex background-color-dark flex-column">
         <Container>
-          <Navbar.Brand href="#home" className='d-flex text-light cont'>
+          <Navbar.Brand href="/" className='d-flex text-light cont'>
             <Image src={goldServiceLogo} rounded className='goldServiceLogo' />
           </Navbar.Brand>
           <InputGroup className="d-flex align-items-center w-50">
@@ -103,9 +110,9 @@ const MyNavbar = () => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                <Dropdown.Item href="./action-1">Action</Dropdown.Item>
+                <Dropdown.Item href="./action-2">Another action</Dropdown.Item>
+                <Dropdown.Item href="./action-3">Something else</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
             <Form.Control
@@ -121,30 +128,11 @@ const MyNavbar = () => {
           </InputGroup>
           <div className='d-flex text-light ms-3 w-25 justify-content-around'>
             {!token ?
-              <NavLink to='./signin' className='d-flex onHover' style={{ cursor: 'pointer' }}>
-                <div className='d-flex align-items-center'>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                  </svg>
-                </div>
-                <div className='d-flex flex-column align-items-start ms-2'>
-                  <span>Inicio de sesión</span>
-                  <span>Mi cuenta</span>
-                </div>
+              <NavLink to='/signin' className='d-flex onHover' style={{ cursor: 'pointer' }}>
+                <UserNav/>
               </NavLink>
               :
-              // <UserNav name={'Julian'}/>
-              <div className='d-flex onHover' style={{ cursor: 'pointer' }}>
-                <div className='d-flex align-items-center'>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                  </svg>
-                </div>
-                <div className='d-flex flex-column align-items-start ms-2'>
-                  <span>{userName}</span>
-                  <span>Mi cuenta</span>
-                </div>
-              </div>
+              <UserNav/>
             }
             <NavLink to='./cart' className='d-flex onHover' style={{ cursor: 'pointer' }}>
               <div className='d-flex align-items-center ms-3'>
@@ -160,19 +148,19 @@ const MyNavbar = () => {
           </div>
         </Container>
         <hr />
-        <Container className='navContainer bg-dark' ref={myNavbarRef} >
-          {services.map((service, serviceIndex) => {
+        <Container className='navContainer background-color-dark' ref={myNavbarRef} >
+          {categories.map((category, categoryIndex) => {
             const imageStyle = {
               width: '2.5rem',
               height: '2.5rem',
-              backgroundImage: `url(${service.pathImage})`,
+              backgroundImage: `url(${category.pathImage})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }
             return (
-              <div className='divContainer' key={serviceIndex}>
+              <div className='divContainer' key={categoryIndex} onClick={() => onCategory(category.name)}>
                 <div style={imageStyle}></div>
-                <div className='nameStyle'>{service.name}</div>
+                <div className='nameStyle'>{category.name}</div>
               </div>
             );
           })}

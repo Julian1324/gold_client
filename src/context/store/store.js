@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import secureLocalStorage from "react-secure-storage";
-import { userSlice, cartSlice } from './userSlice.js';
+import { userSlice } from './userSlice.js';
+import { constants } from '../constants.js';
 
 const mySlices = {
     userSlice,
-    cartSlice
 };
 
 const initGoldStore = () => {
@@ -15,7 +15,7 @@ const initGoldStore = () => {
             persist(
                 (value),
                 {
-                    name: 'GLDST0' + myIndex,
+                    name: constants.KEY_STORAGE_BASE + myIndex,
                     storage: createJSONStorage(() => secureLocalStorage)
                 }
             )

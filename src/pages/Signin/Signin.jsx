@@ -4,7 +4,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import goldServiceLogo from '../../assets/goldServiceLogo.png';
 import { useForm } from 'react-hook-form';
 import { signInUser } from '../../helpers/axiosHelper';
-import AlertModal from '../../shared/Modal/alertModal';
+import { AlertModal } from '../../shared/Modal/alertModal';
 import { constants } from '../../context/constants';
 import { useNavigate } from 'react-router-dom';
 import { getUserSlice } from "../../context/store/store.js";
@@ -26,22 +26,21 @@ const Signin = () => {
     const onSubmit = async ({ email, password }) => {
         try {
             setLoadingLogin(true);
-            //Optimizar con desestructuración en la respuesta. (Solo sigue si el status es 200 en el helper).
             const response = await signInUser({ email, password });
-            if (!response.loadingLogin) setLoadingLogin(false);
+            setLoadingLogin(response.loadingLogin);
             if (response.alertModalShow) {
                 setMessagesToModal({ title: constants.MODAL_TITLE_SUCCCESS, body: constants.USER_LOGGED });
-                setAlertModalShow(true);
+                setAlertModalShow(response.alertModalShow);
             }
-            if (response.reset) reset();
+            reset();
             updateToken(response?.data?.token);
             updateUserName(response?.data?.name);
         } catch (error) {
             console.log('error:', error);
-            setMessagesToModal({ title: constants.MODAL_TITLE_ERROR, body: error?.response?.data?.message });
+            setMessagesToModal({ title: constants.MODAL_TITLE_ERROR, body: error?.response?.data });
             setAlertModalShow(true);
         }
-    };
+    }
 
     const onCloseModal = () => {
         if (loadingLogin) {

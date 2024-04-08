@@ -2,7 +2,7 @@ import { useState } from 'react';
 import goldServiceLogo from '../../assets/goldServiceLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import AlertModal from '../../shared/Modal/alertModal';
+import { AlertModal } from '../../shared/Modal/alertModal';
 import Spinner from 'react-bootstrap/Spinner';
 import { constants } from '../../context/constants';
 import { signUpUser } from '../../helpers/axiosHelper';
@@ -28,15 +28,15 @@ const Signup = () => {
             try {
                 setLoadingRegister(true);
                 const response = await signUpUser({name, email, password});
-                if(!response.loadingRegister) setLoadingRegister(false);
+                setLoadingRegister(response.loadingRegister);
                 if(response.alertModalShow){
                     setMessagesToModal({title: constants.MODAL_TITLE_SUCCCESS, body: constants.USER_CREATED});
-                    setAlertModalShow(true);
+                    setAlertModalShow(response.alertModalShow);
                 }
-                if(response.reset) reset();
+                reset();
             } catch (error) {
                 console.log('error:', error);
-                setMessagesToModal({title: constants.MODAL_TITLE_ERROR, body: error?.response?.data?.message});
+                setMessagesToModal({title: constants.MODAL_TITLE_ERROR, body: error?.response?.data});
                 setAlertModalShow(true);
             }
         }else{
@@ -90,6 +90,10 @@ const Signup = () => {
                                                     required
                                                     {...register('name', {
                                                         required: 'El nombre es requerido.',
+                                                        minLength: {
+                                                            value: 3,
+                                                            message: 'El nombre debe tener mínimo 3 caracteres.'
+                                                        }
                                                     })}
                                                 />
                                             </div>
