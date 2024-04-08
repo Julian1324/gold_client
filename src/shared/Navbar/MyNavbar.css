@@ -76,3 +76,7 @@ hr {
     justify-content: center;
     cursor: pointer;
 }
+
+.bg-color-black{
+    background-color: #111410;
+}
