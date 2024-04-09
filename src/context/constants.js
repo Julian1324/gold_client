@@ -6,6 +6,7 @@ const USER_SETPASSWORD = '/userPassword';
 const USER_CREATED = '¡Usuario creado con éxito! Bienvenido a nuestra comunidad. A continuación puedes ingresar con tu cuenta.';
 const USER_LOGGED = '¡Bienvenid@ a Gold Service!';
 const USER_SESSION_EXPIRED = 'Sesión caducada, por favor inicia sesión otra vez.';
+const GET_CATEGORIES = '/categories';
 const MODAL_TITLE_SUCCCESS = '¡Se ha realizado con éxito!';
 const MODAL_TITLE_ERROR = '¡Oops, error en la solicitud!';
 const MODAL_TITLE_SIGNOUT= 'Desconexión exitosa.';
@@ -21,6 +22,7 @@ export const constants = {
     USER_CREATED,
     USER_LOGGED,
     USER_SESSION_EXPIRED,
+    GET_CATEGORIES,
     MODAL_TITLE_SUCCCESS,
     MODAL_TITLE_ERROR,
     MODAL_TITLE_SIGNOUT,

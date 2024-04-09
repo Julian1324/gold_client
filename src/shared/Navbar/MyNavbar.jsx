@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -20,6 +20,7 @@ import crunchyrollImage from '../../assets/crunchyroll.png';
 import IPTVImage from '../../assets/IPTV.png';
 import { getUserSlice } from '../../context/store/store';
 import { UserNav } from '../UserNav/UserNav';
+import { getCategories } from '../../helpers/axiosHelper';
 
 const MyNavbar = () => {
   const navigator = useNavigate();
@@ -72,6 +73,14 @@ const MyNavbar = () => {
       pathImage: IPTVImage
     },
   ];
+
+  useEffect(() => {
+    const getMyCategories = async () => {
+      const response = await getCategories();
+      console.log(response);
+    }
+    getMyCategories();
+  }, []);
 
   const onCategory = (categoryName) => {
     if(categoryName === 'Inicio') return navigator('/');

@@ -79,3 +79,17 @@ export const setPassword = async ({ currentPassword, newPassword, headers }) => 
         throw error;
     }
 }
+
+export const getCategories = async () => {
+    try {
+        const response = await axiosInstance.get(
+            `${constants.API_URL + constants.GET_CATEGORIES}`
+        );
+        if (response.status === 200) return {
+            data: response.data,
+            loadingReq: false,
+        }
+    } catch (error) {
+        throw error;
+    }
+}
