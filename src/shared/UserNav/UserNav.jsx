@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const UserNav = () => {
   const navigator = useNavigate();
   const [hover, setHover] = useState(false);
-  const { userName, token, updateUserName, updateToken } = getUserSlice();
+  const { userName, headers, updateUserName, updateHeaders } = getUserSlice();
   const [alertModalShow, setAlertModalShow] = useState(false);
   const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
 
@@ -17,15 +17,15 @@ const UserNav = () => {
 
   const onCloseModal = () => {
     setAlertModalShow(false);
-    updateToken('');
+    updateHeaders('');
     updateUserName('');
     navigator('/');
   }
-  
+
   const signOut = () => {
     localStorage.clear();
     setAlertModalShow(true);
-    setMessagesToModal({title: constants.MODAL_TITLE_SIGNOUT, body: constants.MODAL_BODY_SIGNOUT});
+    setMessagesToModal({ title: constants.MODAL_TITLE_SIGNOUT, body: constants.MODAL_BODY_SIGNOUT });
   }
 
   const filterAndCursorStyle = hover ? {
@@ -45,7 +45,7 @@ const UserNav = () => {
 
   return (
     <div className="position-relative" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-      {!token ?
+      {!Object.keys(headers).length ?
         <div className='d-flex'>
           <IconBox />
           <div className='d-flex flex-column align-items-start ms-2'>

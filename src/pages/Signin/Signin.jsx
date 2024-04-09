@@ -11,7 +11,7 @@ import { getUserSlice } from "../../context/store/store.js";
 
 const Signin = () => {
     const navigator = useNavigate();
-    const { updateToken, updateUserName } = getUserSlice();
+    const { updateUserName, updateHeaders } = getUserSlice();
     const [loadingLogin, setLoadingLogin] = useState(false);
     const [alertModalShow, setAlertModalShow] = useState(false);
     const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
@@ -33,7 +33,7 @@ const Signin = () => {
                 setAlertModalShow(response.alertModalShow);
             }
             reset();
-            updateToken(response?.data?.token);
+            updateHeaders(response?.data?.token);
             updateUserName(response?.data?.name);
         } catch (error) {
             console.log('error:', error);

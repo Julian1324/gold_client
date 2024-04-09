@@ -4,22 +4,16 @@ import { getUser, setUser } from '../../helpers/axiosHelper';
 import { getUserSlice } from '../../context/store/store.js';
 import { AlertModal } from '../../shared/Modal/alertModal';
 import { constants } from '../../context/constants';
-import { useMemo } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { PasswordForm } from '../../components/Forms/PasswordForm.jsx';
 
 const Account = () => {
     const navigator = useNavigate();
-    const { token, updateToken, updateUserName } = getUserSlice();
+    const { updateUserName, headers, updateHeaders } = getUserSlice();
     const [alertModalShow, setAlertModalShow] = useState(false);
     const [loadingReq, setLoadingReq] = useState(false);
     const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
-
-    const headers = useMemo(
-        () => ({ Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }),
-        [token]
-    );
 
     const {
         register,
@@ -65,11 +59,11 @@ const Account = () => {
     const onCloseModal = () => {
         setAlertModalShow(false);
         setLoadingReq(false);
-        // if (messagesToModal.title === constants.MODAL_TITLE_ERROR) {
-        //     updateToken('');
-        //     updateUserName('');
-        //     navigator('/');
-        // }
+        if (messagesToModal.title === constants.MODAL_TITLE_ERROR) {
+            updateHeaders('');
+            updateUserName('');
+            navigator('/');
+        }
     }
 
     return (

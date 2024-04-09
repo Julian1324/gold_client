@@ -24,7 +24,7 @@ import { UserNav } from '../UserNav/UserNav';
 const MyNavbar = () => {
   const navigator = useNavigate();
   const myNavbarRef = useRef(null);
-  const { token } = getUserSlice();
+  const { headers } = getUserSlice();
 
   const categories = [
     {
@@ -127,7 +127,7 @@ const MyNavbar = () => {
             </Button>
           </InputGroup>
           <div className='d-flex text-light ms-3 w-25 justify-content-around'>
-            {!token ?
+            {!Object.keys(headers).length ?
               <NavLink to='/signin' className='d-flex onHover' style={{ cursor: 'pointer' }}>
                 <UserNav/>
               </NavLink>

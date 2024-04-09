@@ -1,6 +1,12 @@
 export const userSlice = (set) => ({
     userName: '',
-    token: '',
+    headers: {},
     updateUserName: (currentUserName) => set((state) => ({ ...state, userName: currentUserName })),
-    updateToken: (currentToken) => set((state) => ({ ...state, token: currentToken }))
+    updateHeaders: (currentToken) => set((state) => (
+        {
+            ...state,
+            headers:
+                currentToken ? { Authorization: `Bearer ${currentToken}`, 'Content-Type': 'application/json' } : {}
+        }
+    ))
 });

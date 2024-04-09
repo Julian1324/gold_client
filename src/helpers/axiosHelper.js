@@ -1,10 +1,9 @@
-import axios from "axios";
 import { constants } from "../context/constants";
 import axiosInstance from "./axiosInstance";
 
 export const signUpUser = async ({ name, email, password }) => {
     try {
-        const response = await axios.post(
+        const response = await axiosInstance.post(
             `${constants.API_URL + constants.USER_SIGNUP}`,
             { name, email, password }
         );
@@ -20,7 +19,7 @@ export const signUpUser = async ({ name, email, password }) => {
 
 export const signInUser = async ({ email, password }) => {
     try {
-        const response = await axios.post(
+        const response = await axiosInstance.post(
             `${constants.API_URL + constants.USER_SIGNIN}`,
             { email, password }
         );
@@ -38,7 +37,7 @@ export const getUser = async ({ headers }) => {
     try {
         const response = await axiosInstance.get(
             `${constants.API_URL + constants.USER_INFO}`,
-            // { headers }
+            { headers }
         );
         if (response.status === 200) return {
             data: response.data,
@@ -51,7 +50,7 @@ export const getUser = async ({ headers }) => {
 
 export const setUser = async ({ name, email, headers }) => {
     try {
-        const response = await axios.post(
+        const response = await axiosInstance.post(
             `${constants.API_URL + constants.USER_INFO}`,
             { name, email },
             { headers }
@@ -67,7 +66,7 @@ export const setUser = async ({ name, email, headers }) => {
 
 export const setPassword = async ({ currentPassword, newPassword, headers }) => {
     try {
-        const response = await axios.post(
+        const response = await axiosInstance.post(
             `${constants.API_URL + constants.USER_SETPASSWORD}`,
             { currentPassword, newPassword },
             { headers }

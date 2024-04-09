@@ -1,20 +1,15 @@
 import { constants } from '../../context/constants.js';
 import { useForm } from 'react-hook-form';
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { getUserSlice } from '../../context/store/store.js';
 import { AlertModal } from '../../shared/Modal/alertModal.jsx';
 import { setPassword } from '../../helpers/axiosHelper.js';
 
 const PasswordForm = () => {
-    const { token } = getUserSlice();
+    const { headers } = getUserSlice();
     const [alertModalShow, setAlertModalShow] = useState(false);
     const [loadingReq, setLoadingReq] = useState(false);
     const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
-
-    const headers = useMemo(
-        () => ({ Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }),
-        [token]
-    );
 
     const {
         register,
