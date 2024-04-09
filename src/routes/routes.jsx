@@ -9,7 +9,7 @@ const routes = [
     { path: '/signin', component: Signin },
     { path: '/signup', component: Signup },
     { path: '/account', component: Account },
-    { path: '/category', component: Category },
+    { path: '/category/:category_id', component: Category },
 ];
   
 export default routes;

@@ -18,7 +18,7 @@ import starImage from '../../assets/star.png';
 import playImage from '../../assets/play.png';
 import crunchyrollImage from '../../assets/crunchyroll.png';
 import IPTVImage from '../../assets/IPTV.png';
-import { getUserSlice } from '../../context/store/store';
+import { getCategorySlice, getUserSlice } from '../../context/store/store';
 import { UserNav } from '../UserNav/UserNav';
 import { getCategories } from '../../helpers/axiosHelper';
 
@@ -26,8 +26,9 @@ const MyNavbar = () => {
   const navigator = useNavigate();
   const myNavbarRef = useRef(null);
   const { headers } = getUserSlice();
+  const { categories, updateCategories } = getCategorySlice();
 
-  const categories = [
+  const myCategories = [
     {
       name: 'Inicio',
       pathImage: homeImage
@@ -77,15 +78,17 @@ const MyNavbar = () => {
   useEffect(() => {
     const getMyCategories = async () => {
       const response = await getCategories();
-      console.log(response);
+      updateCategories(response.data);
     }
     getMyCategories();
-  }, []);
+  }, [updateCategories]);
 
   const onCategory = (categoryName) => {
-    if(categoryName === 'Inicio') return navigator('/');
-    if(categoryName === 'Tienda') return navigator('/cart');
-    navigator('/category');
+    if (categoryName === 'Inicio') return navigator('/');
+    if (categoryName === 'Tienda') return navigator('/cart');
+    const categoryFinded = categories.filter( (currentCategory) => currentCategory.name === categoryName );
+    if(!Object.keys(categoryFinded).length) return;
+    navigator('/category/'+categoryFinded[0]._id);
   }
 
   window.onscroll = function () {
@@ -138,10 +141,10 @@ const MyNavbar = () => {
           <div className='d-flex text-light ms-3 w-25 justify-content-around'>
             {!Object.keys(headers).length ?
               <NavLink to='/signin' className='d-flex onHover' style={{ cursor: 'pointer' }}>
-                <UserNav/>
+                <UserNav />
               </NavLink>
               :
-              <UserNav/>
+              <UserNav />
             }
             <NavLink to='./cart' className='d-flex onHover' style={{ cursor: 'pointer' }}>
               <div className='d-flex align-items-center ms-3'>
@@ -158,7 +161,7 @@ const MyNavbar = () => {
         </Container>
         <hr />
         <Container className='navContainer background-color-dark' ref={myNavbarRef} >
-          {categories.map((category, categoryIndex) => {
+          {myCategories.map((category, categoryIndex) => {
             const imageStyle = {
               width: '2.5rem',
               height: '2.5rem',
