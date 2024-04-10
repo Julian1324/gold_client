@@ -13,7 +13,6 @@ const Category = () => {
     useEffect(() => {
         const getProducts = async () => {
             const response = await getProductsByCategory({ category_id, currentCategoryPage });
-            console.log(response.data);
             setProducts(response.data.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
         }
         getProducts();

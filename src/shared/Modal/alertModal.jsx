@@ -16,7 +16,6 @@ function AlertModal({ show, onHide, title, bodyText }) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-
         <p>
           {bodyText}
         </p>
