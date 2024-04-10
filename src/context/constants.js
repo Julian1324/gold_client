@@ -12,6 +12,8 @@ const MODAL_TITLE_SUCCCESS = '¡Se ha realizado con éxito!';
 const MODAL_TITLE_ERROR = '¡Oops, error en la solicitud!';
 const MODAL_TITLE_SIGNOUT= 'Desconexión exitosa.';
 const MODAL_BODY_SIGNOUT = 'Hasta luego, vuelve pronto...';
+const PARAMS_CATEGORY_ID = 'category_id=';
+const PARAMS_PAGE = 'page=';
 const KEY_STORAGE_BASE = 'GLDST0';
 
 export const constants = {
@@ -29,5 +31,7 @@ export const constants = {
     MODAL_TITLE_ERROR,
     MODAL_TITLE_SIGNOUT,
     MODAL_BODY_SIGNOUT,
+    PARAMS_CATEGORY_ID,
+    PARAMS_PAGE,
     KEY_STORAGE_BASE
 };

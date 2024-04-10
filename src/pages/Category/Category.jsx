@@ -2,29 +2,22 @@ import { useEffect, useState } from "react";
 import CardProduct from "../../components/Cards/CardProduct";
 import { useParams } from 'react-router-dom';
 import { getProductsByCategory } from "../../helpers/axiosHelper";
-import { getUserSlice } from "../../context/store/store";
+import { getUserSlice, getCategorySlice } from "../../context/store/store";
 
 const Category = () => {
     const [products, setProducts] = useState([]);
     const { category_id } = useParams();
     const { headers } = getUserSlice();
+    const { currentCategoryPage, getCategoryImageByID } = getCategorySlice();
 
     useEffect(() => {
         const getProducts = async () => {
-
-            const response = await getProductsByCategory({category_id});
-            console.log(response);
-            // setProducts(response.data);
+            const response = await getProductsByCategory({ category_id, currentCategoryPage });
+            console.log(response.data);
+            setProducts(response.data.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
         }
         getProducts();
-        const myProductsQuemados = [
-            { name: 'Nesflis', image: 'https://placehold.co/250', price: 5000 },
-            { name: 'Nesflis', image: 'https://placehold.co/250', price: 5000 },
-            { name: 'Nesflis', image: 'https://placehold.co/250', price: 5000 },
-            { name: 'Nesflis', image: 'https://placehold.co/250', price: 5000 },
-        ];
-        setProducts(myProductsQuemados);
-    }, [category_id, headers]);
+    }, [category_id, headers, currentCategoryPage, getCategoryImageByID]);
     return (
         <div className="d-flex p-5">
             {products.map((product, productIndex) => {
@@ -37,6 +30,7 @@ const Category = () => {
                     />
                 )
             })}
+            {!products.length && <p>No hay productos en esta categoría...</p>}
         </div>
     )
 }

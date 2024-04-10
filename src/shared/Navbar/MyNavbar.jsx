@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -9,15 +9,16 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import goldServiceLogo from '../../assets/goldServiceLogo.png';
 import './MyNavbar.css';
-import storeImage from '../../assets/store.png';
-import homeImage from '../../assets/home.png';
-import netflixImage from '../../assets/netflix.png';
-import amazonImage from '../../assets/amazon.png';
-import disneyImage from '../../assets/disney.png';
-import starImage from '../../assets/star.png';
-import playImage from '../../assets/play.png';
-import crunchyrollImage from '../../assets/crunchyroll.png';
-import IPTVImage from '../../assets/IPTV.png';
+import storeIcon from '../../assets/store.png';
+import homeIcon from '../../assets/home.png';
+import netflixIcon from '../../assets/netflix.png';
+import amazonIcon from '../../assets/amazon.png';
+import disneyIcon from '../../assets/disney.png';
+import starIcon from '../../assets/star.png';
+import playIcon from '../../assets/play.png';
+import crunchyrollIcon from '../../assets/crunchyroll.png';
+import IPTVIcon from '../../assets/iptv.png';
+import netflixCategoryPH from '../../assets/netflixCategoryPH.png';
 import { getCategorySlice, getUserSlice } from '../../context/store/store';
 import { UserNav } from '../UserNav/UserNav';
 import { getCategories } from '../../helpers/axiosHelper';
@@ -28,67 +29,85 @@ const MyNavbar = () => {
   const { headers } = getUserSlice();
   const { categories, updateCategories } = getCategorySlice();
 
-  const myCategories = [
-    {
-      name: 'Inicio',
-      pathImage: homeImage
-    },
-    {
-      name: 'Tienda',
-      pathImage: storeImage
-    },
-    {
-      name: 'Netflix',
-      pathImage: netflixImage
-    },
-    {
-      name: 'Amazon',
-      pathImage: amazonImage
-    },
-    {
-      name: 'Disney+',
-      pathImage: disneyImage
-    },
-    {
-      name: 'Star+',
-      pathImage: starImage
-    },
-    {
-      name: 'HBOMAX',
-      pathImage: starImage
-    },
-    {
-      name: 'Plex',
-      pathImage: playImage
-    },
-    {
-      name: 'Crunchyroll',
-      pathImage: crunchyrollImage
-    },
-    {
-      name: 'Vix',
-      pathImage: playImage
-    },
-    {
-      name: 'IPTV',
-      pathImage: IPTVImage
-    },
-  ];
+  const myCategories = useMemo(() => {
+    return [
+      {
+        name: 'Inicio',
+        icon: homeIcon,
+        image: ''
+      },
+      {
+        name: 'Tienda',
+        icon: storeIcon,
+        image: ''
+      },
+      {
+        name: 'Netflix',
+        icon: netflixIcon,
+        image: netflixCategoryPH
+      },
+      {
+        name: 'Amazon',
+        icon: amazonIcon,
+        image: ''
+      },
+      {
+        name: 'Disney+',
+        icon: disneyIcon,
+        image: ''
+      },
+      {
+        name: 'Star+',
+        icon: starIcon,
+        image: ''
+      },
+      {
+        name: 'HBOMAX',
+        icon: starIcon,
+        image: ''
+      },
+      {
+        name: 'Plex',
+        icon: playIcon,
+        image: ''
+      },
+      {
+        name: 'Crunchyroll',
+        icon: crunchyrollIcon,
+        image: ''
+      },
+      {
+        name: 'Vix',
+        icon: playIcon,
+        image: ''
+      },
+      {
+        name: 'IPTV',
+        icon: IPTVIcon,
+        image: ''
+      },
+    ];
+  }, []);
 
   useEffect(() => {
     const getMyCategories = async () => {
       const response = await getCategories();
-      updateCategories(response.data);
+      const categoriesMap = myCategories.reduce((acc, category) => {
+        acc[category.name] = category.image;
+        return acc;
+      }, {});
+      const updatedCategories = response.data.map((category) => { return { ...category, image: categoriesMap[category.name] } });
+      updateCategories(updatedCategories);
     }
     getMyCategories();
-  }, [updateCategories]);
+  }, [updateCategories, myCategories]);
 
   const onCategory = (categoryName) => {
     if (categoryName === 'Inicio') return navigator('/');
     if (categoryName === 'Tienda') return navigator('/cart');
-    const categoryFinded = categories.filter( (currentCategory) => currentCategory.name === categoryName );
-    if(!Object.keys(categoryFinded).length) return;
-    navigator('/category/'+categoryFinded[0]._id);
+    const categoryFinded = categories.filter((currentCategory) => currentCategory.name === categoryName);
+    if (!Object.keys(categoryFinded).length) return;
+    navigator('/category/' + categoryFinded[0]._id);
   }
 
   window.onscroll = function () {
@@ -165,7 +184,7 @@ const MyNavbar = () => {
             const imageStyle = {
               width: '2.5rem',
               height: '2.5rem',
-              backgroundImage: `url(${category.pathImage})`,
+              backgroundImage: `url(${category.icon})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }
