@@ -13,12 +13,13 @@ const Category = () => {
     useEffect(() => {
         const getProducts = async () => {
             const response = await getProductsByCategory({ category_id, currentCategoryPage });
-            setProducts(response.data.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
+            console.log(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
+            setProducts(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
         }
         getProducts();
     }, [category_id, headers, currentCategoryPage, getCategoryImageByID]);
     return (
-        <div className="d-flex p-5">
+        <div className="d-flex p-5 flex-wrap justify-content-center">
             {products.map((product, productIndex) => {
                 return (
                     <CardProduct
@@ -26,6 +27,9 @@ const Category = () => {
                         image={product.image}
                         price={product.price}
                         key={productIndex}
+                        body={product.description}
+                        discount={product.discount}
+                        status={product.status}
                     />
                 )
             })}

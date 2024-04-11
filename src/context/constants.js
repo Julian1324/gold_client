@@ -14,6 +14,10 @@ const MODAL_TITLE_SIGNOUT= 'Desconexión exitosa.';
 const MODAL_BODY_SIGNOUT = 'Hasta luego, vuelve pronto...';
 const PARAMS_CATEGORY_ID = 'category_id=';
 const PARAMS_PAGE = 'page=';
+const PRODUCT_STATUS_SOLDOUT = 'soldout';
+const PRODUCT_STATUS_AVAILABLE= 'available';
+const LANGUAGE_TAG = 'es-CO';
+const CURRENCY_NAME = 'COP';
 const KEY_STORAGE_BASE = 'GLDST0';
 
 export const constants = {
@@ -33,5 +37,9 @@ export const constants = {
     MODAL_BODY_SIGNOUT,
     PARAMS_CATEGORY_ID,
     PARAMS_PAGE,
+    PRODUCT_STATUS_SOLDOUT,
+    PRODUCT_STATUS_AVAILABLE,
+    LANGUAGE_TAG,
+    CURRENCY_NAME,
     KEY_STORAGE_BASE
 };
