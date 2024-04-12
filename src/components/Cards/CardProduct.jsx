@@ -10,6 +10,7 @@ const CardProduct = ({ name, image, body, price, discount, status }) => {
 
     const onAddToCard = () => {
         console.log('Aqui añadimos al carrito');
+        console.log(status === constants.PRODUCT_STATUS_SOLDOUT);
     }
 
     const onWatchProduct = () => {
@@ -29,13 +30,25 @@ const CardProduct = ({ name, image, body, price, discount, status }) => {
     }
 
     const calculateDiscount = (thePrice, theDiscount) => {
-        return thePrice - (thePrice * theDiscount/100);
+        return thePrice - (thePrice * theDiscount / 100);
+    }
+
+    const DisabledMask = () => {
+        return <div className='bg-dark' style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 130 }}></div>
     }
 
     return (
         <>
-            <Card style={{ marginLeft: '1vw', width: '19vw', marginTop: '2vh' }}>
-                <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} />
+            <Card style={{ marginLeft: '1vw', width: '20vw', marginTop: '2vh' }}>
+                {status === constants.PRODUCT_STATUS_SOLDOUT ? 
+                    <div>
+                        <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} />
+                        <DisabledMask/>
+                    </div>
+                    :
+                    <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} />
+                }
+                {/* <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} /> */}
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
                     {!discount ?
