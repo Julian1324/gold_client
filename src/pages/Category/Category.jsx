@@ -29,6 +29,7 @@ const Category = () => {
                         key={productIndex}
                         body={product.description}
                         discount={product.discount}
+                        quantity={product.quantity}
                         status={product.status}
                     />
                 )

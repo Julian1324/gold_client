@@ -6,7 +6,7 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
 
-const ProductDetailModal = ({ show, onHide, name, image, description, price, discount, status }) => {
+const ProductDetailModal = ({ show, onHide, name, image, description, price, discount, quantity, status }) => {
 
     const [count, setCount] = useState(0);
 
@@ -58,7 +58,12 @@ const ProductDetailModal = ({ show, onHide, name, image, description, price, dis
                                 {description}
                             </div>
                             <div className='mt-3'>
-                                Disponibilidad: {status}
+                                Disponibilidad:
+                                {!quantity ?
+                                    <span className='text-danger'> Agotado</span>
+                                    :
+                                    <span className='text-primary'> {quantity} unidades </span>
+                                }
                             </div>
                             <div className='text-success mt-2'>
                                 {!discount ?
@@ -77,19 +82,21 @@ const ProductDetailModal = ({ show, onHide, name, image, description, price, dis
                                 }
                             </div>
                         </div>
-                        <div className='mt-2'>
-                            <Form>
-                                <Form.Group controlId="productCounter">
-                                    <div className="d-flex align-items-center mt-5">
-                                        <Button variant="outline-secondary" onClick={decrement}>-</Button>
-                                        <Form.Control type="text" value={count} readOnly className="mx-2" style={{ width: '50px', textAlign: 'center' }} />
-                                        <Button variant="outline-secondary" onClick={increment}>+</Button>
-                                        <Button variant="warning" className='d-flex ms-2 align-items-center' onClick={onAddToCard}>Añadir <CarritoSVG /></Button>
-                                        <Button variant="success" className='d-flex ms-2 align-items-center'>Comprar <WhatsAppSVG /></Button>
-                                    </div>
-                                </Form.Group>
-                            </Form>
-                        </div>
+                        {!!quantity &&
+                            <div className='mt-2'>
+                                <Form>
+                                    <Form.Group controlId="productCounter">
+                                        <div className="d-flex align-items-center mt-2">
+                                            <Button variant="outline-secondary" onClick={decrement}>-</Button>
+                                            <Form.Control type="text" value={count} readOnly className="mx-2" style={{ width: '50px', textAlign: 'center' }} />
+                                            <Button variant="outline-secondary" onClick={increment}>+</Button>
+                                            <Button variant="warning" className='d-flex ms-2 align-items-center' onClick={onAddToCard}>Añadir <CarritoSVG /></Button>
+                                            <Button variant="success" className='d-flex ms-2 align-items-center'>Comprar <WhatsAppSVG /></Button>
+                                        </div>
+                                    </Form.Group>
+                                </Form>
+                            </div>
+                        }
                     </div>
                 </div>
             </Modal.Body>

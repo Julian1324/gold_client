@@ -7,15 +7,15 @@ const USER_CREATED = '¡Usuario creado con éxito! Bienvenido a nuestra comunida
 const USER_LOGGED = '¡Bienvenid@ a Gold Service!';
 const USER_SESSION_EXPIRED = 'Sesión caducada, por favor inicia sesión otra vez.';
 const GET_CATEGORIES = '/categories';
-const GET_PRODUCTS_BY_CATEGORY= '/productsByCategory';
+const GET_PRODUCTS_BY_CATEGORY = '/productsByCategory';
 const MODAL_TITLE_SUCCCESS = '¡Se ha realizado con éxito!';
 const MODAL_TITLE_ERROR = '¡Oops, error en la solicitud!';
-const MODAL_TITLE_SIGNOUT= 'Desconexión exitosa.';
+const MODAL_TITLE_SIGNOUT = 'Desconexión exitosa.';
 const MODAL_BODY_SIGNOUT = 'Hasta luego, vuelve pronto...';
 const PARAMS_CATEGORY_ID = 'category_id=';
 const PARAMS_PAGE = 'page=';
-const PRODUCT_STATUS_SOLDOUT = 'soldout';
-const PRODUCT_STATUS_AVAILABLE= 'available';
+const PRODUCT_STATUS_ACTIVE = 'active';
+const PRODUCT_STATUS_INACTIVE = 'inactive';
 const LANGUAGE_TAG = 'es-CO';
 const CURRENCY_NAME = 'COP';
 const KEY_STORAGE_BASE = 'GLDST0';
@@ -37,8 +37,8 @@ export const constants = {
     MODAL_BODY_SIGNOUT,
     PARAMS_CATEGORY_ID,
     PARAMS_PAGE,
-    PRODUCT_STATUS_SOLDOUT,
-    PRODUCT_STATUS_AVAILABLE,
+    PRODUCT_STATUS_ACTIVE,
+    PRODUCT_STATUS_INACTIVE,
     LANGUAGE_TAG,
     CURRENCY_NAME,
     KEY_STORAGE_BASE

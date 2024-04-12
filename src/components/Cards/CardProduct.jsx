@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
 
-const CardProduct = ({ name, image, body, price, discount, status }) => {
+const CardProduct = ({ name, image, body, price, discount, quantity, status }) => {
     const [productDetailShow, setProductDetailShow] = useState(false);
 
     const onAddToCard = () => {
@@ -34,43 +34,58 @@ const CardProduct = ({ name, image, body, price, discount, status }) => {
     }
 
     const DisabledMask = () => {
-        return <div className='bg-dark' style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 130 }}></div>
+        return (
+            <div
+                className='d-flex justify-content-center align-items-center z-3 bg-black h-100'
+                style={{ marginTop: '-100%', cursor: 'pointer', opacity: '85%' }}
+                onClick={onWatchProduct}
+            >
+                <span className='fs-1 text-danger opacity-100'>
+                    Agotado
+                </span>
+            </div>
+        );
     }
 
     return (
         <>
-            <Card style={{ marginLeft: '1vw', width: '20vw', marginTop: '2vh' }}>
-                {status === constants.PRODUCT_STATUS_SOLDOUT ? 
-                    <div>
-                        <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} />
-                        <DisabledMask/>
-                    </div>
-                    :
-                    <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} />
-                }
-                {/* <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} /> */}
-                <Card.Body>
-                    <Card.Title>{name}</Card.Title>
-                    {!discount ?
-                        <Card.Text className='text-success'>
-                            {currencyValue(price)} {constants.CURRENCY_NAME}
-                        </Card.Text>
+            {status !== constants.PRODUCT_STATUS_INACTIVE &&
+                <Card style={{ marginLeft: '1vw', width: '20vw', marginTop: '2vh' }}>
+                    {!quantity ?
+                        <div className='d-flex flex-column h-100'>
+                            <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} />
+                            <DisabledMask />
+                        </div>
                         :
-                        <div className='d-flex'>
+                        <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} />
+                    }
+                    <Card.Body>
+                        <Card.Title>{name}</Card.Title>
+                        {!discount ?
                             <Card.Text className='text-success'>
-                                {currencyValue(calculateDiscount(price, discount))} {constants.CURRENCY_NAME}
-                            </Card.Text>
-                            <Card.Text className='text-decoration-line-through text-secondary ms-2'>
                                 {currencyValue(price)} {constants.CURRENCY_NAME}
                             </Card.Text>
+                            :
+                            <div className='d-flex'>
+                                <Card.Text className='text-success'>
+                                    {currencyValue(calculateDiscount(price, discount))} {constants.CURRENCY_NAME}
+                                </Card.Text>
+                                <Card.Text className='text-decoration-line-through text-secondary ms-2'>
+                                    {currencyValue(price)} {constants.CURRENCY_NAME}
+                                </Card.Text>
+                            </div>
+                        }
+                        <div className='d-flex justify-content-center'>
+                            {!!quantity &&
+                                <Button variant="warning" className='d-flex ms-2 align-items-center' onClick={onAddToCard}>
+                                    Añadir <CarritoSVG />
+                                </Button>
+                            }
+                            <Button className='ms-2' variant="light" onClick={onWatchProduct}><EyeSVG /></Button>
                         </div>
-                    }
-                    <div className='d-flex justify-content-center'>
-                        <Button variant="warning" className='d-flex ms-2 align-items-center' onClick={onAddToCard}>Añadir <CarritoSVG /></Button>
-                        <Button className='ms-2' variant="light" onClick={onWatchProduct}><EyeSVG /></Button>
-                    </div>
-                </Card.Body>
-            </Card>
+                    </Card.Body>
+                </Card>
+            }
 
             <ProductDetailModal
                 show={productDetailShow}
@@ -80,6 +95,7 @@ const CardProduct = ({ name, image, body, price, discount, status }) => {
                 description={body}
                 price={price}
                 discount={discount}
+                quantity={quantity}
                 status={status}
             />
         </>
