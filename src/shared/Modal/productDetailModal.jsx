@@ -53,7 +53,7 @@ const ProductDetailModal = ({ show, onHide, name, image, description, price, dis
                     <img src={image} alt="" style={{ height: '32vh' }} />
                     <div className='d-flex flex-column ms-5' style={{ width: '100%' }}>
                         <div className='d-flex w-100 justify-content-center'>{name}</div>
-                        <div className='d-flex w-100 flex-column justify-content-center'>
+                        <div className='d-flex w-100 flex-column justify-content-center h-100'>
                             <div className='mt-3 text-start text-justify'>
                                 {description}
                             </div>
@@ -83,10 +83,10 @@ const ProductDetailModal = ({ show, onHide, name, image, description, price, dis
                             </div>
                         </div>
                         {!!quantity &&
-                            <div className='mt-2'>
+                            <div>
                                 <Form>
                                     <Form.Group controlId="productCounter">
-                                        <div className="d-flex align-items-center mt-2">
+                                        <div className="d-flex align-items-center mb-3">
                                             <Button variant="outline-secondary" onClick={decrement}>-</Button>
                                             <Form.Control type="text" value={count} readOnly className="mx-2" style={{ width: '50px', textAlign: 'center' }} />
                                             <Button variant="outline-secondary" onClick={increment}>+</Button>
