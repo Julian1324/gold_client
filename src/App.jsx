@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import routes from "./routes/routes";
 import MyNavbar from "./shared/Navbar/MyNavbar.jsx";
+import { Suspense } from 'react';
 
 function App() {
   return (
@@ -12,10 +13,14 @@ function App() {
             <Route
               path={route.path}
               element={
-                route.path.includes('sign') ?
-                  <route.component/>
-                  :
-                  <><MyNavbar/><route.component/></>
+                <Suspense fallback={<span>Loading...</span>}>
+                  {
+                    route.path.includes('sign') ?
+                      <route.component />
+                      :
+                      <><MyNavbar /><route.component /></>
+                  }
+                </Suspense>
               }
               key={indexRoute}>
             </Route>

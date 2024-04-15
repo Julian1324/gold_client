@@ -10,7 +10,6 @@ const CardProduct = ({ name, image, body, price, discount, quantity, status }) =
 
     const onAddToCard = () => {
         console.log('Aqui añadimos al carrito');
-        console.log(status === constants.PRODUCT_STATUS_SOLDOUT);
     }
 
     const onWatchProduct = () => {

@@ -1,28 +1,42 @@
 import '@splidejs/splide/dist/css/splide.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import coverImage from '../../assets/coverImage.jpeg';
 
 const CoverScroll = () => {
     const splideOptions = {
         type: 'loop',
-        lazyLoad: 'nearby',
+        lazyLoad: 'sequential',
         perPage: 1,
         focus: 'center',
         gap: '1rem',
         pagination: false,
-        autoplay: true,
+        autoplay: false,
         arrows: false,
         interval: 3000
     };
 
+    const coverImages = () => {
+        const images = [];
+        let imagesBoolean = true;
+        let imageCont = 0;
+        while (imagesBoolean) {
+            try {
+                imageCont++;
+                images.push(require(`../../assets/CoverImages/${imageCont}.png`));
+            } catch (error) {
+                return images;
+            }
+        }
+    }
+
     return (
         <Splide aria-label="Cover" options={splideOptions} className="heightSplide">
-            <SplideSlide className="w-100 heightSplide">
-                <img src={coverImage} alt="Cover 1" className="w-100 imagen" />
-            </SplideSlide>
-            <SplideSlide className="w-100 heightSplide">
-                <img src={coverImage} alt="Cover 2" className="w-100 imagen" />
-            </SplideSlide>
+            {coverImages().map((image, imageIndex) => {
+                return (
+                    <SplideSlide className="w-100 heightSplide" key={imageIndex}>
+                        <img data-splide-lazy={image} alt="Cover 1" className="w-100" />
+                    </SplideSlide>
+                )
+            })}
         </Splide>
     );
 }

@@ -1,8 +1,10 @@
-import Home from "../pages/Home/Home";
-import Signin from "../pages/Signin/Signin";
-import Signup from "../pages/Signup/Signup";
-import Account from "../pages/Account/Account";
-import Category from "../pages/Category/Category";
+import { lazy } from "react";
+
+const Home = lazy(() => import("../pages/Home/Home"));
+const Signin = lazy(() => import("../pages/Signin/Signin"));
+const Signup = lazy(() => import("../pages/Signup/Signup"));
+const Account = lazy(() => import("../pages/Account/Account"));
+const Category = lazy(() => import("../pages/Category/Category"));
 
 const routes = [
     { path: '/', component: Home },

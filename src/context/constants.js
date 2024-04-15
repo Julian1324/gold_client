@@ -18,9 +18,10 @@ const PRODUCT_STATUS_ACTIVE = 'active';
 const PRODUCT_STATUS_INACTIVE = 'inactive';
 const LANGUAGE_TAG = 'es-CO';
 const CURRENCY_NAME = 'COP';
+const COVER_IMAGES_NUM = 7;
 const KEY_STORAGE_BASE = 'GLDST0';
 
-export const constants = {
+export const constants = Object.freeze({
     API_URL,
     USER_SIGNUP,
     USER_SIGNIN,
@@ -41,5 +42,6 @@ export const constants = {
     PRODUCT_STATUS_INACTIVE,
     LANGUAGE_TAG,
     CURRENCY_NAME,
+    COVER_IMAGES_NUM,
     KEY_STORAGE_BASE
-};
+});
