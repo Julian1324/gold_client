@@ -4,10 +4,12 @@ import secureLocalStorage from "react-secure-storage";
 import { constants } from '../constants.js';
 import { userSlice } from './userSlice.js';
 import { categorySlice } from './categorySlice.js';
+import { cartSlice } from './cartSlice.js';
 
 const mySlices = {
     userSlice,
-    categorySlice
+    categorySlice,
+    cartSlice
 };
 
 const initGoldStore = () => {
@@ -30,5 +32,5 @@ const initGoldStore = () => {
 const goldStore = initGoldStore();
 
 export const getUserSlice = goldStore.userSlice;
-
 export const getCategorySlice = goldStore.categorySlice;
+export const getCartSlice = goldStore.cartSlice;
