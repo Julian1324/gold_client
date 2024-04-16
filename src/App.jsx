@@ -1,8 +1,9 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense } from 'react';
 import routes from "./routes/routes";
 import MyNavbar from "./shared/Navbar/MyNavbar.jsx";
-import { Suspense } from 'react';
+import Footer from './shared/Footer/Footer.jsx';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
                     route.path.includes('sign') ?
                       <route.component />
                       :
-                      <><MyNavbar /><route.component /></>
+                      <> <MyNavbar /><route.component /><Footer /> </>
                   }
                 </Suspense>
               }

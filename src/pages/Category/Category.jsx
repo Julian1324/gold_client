@@ -13,7 +13,7 @@ const Category = () => {
     useEffect(() => {
         const getProducts = async () => {
             const response = await getProductsByCategory({ category_id, currentCategoryPage });
-            console.log(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
+            // console.log(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
             setProducts(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
         }
         getProducts();
@@ -23,6 +23,7 @@ const Category = () => {
             {products.map((product, productIndex) => {
                 return (
                     <CardProduct
+                        _id={product._id}
                         name={product.name}
                         image={product.image}
                         price={product.price}
@@ -34,7 +35,7 @@ const Category = () => {
                     />
                 )
             })}
-            {!products.length && <p>No hay productos en esta categoría...</p>}
+            {!products.length && <div style={{height: '50vh'}}>Por el momento no hay nada en esta categoría...</div>}
         </div>
     )
 }

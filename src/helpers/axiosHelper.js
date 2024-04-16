@@ -106,3 +106,17 @@ export const getProductsByCategory = async ({ category_id, currentCategoryPage }
         throw error;
     }
 }
+
+export const getProduct = async ({ _id }) => {
+    try {
+        const response = await axiosInstance.get(
+            `${constants.API_URL + constants.GET_PRODUCT_BY_ID}?${constants.PARAMS_PRODUCT + _id}`,
+        )
+        if (response.status === 200) return {
+            data: response.data,
+            loadingReq: false,
+        }
+    } catch (error) {
+        throw error;
+    }
+}

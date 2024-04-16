@@ -32,8 +32,8 @@ const CoverScroll = () => {
         <Splide aria-label="Cover" options={splideOptions} className="heightSplide">
             {coverImages().map((image, imageIndex) => {
                 return (
-                    <SplideSlide className="w-100 heightSplide" key={imageIndex}>
-                        <img data-splide-lazy={image} alt="Cover 1" className="w-100" />
+                    <SplideSlide className="w-100" key={imageIndex}>
+                        <img data-splide-lazy={image} alt="Cover 1" className="w-100 coverImage" />
                     </SplideSlide>
                 )
             })}

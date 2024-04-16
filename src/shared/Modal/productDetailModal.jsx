@@ -5,12 +5,17 @@ import { useState } from 'react';
 import CloseButton from 'react-bootstrap/CloseButton';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
+// import { getCartSlice } from '../../context/store/store';
+import { getProduct } from '../../helpers/axiosHelper';
 
-const ProductDetailModal = ({ show, onHide, name, image, description, price, discount, quantity, status }) => {
+const ProductDetailModal = ({ show, onHide, _id, name, image, description, price, discount, quantity }) => {
 
     const [count, setCount] = useState(0);
 
-    const increment = () => {
+    const increment = async () => {
+        const response = await getProduct(_id);
+        console.log(response);
+        if(quantity === count) return;
         setCount(count + 1);
     };
 
@@ -20,7 +25,6 @@ const ProductDetailModal = ({ show, onHide, name, image, description, price, dis
 
     const onAddToCard = () => {
         if (count > 0) console.log('Aqui añadimos al carrito');
-        console.log(discount);
     }
 
     const WhatsAppSVG = () => {

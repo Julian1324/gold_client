@@ -4,12 +4,14 @@ import ProductDetailModal from '../../shared/Modal/productDetailModal';
 import { useState } from 'react';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
+import { getCartSlice } from '../../context/store/store';
 
-const CardProduct = ({ name, image, body, price, discount, quantity, status }) => {
+const CardProduct = ({ _id, name, image, body, price, discount, quantity, status }) => {
     const [productDetailShow, setProductDetailShow] = useState(false);
+    const { addItem } = getCartSlice();
 
     const onAddToCard = () => {
-        console.log('Aqui añadimos al carrito');
+        addItem({name, price, discount, quantityToBuy: 1});
     }
 
     const onWatchProduct = () => {
@@ -87,6 +89,7 @@ const CardProduct = ({ name, image, body, price, discount, quantity, status }) =
             }
 
             <ProductDetailModal
+                _id={_id}
                 show={productDetailShow}
                 onHide={() => onCloseModal()}
                 name={name}
