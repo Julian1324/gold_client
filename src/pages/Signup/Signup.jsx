@@ -2,7 +2,7 @@ import { useState } from 'react';
 import goldServiceLogo from '../../assets/goldServiceLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { AlertModal } from '../../shared/Modal/alertModal';
+import { AlertModal } from '../../shared/Modal/AlertModal';
 import Spinner from 'react-bootstrap/Spinner';
 import { constants } from '../../context/constants';
 import { signUpUser } from '../../helpers/axiosHelper';

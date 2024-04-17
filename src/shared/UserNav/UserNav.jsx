@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getUserSlice } from '../../context/store/store';
-import { AlertModal } from '../../shared/Modal/alertModal';
+import { AlertModal } from '../../shared/Modal/AlertModal';
 import { constants } from '../../context/constants';
 import { useNavigate } from 'react-router-dom';
 

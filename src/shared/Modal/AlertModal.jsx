@@ -1,12 +1,12 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function AlertModal({ show, onHide, title, bodyText }) {
+function AlertModal({ show, onHide, title, bodyText, size = 'lg' }) {
   return (
     <Modal
       show={show}
       onHide={onHide}
-      size="lg"
+      size={size}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >

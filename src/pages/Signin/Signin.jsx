@@ -4,7 +4,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import goldServiceLogo from '../../assets/goldServiceLogo.png';
 import { useForm } from 'react-hook-form';
 import { signInUser } from '../../helpers/axiosHelper';
-import { AlertModal } from '../../shared/Modal/alertModal';
+import { AlertModal } from '../../shared/Modal/AlertModal';
 import { constants } from '../../context/constants';
 import { useNavigate } from 'react-router-dom';
 import { getUserSlice } from "../../context/store/store.js";

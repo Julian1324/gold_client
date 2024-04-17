@@ -13,6 +13,7 @@ const MODAL_TITLE_SUCCCESS = '¡Se ha realizado con éxito!';
 const MODAL_TITLE_ERROR = '¡Oops, error en la solicitud!';
 const MODAL_TITLE_SIGNOUT = 'Desconexión exitosa.';
 const MODAL_BODY_SIGNOUT = 'Hasta luego, vuelve pronto...';
+const MODAL_ITEM_ADDED = 'Se ha agregado el item al carrito.';
 const PARAMS_CATEGORY_ID = 'category_id=';
 const PARAMS_PAGE = 'page=';
 const PARAMS_PRODUCT = 'product=';
@@ -38,6 +39,7 @@ export const constants = Object.freeze({
     MODAL_TITLE_ERROR,
     MODAL_TITLE_SIGNOUT,
     MODAL_BODY_SIGNOUT,
+    MODAL_ITEM_ADDED,
     PARAMS_CATEGORY_ID,
     PARAMS_PAGE,
     PARAMS_PRODUCT,

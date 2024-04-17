@@ -2,7 +2,7 @@ import { constants } from '../../context/constants.js';
 import { useForm } from 'react-hook-form';
 import { useState } from "react";
 import { getUserSlice } from '../../context/store/store.js';
-import { AlertModal } from '../../shared/Modal/alertModal.jsx';
+import { AlertModal } from '../../shared/Modal/AlertModal.jsx';
 import { setPassword } from '../../helpers/axiosHelper.js';
 
 const PasswordForm = () => {

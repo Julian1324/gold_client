@@ -1,17 +1,22 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import ProductDetailModal from '../../shared/Modal/productDetailModal';
+import ProductDetailModal from '../../shared/Modal/ProductDetailModal';
 import { useState } from 'react';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
 import { getCartSlice } from '../../context/store/store';
+import { AlertModal } from '../../shared/Modal/AlertModal';
 
 const CardProduct = ({ _id, name, image, body, price, discount, quantity, status }) => {
     const [productDetailShow, setProductDetailShow] = useState(false);
+    const [alertModalShow, setAlertModalShow] = useState(false);
+    const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
     const { addItem } = getCartSlice();
 
     const onAddToCard = () => {
-        addItem({name, price, discount, quantityToBuy: 1});
+        addItem({ name, price, discount, quantityToBuy: 1 });
+        setMessagesToModal({title:constants.MODAL_TITLE_SUCCCESS, body: constants.MODAL_ITEM_ADDED});
+        setAlertModalShow(true);
     }
 
     const onWatchProduct = () => {
@@ -99,6 +104,13 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
                 discount={discount}
                 quantity={quantity}
                 status={status}
+            />
+
+            <AlertModal
+                show={alertModalShow}
+                onHide={() => setAlertModalShow(false)}
+                title={messagesToModal.title}
+                bodyText={messagesToModal.body}
             />
         </>
     )

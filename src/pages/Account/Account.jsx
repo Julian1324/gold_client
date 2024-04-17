@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './Account.css';
 import { getUser, setUser } from '../../helpers/axiosHelper';
 import { getUserSlice } from '../../context/store/store.js';
-import { AlertModal } from '../../shared/Modal/alertModal';
+import { AlertModal } from '../../shared/Modal/AlertModal';
 import { constants } from '../../context/constants';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
