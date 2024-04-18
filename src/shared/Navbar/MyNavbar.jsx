@@ -22,13 +22,14 @@ import netflixCategoryPH from '../../assets/netflixCategoryPH.png';
 import { getCategorySlice, getUserSlice, getCartSlice } from '../../context/store/store';
 import { UserNav } from '../UserNav/UserNav';
 import { getCategories } from '../../helpers/axiosHelper';
+import { currencyValue } from '../../helpers/currencyHelper';
 
 const MyNavbar = () => {
   const navigator = useNavigate();
   const myNavbarRef = useRef(null);
   const { headers } = getUserSlice();
   const { categories, updateCategories } = getCategorySlice();
-  const { items } = getCartSlice();
+  const { items, getSubtotal } = getCartSlice();
 
   const myCategories = useMemo(() => {
     return [
@@ -101,6 +102,7 @@ const MyNavbar = () => {
       updateCategories(updatedCategories);
     }
     getMyCategories();
+    console.log('items', items);
   }, [updateCategories, myCategories]);
 
   const onCategory = (categoryName) => {
@@ -158,7 +160,7 @@ const MyNavbar = () => {
               </svg>
             </Button>
           </InputGroup>
-          <div className='d-flex text-light ms-3 w-25 justify-content-around'>
+          <div className='d-flex text-light w-25 justify-content-around'>
             {!Object.keys(headers).length ?
               <NavLink to='/signin' className='d-flex onHover' style={{ cursor: 'pointer' }}>
                 <UserNav />
@@ -179,7 +181,7 @@ const MyNavbar = () => {
               </div>
               <div className='d-flex flex-column justify-content-center w-100 ms-3'>
                 <span>Su cesta</span>
-                <span>$0</span>
+                <span>{currencyValue(getSubtotal())}</span>
               </div>
             </NavLink>
           </div>
