@@ -11,7 +11,7 @@ import { AlertModal } from './AlertModal';
 
 const ProductDetailModal = ({ show, onHide, _id, name, image, description, price, discount, quantity }) => {
 
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(1);
     const [currentQuantity, setCurrentQuantity] = useState(quantity);
     const [loadingReqMas, setLoadingReqMas] = useState(false);
     const [loadingReqMenos, setLoadingReqMenos] = useState(false);
@@ -64,7 +64,7 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
     }
 
     const calculateDiscount = (thePrice, theDiscount) => {
-        return thePrice - (thePrice * theDiscount / 100);
+        return (thePrice - (thePrice * theDiscount / 100)) * (!!count && count);
     }
 
     return (
@@ -101,15 +101,15 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
                                 <div className='text-success mt-2'>
                                     {!discount ?
                                         <p>
-                                            {currencyValue(price)} {constants.CURRENCY_NAME}
+                                            {currencyValue(price) + ' ' + constants.CURRENCY_NAME}
                                         </p>
                                         :
                                         <div className='d-flex'>
                                             <p>
-                                                {currencyValue(calculateDiscount(price, discount))} {constants.CURRENCY_NAME}
+                                                {currencyValue(calculateDiscount(price, discount)) + ' ' +constants.CURRENCY_NAME}
                                             </p>
                                             <p className='text-decoration-line-through text-secondary ms-2'>
-                                                {currencyValue(price)} {constants.CURRENCY_NAME}
+                                                {currencyValue(price) + ' ' + constants.CURRENCY_NAME}
                                             </p>
                                         </div>
                                     }
@@ -120,17 +120,17 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
                                     <Form>
                                         <Form.Group controlId="productCounter">
                                             <div className="d-flex align-items-center mb-3">
-                                                <Button variant="outline-secondary" onClick={decrement} style={{ width: '50px' }}>
+                                                <Button variant="outline-secondary" onClick={() => decrement()} style={{ width: '50px' }}>
                                                     {loadingReqMenos ? <span className="spinner-border spinner-border-sm" aria-hidden="true"></span> : '-'}
                                                 </Button>
                                                 <Form.Control type="text" value={count} readOnly className="mx-2" style={{ width: '50px', textAlign: 'center' }} />
-                                                <Button variant="outline-secondary" onClick={increment} style={{ width: '50px' }}>
+                                                <Button variant="outline-secondary" onClick={() => increment()} style={{ width: '50px' }}>
                                                     {loadingReqMas ? <span className="spinner-border spinner-border-sm" aria-hidden="true"></span> : '+'}
                                                 </Button>
-                                                <Button variant="warning" className='d-flex ms-2 align-items-center' onClick={onAddToCard} disabled={!count}>
+                                                <Button variant="warning" className='d-flex ms-2 align-items-center' onClick={() => onAddToCard()} disabled={!count}>
                                                     Añadir <CarritoSVG />
                                                 </Button>
-                                                <Button variant="success" className='d-flex ms-2 align-items-center'>Comprar <WhatsAppSVG /></Button>
+                                                <Button variant="success" className='d-flex ms-2 align-items-center' disabled={!count}>Comprar <WhatsAppSVG /></Button>
                                             </div>
                                         </Form.Group>
                                     </Form>
@@ -146,6 +146,9 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
                 title={messagesToModal.title}
                 bodyText={messagesToModal.body}
                 size={'md'}
+                closeButton={0}
+                icon='check'
+                timeModal={1000}
             />
         </>
     );

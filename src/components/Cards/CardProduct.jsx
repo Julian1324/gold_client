@@ -111,6 +111,10 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
                 onHide={() => setAlertModalShow(false)}
                 title={messagesToModal.title}
                 bodyText={messagesToModal.body}
+                size='md'
+                closeButton={0}
+                icon='check'
+                timeModal={1000}
             />
         </>
     )

@@ -166,7 +166,7 @@ const MyNavbar = () => {
               :
               <UserNav />
             }
-            <NavLink to='./cart' className='d-flex' style={{ cursor: 'pointer' }}>
+            <NavLink to='/cart' className='d-flex' style={{ cursor: 'pointer' }}>
               <div className='d-flex align-items-center ms-3'>
                 {!!items.length &&
                   <span className="position-relative top-0 start-100 translate-middle badge rounded-pill text-bg-primary">
