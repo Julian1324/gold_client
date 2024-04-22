@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -23,6 +23,7 @@ import { getCategorySlice, getUserSlice, getCartSlice } from '../../context/stor
 import { UserNav } from '../UserNav/UserNav';
 import { getCategories } from '../../helpers/axiosHelper';
 import { currencyValue } from '../../helpers/currencyHelper';
+import CartModal from '../Modal/CartModal';
 
 const MyNavbar = () => {
   const navigator = useNavigate();
@@ -30,6 +31,7 @@ const MyNavbar = () => {
   const { headers } = getUserSlice();
   const { categories, updateCategories } = getCategorySlice();
   const { items, getSubtotal } = getCartSlice();
+  const [hover, setHover] = useState();
 
   const myCategories = useMemo(() => {
     return [
@@ -167,7 +169,7 @@ const MyNavbar = () => {
               :
               <UserNav />
             }
-            <NavLink to='/cart' className='d-flex' style={{ cursor: 'pointer' }}>
+            <NavLink to='/cart' className='d-flex' style={{ cursor: 'pointer' }} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
               <div className='d-flex align-items-center ms-3'>
                 {!!items.length &&
                   <span className="position-relative top-0 start-100 translate-middle badge rounded-pill text-bg-primary">
@@ -183,6 +185,12 @@ const MyNavbar = () => {
                 <span>{currencyValue(getSubtotal())}</span>
               </div>
             </NavLink>
+            <CartModal
+              show={!!items.length}
+              items={items}
+              hover={hover}
+              setHover={setHover}
+            />
           </div>
         </Container>
         <hr />

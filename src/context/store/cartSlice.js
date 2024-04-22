@@ -1,9 +1,10 @@
 export const cartSlice = (set, get) => ({
     items: [],
+    showItems: false,
     addItem: (newItem) => set((state) => {
         const stateItems = [...state.items];
         const objFinded = stateItems.find((item) => item.name === newItem.name);
-        if (!stateItems.length || !objFinded) return { ...state, items: [...state.items, newItem] };
+        if (!stateItems.length || !objFinded) return { ...state, items: [...stateItems, newItem] };
         const updatedItems = stateItems.map((item) => {
             if (item.name === newItem.name) return { ...item, quantityToBuy: item.quantityToBuy + newItem.quantityToBuy };
             return item;
