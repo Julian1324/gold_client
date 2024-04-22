@@ -4,12 +4,8 @@ export const cartSlice = (set, get) => ({
         const stateItems = [...state.items];
         const objFinded = stateItems.find((item) => item.name === newItem.name);
         if (!stateItems.length || !objFinded) return { ...state, items: [...state.items, newItem] };
-        const objUnified = stateItems.reduce((acc, item) => {
-            if (item.name === newItem.name) Object.assign(acc, { ...item, quantityToBuy: item.quantityToBuy + newItem.quantityToBuy });
-            return acc;
-        }, {});
         const updatedItems = stateItems.map((item) => {
-            if (item.name === objUnified.name) return { ...objUnified };
+            if (item.name === newItem.name) return { ...item, quantityToBuy: item.quantityToBuy + newItem.quantityToBuy };
             return item;
         });
         return { ...state, items: [...updatedItems] }

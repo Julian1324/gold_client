@@ -102,7 +102,6 @@ const MyNavbar = () => {
       updateCategories(updatedCategories);
     }
     getMyCategories();
-    console.log('items', items);
   }, [updateCategories, myCategories]);
 
   const onCategory = (categoryName) => {
