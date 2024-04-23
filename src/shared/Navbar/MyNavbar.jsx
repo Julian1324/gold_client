@@ -108,7 +108,7 @@ const MyNavbar = () => {
 
   const onCategory = (categoryName) => {
     if (categoryName === 'Inicio') return navigator('/');
-    if (categoryName === 'Tienda') return navigator('/cart');
+    if (categoryName === 'Tienda') return navigator('/shop');
     const categoryFinded = categories.find((currentCategory) => currentCategory.name === categoryName);
     if (!categoryFinded) return;
     navigator('/category/' + categoryFinded._id);

@@ -9,6 +9,7 @@ const USER_SESSION_EXPIRED = 'Sesión caducada, por favor inicia sesión otra ve
 const GET_CATEGORIES = '/categories';
 const GET_PRODUCTS_BY_CATEGORY = '/productsByCategory';
 const GET_PRODUCT_BY_ID = '/product';
+const GET_ALL_PRODUCTS = '/products';
 const MODAL_TITLE_SUCCCESS = '¡Se ha realizado con éxito!';
 const MODAL_TITLE_ERROR = '¡Oops, error en la solicitud!';
 const MODAL_TITLE_SIGNOUT = 'Desconexión exitosa.';
@@ -35,6 +36,7 @@ export const constants = Object.freeze({
     GET_CATEGORIES,
     GET_PRODUCTS_BY_CATEGORY,
     GET_PRODUCT_BY_ID,
+    GET_ALL_PRODUCTS,
     MODAL_TITLE_SUCCCESS,
     MODAL_TITLE_ERROR,
     MODAL_TITLE_SIGNOUT,
