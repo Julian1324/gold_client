@@ -49,8 +49,8 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
     };
 
     const onAddToCard = () => {
-        addItem({name, price, discount, quantityToBuy: count});
-        setMessagesToModal({title:constants.MODAL_TITLE_SUCCCESS, body: constants.MODAL_ITEM_ADDED});
+        addItem({ name, image, price, discount, quantityToBuy: 1 });
+        setMessagesToModal({ title: constants.MODAL_TITLE_SUCCCESS, body: constants.MODAL_ITEM_ADDED });
         setAlertModalShow(true);
         onHide();
     }
@@ -106,7 +106,7 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
                                         :
                                         <div className='d-flex'>
                                             <p>
-                                                {currencyValue(calculateDiscount(price, discount)) + ' ' +constants.CURRENCY_NAME}
+                                                {currencyValue(calculateDiscount(price, discount)) + ' ' + constants.CURRENCY_NAME}
                                             </p>
                                             <p className='text-decoration-line-through text-secondary ms-2'>
                                                 {currencyValue(price) + ' ' + constants.CURRENCY_NAME}

@@ -30,7 +30,7 @@ function AlertModal({ show, onHide, title, bodyText, size = 'lg', closeButton = 
       </Modal.Header>
       <Modal.Body>
         <p>
-          {bodyText} {myIcons[icon]}
+          {bodyText}
         </p>
       </Modal.Body>
       {!!closeButton &&

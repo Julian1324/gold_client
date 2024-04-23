@@ -14,8 +14,8 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
     const { addItem } = getCartSlice();
 
     const onAddToCard = () => {
-        addItem({ name, price, discount, quantityToBuy: 1 });
-        setMessagesToModal({title:constants.MODAL_TITLE_SUCCCESS, body: constants.MODAL_ITEM_ADDED});
+        addItem({ name, image, price, discount, quantityToBuy: 1 });
+        setMessagesToModal({ title: constants.MODAL_TITLE_SUCCCESS, body: constants.MODAL_ITEM_ADDED });
         setAlertModalShow(true);
     }
 

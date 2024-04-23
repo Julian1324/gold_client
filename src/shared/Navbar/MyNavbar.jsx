@@ -109,9 +109,9 @@ const MyNavbar = () => {
   const onCategory = (categoryName) => {
     if (categoryName === 'Inicio') return navigator('/');
     if (categoryName === 'Tienda') return navigator('/cart');
-    const categoryFinded = categories.filter((currentCategory) => currentCategory.name === categoryName);
-    if (!Object.keys(categoryFinded).length) return;
-    navigator('/category/' + categoryFinded[0]._id);
+    const categoryFinded = categories.find((currentCategory) => currentCategory.name === categoryName);
+    if (!categoryFinded) return;
+    navigator('/category/' + categoryFinded._id);
   }
 
   window.onscroll = function () {
@@ -128,6 +128,7 @@ const MyNavbar = () => {
       navContainer.style.position = "inherit";
       navContainer.style.flexWrap = 'wrap';
       navContainer.style.justifyContent = 'center';
+      navContainer.style.zIndex = 0;
     }
   };
 
@@ -190,6 +191,7 @@ const MyNavbar = () => {
               items={items}
               hover={hover}
               setHover={setHover}
+              subtotal={currencyValue(getSubtotal())}
             />
           </div>
         </Container>
