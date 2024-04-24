@@ -19,6 +19,7 @@ import playIcon from '../../assets/play.png';
 import crunchyrollIcon from '../../assets/crunchyroll.png';
 import IPTVIcon from '../../assets/iptv.png';
 import netflixCategoryPH from '../../assets/netflixCategoryPH.png';
+import amazonCategoryPH from '../../assets/amazonCategoryPH.png';
 import { getCategorySlice, getUserSlice, getCartSlice } from '../../context/store/store';
 import { UserNav } from '../UserNav/UserNav';
 import { getCategories } from '../../helpers/axiosHelper';
@@ -53,7 +54,7 @@ const MyNavbar = () => {
       {
         name: 'Amazon',
         icon: amazonIcon,
-        image: ''
+        image: amazonCategoryPH
       },
       {
         name: 'Disney+',

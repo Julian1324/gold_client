@@ -2,24 +2,20 @@ import { useEffect, useState } from "react";
 import CardProduct from "../../components/Cards/CardProduct";
 import { useParams } from 'react-router-dom';
 import { getProductsByCategory } from "../../helpers/axiosHelper";
-import { getUserSlice, getCategorySlice } from "../../context/store/store";
+import { getCategorySlice } from "../../context/store/store";
 
 const Category = () => {
     const [products, setProducts] = useState([]);
     const { category_id } = useParams();
-    const { headers } = getUserSlice();
     const { getCategoryImageByID } = getCategorySlice();
 
     useEffect(() => {
         const getProducts = async () => {
-            let response;
-            if(!category_id) response = await getProductsByCategory({ undefined, page: 1 });
-            response = await getProductsByCategory({ category_id, page: 1 });
-            // console.log(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
+            const response = await getProductsByCategory({ category_id, page: 1 });
             setProducts(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
         }
         getProducts();
-    }, [category_id, headers, getCategoryImageByID]);
+    }, [category_id, getCategoryImageByID]);
     return (
         <div className="d-flex p-5 flex-wrap justify-content-center">
             {products.map((product, productIndex) => {

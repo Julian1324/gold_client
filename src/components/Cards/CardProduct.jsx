@@ -6,15 +6,21 @@ import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
 import { getCartSlice } from '../../context/store/store';
 import { AlertModal } from '../../shared/Modal/AlertModal';
+import { getProduct } from '../../helpers/axiosHelper';
 
 const CardProduct = ({ _id, name, image, body, price, discount, quantity, status }) => {
     const [productDetailShow, setProductDetailShow] = useState(false);
     const [alertModalShow, setAlertModalShow] = useState(false);
     const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
     const { addItem } = getCartSlice();
+    const [loadingReq, setLoadingReq] = useState(false);
 
-    const onAddToCard = () => {
-        addItem({ name, image, price, discount, quantityToBuy: 1 });
+    const onAddToCard = async () => {
+        setLoadingReq(true);
+        const response = await getProduct({ _id });
+        setLoadingReq(response.loadingReq);
+        if(!response.data) return setMessagesToModal({ title: 'Alerta', body: 'Se agotaron.' });
+        addItem({ name, image, price, discount, quantityToBuy: 1 },response.data);
         setMessagesToModal({ title: constants.MODAL_TITLE_SUCCCESS, body: constants.MODAL_ITEM_ADDED });
         setAlertModalShow(true);
     }
@@ -84,7 +90,13 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
                         <div className='d-flex justify-content-center'>
                             {!!quantity &&
                                 <Button variant="warning" className='d-flex ms-2 align-items-center' onClick={onAddToCard}>
-                                    Añadir <CarritoSVG />
+                                    {loadingReq ?
+                                        <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                        :
+                                        <div>
+                                            Añadir <CarritoSVG />
+                                        </div>
+                                    }
                                 </Button>
                             }
                             <Button className='ms-2' variant="light" onClick={onWatchProduct}><EyeSVG /></Button>

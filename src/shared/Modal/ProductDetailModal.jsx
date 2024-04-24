@@ -13,10 +13,12 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
 
     const [count, setCount] = useState(1);
     const [currentQuantity, setCurrentQuantity] = useState(quantity);
+    const [loadingReq, setLoadingReq] = useState();
     const [loadingReqMas, setLoadingReqMas] = useState(false);
     const [loadingReqMenos, setLoadingReqMenos] = useState(false);
     const [alertModalShow, setAlertModalShow] = useState(false);
     const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
+    const [timetoAlertModal, setTimeToAlertModal] = useState();
     const { addItem } = getCartSlice();
 
     const increment = async () => {
@@ -48,9 +50,13 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
         setCount(count - 1);
     };
 
-    const onAddToCard = () => {
-        addItem({ name, image, price, discount, quantityToBuy: 1 });
+    const onAddToCard = async () => {
+        setLoadingReq(true);
+        const response = await getProduct({ _id });
+        setLoadingReq(response.loadingReq);
+        addItem({ name, image, price, discount, quantityToBuy: count },response.data);
         setMessagesToModal({ title: constants.MODAL_TITLE_SUCCCESS, body: constants.MODAL_ITEM_ADDED });
+        setTimeToAlertModal(1000);
         setAlertModalShow(true);
         onHide();
     }
@@ -128,7 +134,13 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
                                                     {loadingReqMas ? <span className="spinner-border spinner-border-sm" aria-hidden="true"></span> : '+'}
                                                 </Button>
                                                 <Button variant="warning" className='d-flex ms-2 align-items-center' onClick={() => onAddToCard()} disabled={!count}>
-                                                    Añadir <CarritoSVG />
+                                                    {loadingReq ?
+                                                        <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                                        :
+                                                        <div>
+                                                            Añadir <CarritoSVG />
+                                                        </div>
+                                                    }
                                                 </Button>
                                                 <Button variant="success" className='d-flex ms-2 align-items-center' disabled={!count}>Comprar <WhatsAppSVG /></Button>
                                             </div>
@@ -148,7 +160,7 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
                 size={'md'}
                 closeButton={0}
                 icon='check'
-                timeModal={1000}
+                timeModal={timetoAlertModal}
             />
         </>
     );

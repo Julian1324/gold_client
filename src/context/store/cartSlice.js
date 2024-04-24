@@ -1,11 +1,16 @@
 export const cartSlice = (set, get) => ({
     items: [],
-    addItem: (newItem) => set((state) => {
+    addItem: (newItem, currentQuantity) => set((state) => {
         const stateItems = [...state.items];
         const objFinded = stateItems.find((item) => item.name === newItem.name);
         if (!stateItems.length || !objFinded) return { ...state, items: [...stateItems, newItem] };
         const updatedItems = stateItems.map((item) => {
-            if (item.name === newItem.name) return { ...item, quantityToBuy: item.quantityToBuy + newItem.quantityToBuy };
+            const sumQuantityToBuy = item.quantityToBuy + newItem.quantityToBuy;
+            const objToReturn = {
+                ...item,
+                quantityToBuy: sumQuantityToBuy >= currentQuantity ? currentQuantity : sumQuantityToBuy
+            };
+            if (item.name === newItem.name) return objToReturn;
             return item;
         });
         return { ...state, items: [...updatedItems] }
