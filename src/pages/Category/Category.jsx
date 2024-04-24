@@ -8,16 +8,18 @@ const Category = () => {
     const [products, setProducts] = useState([]);
     const { category_id } = useParams();
     const { headers } = getUserSlice();
-    const { currentCategoryPage, getCategoryImageByID } = getCategorySlice();
+    const { getCategoryImageByID } = getCategorySlice();
 
     useEffect(() => {
         const getProducts = async () => {
-            const response = await getProductsByCategory({ category_id, currentCategoryPage });
+            let response;
+            if(!category_id) response = await getProductsByCategory({ undefined, page: 1 });
+            response = await getProductsByCategory({ category_id, page: 1 });
             // console.log(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
             setProducts(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
         }
         getProducts();
-    }, [category_id, headers, currentCategoryPage, getCategoryImageByID]);
+    }, [category_id, headers, getCategoryImageByID]);
     return (
         <div className="d-flex p-5 flex-wrap justify-content-center">
             {products.map((product, productIndex) => {

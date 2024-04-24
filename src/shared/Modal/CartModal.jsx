@@ -22,7 +22,7 @@ const CartModal = ({ show, items, subtotal, hover, setHover }) => {
                 <div
                     className="d-flex flex-column align-items-around position-absolute bg-light text-dark z-3 end-0 mt-5 rounded"
                     onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-                    style={{ width: '14vw' }}
+                    style={{ width: '16vw' }}
                 >
                     <div className="d-flex w-100 justify-content-center align-items-center bg-secondary-subtle text-secondary rounded-top" style={{ height: '3.5vh' }}>
                         Carro de compras

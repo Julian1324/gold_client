@@ -93,10 +93,10 @@ export const getCategories = async () => {
     }
 }
 
-export const getProductsByCategory = async ({ category_id, currentCategoryPage }) => {
+export const getProductsByCategory = async ({ category_id, page }) => {
     try {
         const response = await axiosInstance.get(
-            `${constants.API_URL + constants.GET_PRODUCTS_BY_CATEGORY}?${constants.PARAMS_CATEGORY_ID + category_id}&${constants.PARAMS_PAGE + currentCategoryPage}`,
+            `${constants.API_URL + constants.GET_PRODUCTS_BY_CATEGORY}?${constants.PARAMS_CATEGORY_ID + category_id}&${constants.PARAMS_PAGE + page}`,
         )
         if (response.status === 200) return {
             data: response.data,
