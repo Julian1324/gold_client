@@ -21,8 +21,6 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
         setLoadingReq(response.loadingReq);
         if(!response.data) return setMessagesToModal({ title: 'Alerta', body: 'Se agotaron.' });
         addItem({ name, image, price, discount, quantityToBuy: 1 },response.data);
-        setMessagesToModal({ title: constants.MODAL_TITLE_SUCCCESS, body: constants.MODAL_ITEM_ADDED });
-        setAlertModalShow(true);
     }
 
     const onWatchProduct = () => {

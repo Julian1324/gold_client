@@ -7,7 +7,6 @@ import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
 import { getProduct } from '../../helpers/axiosHelper';
 import { getCartSlice } from '../../context/store/store';
-import { AlertModal } from './AlertModal';
 
 const ProductDetailModal = ({ show, onHide, _id, name, image, description, price, discount, quantity }) => {
 
@@ -16,10 +15,7 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
     const [loadingReq, setLoadingReq] = useState();
     const [loadingReqMas, setLoadingReqMas] = useState(false);
     const [loadingReqMenos, setLoadingReqMenos] = useState(false);
-    const [alertModalShow, setAlertModalShow] = useState(false);
-    const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
-    const [timetoAlertModal, setTimeToAlertModal] = useState();
-    const { addItem } = getCartSlice();
+    const { addItem, itemAdded } = getCartSlice();
 
     const increment = async () => {
         setLoadingReqMas(true);
@@ -27,9 +23,6 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
         setLoadingReqMas(response.loadingReq);
         setCurrentQuantity(response.data);
         if (response.data < count) {
-            setCurrentQuantity(response.data);
-            setMessagesToModal({ title: '¡Aviso!', body: `La cantidad de unidades de este producto ha cambiado. Hay ${response.data} unidades.` });
-            setAlertModalShow(true);
             return setCount(response.data);
         };
         if (response.data === count) return;
@@ -43,8 +36,6 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
         setLoadingReqMenos(response.loadingReq);
         if (response.data < count) {
             setCurrentQuantity(response.data);
-            setMessagesToModal({ title: '¡Aviso!', body: `La cantidad de unidades de este producto ha cambiado. Hay ${response.data} unidades.` });
-            setAlertModalShow(true);
             return setCount(response.data);
         }
         setCount(count - 1);
@@ -54,10 +45,8 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
         setLoadingReq(true);
         const response = await getProduct({ _id });
         setLoadingReq(response.loadingReq);
-        addItem({ name, image, price, discount, quantityToBuy: count },response.data);
-        setMessagesToModal({ title: constants.MODAL_TITLE_SUCCCESS, body: constants.MODAL_ITEM_ADDED });
-        setTimeToAlertModal(1000);
-        setAlertModalShow(true);
+        addItem({ name, image, price, discount, quantityToBuy: count }, response.data);
+        if(!itemAdded) console.log('Navegando al carrito')
         onHide();
     }
 
@@ -152,16 +141,6 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
                     </div>
                 </Modal.Body>
             </Modal>
-            <AlertModal
-                show={alertModalShow}
-                onHide={() => setAlertModalShow(false)}
-                title={messagesToModal.title}
-                bodyText={messagesToModal.body}
-                size={'md'}
-                closeButton={0}
-                icon='check'
-                timeModal={timetoAlertModal}
-            />
         </>
     );
 }

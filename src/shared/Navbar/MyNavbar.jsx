@@ -25,13 +25,14 @@ import { UserNav } from '../UserNav/UserNav';
 import { getCategories } from '../../helpers/axiosHelper';
 import { currencyValue } from '../../helpers/currencyHelper';
 import CartModal from '../Modal/CartModal';
+import NewProductModal from '../Modal/NewProductModal';
 
 const MyNavbar = () => {
   const navigator = useNavigate();
   const myNavbarRef = useRef(null);
   const { headers } = getUserSlice();
   const { categories, updateCategories } = getCategorySlice();
-  const { items, getSubtotal } = getCartSlice();
+  const { items, getSubtotal, itemAdded } = getCartSlice();
   const [hover, setHover] = useState();
 
   const myCategories = useMemo(() => {
@@ -194,6 +195,7 @@ const MyNavbar = () => {
               setHover={setHover}
               subtotal={currencyValue(getSubtotal())}
             />
+            <NewProductModal/>
           </div>
         </Container>
         <hr />
