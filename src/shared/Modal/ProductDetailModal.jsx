@@ -2,6 +2,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CloseButton from 'react-bootstrap/CloseButton';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
@@ -9,13 +10,13 @@ import { getProduct } from '../../helpers/axiosHelper';
 import { getCartSlice } from '../../context/store/store';
 
 const ProductDetailModal = ({ show, onHide, _id, name, image, description, price, discount, quantity }) => {
-
+    const navigator = useNavigate();
     const [count, setCount] = useState(1);
     const [currentQuantity, setCurrentQuantity] = useState(quantity);
     const [loadingReq, setLoadingReq] = useState();
     const [loadingReqMas, setLoadingReqMas] = useState(false);
     const [loadingReqMenos, setLoadingReqMenos] = useState(false);
-    const { addItem, itemAdded } = getCartSlice();
+    const { addItem, getItemAdded } = getCartSlice();
 
     const increment = async () => {
         setLoadingReqMas(true);
@@ -46,8 +47,8 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
         const response = await getProduct({ _id });
         setLoadingReq(response.loadingReq);
         addItem({ name, image, price, discount, quantityToBuy: count }, response.data);
-        if(!itemAdded) console.log('Navegando al carrito')
         onHide();
+        if(!getItemAdded()) navigator('/cart');
     }
 
     const WhatsAppSVG = () => {

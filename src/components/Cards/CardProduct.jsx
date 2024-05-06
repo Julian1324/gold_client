@@ -2,6 +2,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import ProductDetailModal from '../../shared/Modal/ProductDetailModal';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
 import { getCartSlice } from '../../context/store/store';
@@ -9,18 +10,25 @@ import { AlertModal } from '../../shared/Modal/AlertModal';
 import { getProduct } from '../../helpers/axiosHelper';
 
 const CardProduct = ({ _id, name, image, body, price, discount, quantity, status }) => {
+    const navigator = useNavigate();
     const [productDetailShow, setProductDetailShow] = useState(false);
     const [alertModalShow, setAlertModalShow] = useState(false);
     const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
-    const { addItem } = getCartSlice();
+    const { addItem, getItemAdded } = getCartSlice();
     const [loadingReq, setLoadingReq] = useState(false);
 
     const onAddToCard = async () => {
         setLoadingReq(true);
         const response = await getProduct({ _id });
         setLoadingReq(response.loadingReq);
-        if(!response.data) return setMessagesToModal({ title: 'Alerta', body: 'Se agotaron.' });
-        addItem({ name, image, price, discount, quantityToBuy: 1 },response.data);
+        console.log(response.data);
+        if (!response.data) {
+            setMessagesToModal({ title: 'Alerta', body: 'Se agotaron.' });
+            setAlertModalShow(true);
+            return navigator(0);
+        }
+        addItem({ name, image, price, discount, quantityToBuy: 1 }, response.data);
+        if (!getItemAdded()) navigator('/cart');
     }
 
     const onWatchProduct = () => {

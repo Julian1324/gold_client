@@ -32,7 +32,7 @@ const MyNavbar = () => {
   const myNavbarRef = useRef(null);
   const { headers } = getUserSlice();
   const { categories, updateCategories } = getCategorySlice();
-  const { items, getSubtotal, itemAdded } = getCartSlice();
+  const { items, getSubtotal } = getCartSlice();
   const [hover, setHover] = useState();
 
   const myCategories = useMemo(() => {
