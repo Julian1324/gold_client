@@ -2,18 +2,31 @@ import { useEffect, useState } from "react";
 import { getAllProducts } from "../../helpers/axiosHelper";
 import CardProduct from "../../components/Cards/CardProduct";
 import { getCategorySlice } from "../../context/store/store";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
+    const [paginator, setPaginator] = useState({});
     const { getCategoryImageByID } = getCategorySlice();
 
     useEffect(() => {
         const getProducts = async () => {
             const response = await getAllProducts({ page: 1 });
             setProducts(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(product.category_id) })));
+            delete response.data.docs;
+            setPaginator(response.data);
         }
         getProducts();
     }, [getCategoryImageByID]);
+
+    const onScrollProducts = async (nextPage) => {
+        const response = await getAllProducts({ page: nextPage });
+        const newProducts = response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(product.category_id) }));
+        console.log([...products, ...newProducts]);
+        setProducts([...products, ...newProducts]);
+        delete response.data.docs;
+        setPaginator(response.data);
+    }
 
     return (
         <div className="d-flex p-5 flex-wrap justify-content-center">
