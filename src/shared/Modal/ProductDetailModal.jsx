@@ -8,6 +8,7 @@ import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
 import { getProduct } from '../../helpers/axiosHelper';
 import { getCartSlice } from '../../context/store/store';
+import { AlertModal } from '../../shared/Modal/AlertModal';
 
 const ProductDetailModal = ({ show, onHide, _id, name, image, description, price, discount, quantity }) => {
     const navigator = useNavigate();
@@ -16,7 +17,9 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
     const [loadingReq, setLoadingReq] = useState();
     const [loadingReqMas, setLoadingReqMas] = useState(false);
     const [loadingReqMenos, setLoadingReqMenos] = useState(false);
-    const { addItem, getItemAdded } = getCartSlice();
+    const [alertModalShow, setAlertModalShow] = useState(false);
+    const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
+    const { addItem, getItemAdded, deleteItem } = getCartSlice();
 
     const increment = async () => {
         setLoadingReqMas(true);
@@ -46,7 +49,13 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
         setLoadingReq(true);
         const response = await getProduct({ _id });
         setLoadingReq(response.loadingReq);
-        addItem({ name, image, price, discount, quantityToBuy: count }, response.data);
+        if (!response.data) {
+            setMessagesToModal({ title: 'Alerta', body: 'Se agotaron.' });
+            deleteItem(_id);
+            setAlertModalShow(true);
+            return navigator(0);
+        }
+        addItem({ _id, name, image, price, discount, quantityToBuy: count }, response.data);
         onHide();
         if(!getItemAdded()) navigator('/cart');
     }
@@ -142,6 +151,14 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
                     </div>
                 </Modal.Body>
             </Modal>
+            <AlertModal
+                show={alertModalShow}
+                onHide={() => setAlertModalShow(false)}
+                title={messagesToModal.title}
+                bodyText={messagesToModal.body}
+                size='md'
+                closeButton={0}
+            />
         </>
     );
 }

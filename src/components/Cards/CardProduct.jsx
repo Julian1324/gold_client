@@ -14,20 +14,20 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
     const [productDetailShow, setProductDetailShow] = useState(false);
     const [alertModalShow, setAlertModalShow] = useState(false);
     const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
-    const { addItem, getItemAdded } = getCartSlice();
+    const { addItem, getItemAdded, deleteItem } = getCartSlice();
     const [loadingReq, setLoadingReq] = useState(false);
 
     const onAddToCard = async () => {
         setLoadingReq(true);
         const response = await getProduct({ _id });
         setLoadingReq(response.loadingReq);
-        console.log(response.data);
         if (!response.data) {
             setMessagesToModal({ title: 'Alerta', body: 'Se agotaron.' });
+            deleteItem(_id);
             setAlertModalShow(true);
             return navigator(0);
         }
-        addItem({ name, image, price, discount, quantityToBuy: 1 }, response.data);
+        addItem({ _id, name, image, price, discount, quantityToBuy: 1 }, response.data);
         if (!getItemAdded()) navigator('/cart');
     }
 
@@ -131,8 +131,6 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
                 bodyText={messagesToModal.body}
                 size='md'
                 closeButton={0}
-                icon='check'
-                timeModal={1000}
             />
         </>
     )
