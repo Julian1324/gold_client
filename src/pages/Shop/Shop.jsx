@@ -22,14 +22,19 @@ const Shop = () => {
     const onScrollProducts = async (nextPage) => {
         const response = await getAllProducts({ page: nextPage });
         const newProducts = response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(product.category_id) }));
-        console.log([...products, ...newProducts]);
         setProducts([...products, ...newProducts]);
         delete response.data.docs;
         setPaginator(response.data);
     }
 
     return (
-        <div className="d-flex p-5 flex-wrap justify-content-center">
+        <InfiniteScroll
+            dataLength={products.length}
+            next={() => onScrollProducts(paginator.nextPage)}
+            hasMore={paginator.hasNextPage}
+            loader={<div>Loading......................................</div>}
+            className="d-flex p-5 flex-wrap justify-content-center"
+        >
             {products.map((product, productIndex) => {
                 return (
                     <CardProduct
@@ -45,8 +50,7 @@ const Shop = () => {
                     />
                 )
             })}
-            {!products.length && <div style={{height: '50vh'}}>Por el momento no hay nada en esta categoría...</div>}
-        </div>
+        </InfiniteScroll>
     )
 }
 
