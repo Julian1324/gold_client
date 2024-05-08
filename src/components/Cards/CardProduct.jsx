@@ -54,8 +54,8 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
     const DisabledMask = () => {
         return (
             <div
-                className='d-flex justify-content-center align-items-center z-3 bg-black h-100'
-                style={{ marginTop: '-100%', cursor: 'pointer', opacity: '85%' }}
+                className='d-flex justify-content-center align-items-center z-3 bg-black'
+                style={{ marginTop: '-100%', height: '20vw', cursor: 'pointer', opacity: '85%' }}
                 onClick={onWatchProduct}
             >
                 <span className='fs-1 text-danger opacity-100'>
