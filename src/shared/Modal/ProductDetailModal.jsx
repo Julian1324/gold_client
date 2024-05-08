@@ -2,7 +2,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import CloseButton from 'react-bootstrap/CloseButton';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
@@ -57,7 +57,7 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
         }
         addItem({ _id, name, image, price, discount, quantityToBuy: count }, response.data);
         onHide();
-        if(!getItemAdded()) navigator('/cart');
+        if (!getItemAdded()) navigator('/cart');
     }
 
     const WhatsAppSVG = () => {
@@ -141,7 +141,13 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
                                                         </div>
                                                     }
                                                 </Button>
-                                                <Button variant="success" className='d-flex ms-2 align-items-center' disabled={!count}>Comprar <WhatsAppSVG /></Button>
+                                                <Link
+                                                    to={`https://api.whatsapp.com/send/?phone=${constants.WHATSAPP_NUMBER}`}
+                                                    target='_blank'
+                                                    className='d-flex ms-2 align-items-center btn btn-success'
+                                                    disabled={!count}>
+                                                    Comprar <WhatsAppSVG />
+                                                </Link>
                                             </div>
                                         </Form.Group>
                                     </Form>

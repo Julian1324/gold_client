@@ -22,6 +22,8 @@ const PRODUCT_STATUS_ACTIVE = 'active';
 const PRODUCT_STATUS_INACTIVE = 'inactive';
 const LANGUAGE_TAG = 'es-CO';
 const CURRENCY_NAME = 'COP';
+const COUNTRY_PREFIX = '57'
+const WHATSAPP_NUMBER = `${COUNTRY_PREFIX}3045991517`;
 const KEY_STORAGE_BASE = 'GLDST0';
 
 export const constants = Object.freeze({
@@ -49,5 +51,6 @@ export const constants = Object.freeze({
     PRODUCT_STATUS_INACTIVE,
     LANGUAGE_TAG,
     CURRENCY_NAME,
+    WHATSAPP_NUMBER,
     KEY_STORAGE_BASE
 });
