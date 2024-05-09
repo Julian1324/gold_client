@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCartSlice } from "../../context/store/store";
+import Button from 'react-bootstrap/Button';
 
 const NewProductModal = () => {
+    const [hover, setHover] = useState(false);
     const { items, itemAdded, setItemAdded } = getCartSlice();
 
     useEffect(() => {
@@ -12,8 +14,10 @@ const NewProductModal = () => {
 
     return (
         <>
-            {itemAdded &&
-                <div className="position-fixed end-0" style={{zIndex: 10}}>
+            {(hover || itemAdded) &&
+                <div className="position-fixed end-0" style={{zIndex: 10}}
+                    onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+                >
                     <div
                         className="d-flex flex-column align-items-around position-absolute bg-light text-dark z-3 end-0 mt-5 rounded"
                         style={{ width: '17vw' }}
@@ -27,8 +31,8 @@ const NewProductModal = () => {
                                 <div>{items[items.length - 1].name}</div>
                                 <span className="fw-bold">¡Se ha agregado con exito!</span>
                             </div>
-
                         </div>
+                        <Button variant="primary" className="m-1"> Ver carrito</Button>
                     </div>
                 </div>
             }

@@ -1,17 +1,14 @@
 import { constants } from "../../context/constants";
 import { currencyValue } from "../../helpers/currencyHelper";
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 
 const CartModal = ({ show, items, subtotal, hover, setHover }) => {
+    const navigator = useNavigate();
 
-    const onOpenCart = () => {
-        console.log('Abriendo carrito');
-    }
-
-    const onFinishShopping = () => {
-        console.log('Finalizando compra');
-    }
-
+    const onOpenCart = () => navigator('/cart');
+    const onFinishShopping = () => navigator('/purchase');
+    
     const calculateDiscount = (thePrice, theDiscount) => {
         return thePrice - (thePrice * theDiscount / 100);
     }
@@ -22,7 +19,7 @@ const CartModal = ({ show, items, subtotal, hover, setHover }) => {
                 <div
                     className="d-flex flex-column align-items-around position-absolute bg-light text-dark z-3 end-0 mt-5 rounded"
                     onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-                    style={{ width: '16vw' }}
+                    style={{ width: '17.5vw' }}
                 >
                     <div className="d-flex w-100 justify-content-center align-items-center bg-secondary-subtle text-secondary rounded-top" style={{ height: '3.5vh' }}>
                         Carro de compras
