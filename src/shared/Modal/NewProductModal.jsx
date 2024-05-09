@@ -13,7 +13,7 @@ const NewProductModal = () => {
     return (
         <>
             {itemAdded &&
-                <div className="position-relative">
+                <div className="position-fixed end-0" style={{zIndex: 10}}>
                     <div
                         className="d-flex flex-column align-items-around position-absolute bg-light text-dark z-3 end-0 mt-5 rounded"
                         style={{ width: '17vw' }}
