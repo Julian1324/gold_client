@@ -6,6 +6,7 @@ const Signup = lazy(() => import("../pages/Signup/Signup"));
 const Account = lazy(() => import("../pages/Account/Account"));
 const Shop = lazy(() => import("../pages/Shop/Shop"));
 const Category = lazy(() => import("../pages/Category/Category"));
+const Cart = lazy(() => import("../pages/Cart/Cart"));
 
 const routes = [
     { path: '/', component: Home },
@@ -14,6 +15,7 @@ const routes = [
     { path: '/account', component: Account },
     { path: '/shop', component: Shop},
     { path: '/category/:category_id', component: Category },
+    { path: '/cart', component: Cart },
 ];
   
 export default routes;
