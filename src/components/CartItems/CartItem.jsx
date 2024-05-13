@@ -1,8 +1,14 @@
+import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
+import Button from 'react-bootstrap/Button';
 
 const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantityToBuy }) => {
+    const [loadingReq, setLoadingReq] = useState();
+    const [loadingReqMas, setLoadingReqMas] = useState(false);
+    const [loadingReqMenos, setLoadingReqMenos] = useState(false);
+    const [count, setCount] = useState(1);
 
     const calculateDiscount = (thePrice, theDiscount) => {
         return thePrice - (thePrice * theDiscount / 100);
@@ -39,6 +45,15 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
                             </div>
                         </div>
                     }
+                </div>
+                <div className='d-flex'>
+                    <Button variant="outline-secondary" style={{ width: '50px' }}>
+                        {loadingReqMenos ? <span className="spinner-border spinner-border-sm" aria-hidden="true"></span> : '-'}
+                    </Button>
+                    <Form.Control type="text" value={count} readOnly className="mx-2" style={{ width: '50px', textAlign: 'center' }} />
+                    <Button variant="outline-secondary" style={{ width: '50px' }}>
+                        {loadingReqMas ? <span className="spinner-border spinner-border-sm" aria-hidden="true"></span> : '+'}
+                    </Button>
                 </div>
             </div>
         </>
