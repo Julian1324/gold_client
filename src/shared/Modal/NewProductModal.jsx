@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { getCartSlice } from "../../context/store/store";
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 
 const NewProductModal = () => {
     const [hover, setHover] = useState(false);
+    const navigator = useNavigate();
     const { items, itemAdded, setItemAdded } = getCartSlice();
 
     useEffect(() => {
@@ -11,6 +13,8 @@ const NewProductModal = () => {
             setItemAdded(false);
         }, 2000);
     }, [itemAdded, setItemAdded]);
+
+    const onGoToCart = () => navigator('/cart');
 
     return (
         <>
@@ -32,7 +36,7 @@ const NewProductModal = () => {
                                 <span className="fw-bold">¡Se ha agregado con exito!</span>
                             </div>
                         </div>
-                        <Button variant="primary" className="m-1"> Ver carrito</Button>
+                        <Button variant="primary" className="m-1" onClick={onGoToCart}> Ver carrito</Button>
                     </div>
                 </div>
             }
