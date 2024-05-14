@@ -20,11 +20,16 @@ export const cartSlice = (set, get) => ({
         });
         return { ...state, items: [...updatedItems], itemAdded: updatedItemAdded }
     }),
+    updateQuantity: (_id, quantityToBuy) => set(state => {
+        const stateItems = [...state.items];
+        const indexFinded = stateItems.findIndex((item) => item._id === _id);
+        stateItems[indexFinded].quantityToBuy = quantityToBuy;
+        return { ...state, items: stateItems }
+    }),
     deleteItem: (itemID) => set(state => {
         const updatedItems = state.items.filter(item => item._id !== itemID);
         return { ...state, items: [...updatedItems] }
     }),
-    setItems: (updatedItems) => set((state) => ({ ...state, items: [...updatedItems] })),
     getSubtotal: () => get().items.reduce((acc, item) => {
         acc += (item.price * item.quantityToBuy) - (!!item.discount && item.price * item.quantityToBuy * item.discount / 100);
         return acc;

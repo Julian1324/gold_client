@@ -14,8 +14,12 @@ const Cart = () => {
     useEffect(() => {
         const getMyCartItems = async () => {
             const response = await getCartItems({ items });
-            const newItems = response.data.map((product) => ({ ...product, ...getCategoryImageByID(product.category_id) }));
-            setMyItems([...newItems]);
+            const unifiedArray = response.data.map(item => {
+                const matchingItem = items.find(i => i._id === item._id);
+                if (matchingItem) return { ...item, ...matchingItem }
+                return item;
+            });
+            setMyItems([...unifiedArray]);
         }
         getMyCartItems();
     }, [items, getCategoryImageByID]);

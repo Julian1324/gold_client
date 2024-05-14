@@ -31,7 +31,7 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
         };
         if (response.data === count) return;
         setCount(count + 1);
-    };
+    }
 
     const decrement = async () => {
         if (!count) return;
@@ -43,7 +43,7 @@ const ProductDetailModal = ({ show, onHide, _id, name, image, description, price
             return setCount(response.data);
         }
         setCount(count - 1);
-    };
+    }
 
     const onAddToCard = async () => {
         setLoadingReq(true);
