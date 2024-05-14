@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getCartItems } from '../../helpers/axiosHelper';
 import { getCategorySlice } from "../../context/store/store";
 import CarritoSVG from '../../components/CartItems/CarritoSVG';
+import OrderSummary from '../../components/CartItems/OrderSummary';
 
 const Cart = () => {
     const { items } = getCartSlice();
@@ -50,9 +51,7 @@ const Cart = () => {
                     <h3 className='mt-4'>
                         Resumen de la orden
                     </h3>
-                    <div className='bg-light rounded v-100 mt-2'>
-                        asd
-                    </div>
+                    <OrderSummary/>
                 </div>
             </div>
         )
