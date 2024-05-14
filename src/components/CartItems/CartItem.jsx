@@ -5,6 +5,7 @@ import { constants } from '../../context/constants';
 import Button from 'react-bootstrap/Button';
 import { getCartSlice } from "../../context/store/store";
 import { getProduct } from '../../helpers/axiosHelper';
+import DisabledMask from './DisabledMask';
 
 const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantityToBuy }) => {
     const { updateQuantity, deleteItem } = getCartSlice();
@@ -12,6 +13,7 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
     const [loadingReqMenos, setLoadingReqMenos] = useState(false);
     const [count, setCount] = useState(quantityToBuy);
     const [myCurrentQuantity, setMyCurrentQuantity] = useState(currentQuantity);
+    const [isChecked, setIsChecked] = useState(true);
 
     const calculateDiscount = (thePrice, theDiscount) => {
         return thePrice - (thePrice * theDiscount / 100);
@@ -21,6 +23,7 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
         return (
             <svg
                 xmlns="http://www.w3.org/2000/svg"
+                className='m-5'
                 style={{ width: '1.5em', height: '1.5em', cursor: 'pointer' }}
                 onClick={() => onDeleteItem(_id)}
                 viewBox="0 0 256 256"
@@ -54,7 +57,7 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
             setMyCurrentQuantity(response.data);
             return setCount(response.data);
         }
-        if(!(count - 1)) return deleteItem(_id);
+        if (!(count - 1)) return deleteItem(_id);
         setCount(count - 1);
         updateQuantity(_id, count - 1);
     }
@@ -62,7 +65,8 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
     return (
         <>
             <div className="d-flex align-items-center mt-2 me-4 bg-light rounded" style={{ height: '15vh' }}>
-                <Form.Check type={'checkbox'} id={'checkbox'} className='ms-4' defaultChecked />
+                <Form.Check type={'checkbox'} id={'checkbox'} className='ms-4' checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
+                {!isChecked && <DisabledMask />}
                 <img src={image} className="rounded ms-4" alt="" style={{ width: '5vw' }} />
                 <div className='d-flex flex-column align-items-top m-5' style={{ height: '5vw', width: '' }}>
                     <h5>{name}</h5>
@@ -100,7 +104,7 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
                         {loadingReqMas ? <span className="spinner-border spinner-border-sm" aria-hidden="true"></span> : '+'}
                     </Button>
                 </div>
-                <XICON/>
+                <XICON />
             </div>
         </>
     )
