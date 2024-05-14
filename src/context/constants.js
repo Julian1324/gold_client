@@ -10,6 +10,7 @@ const GET_CATEGORIES = '/categories';
 const GET_PRODUCTS_BY_CATEGORY = '/productsByCategory';
 const GET_PRODUCT_BY_ID = '/product';
 const GET_ALL_PRODUCTS = '/products';
+const GET_CART_PRODUCTS = '/cartProducts';
 const MODAL_TITLE_SUCCCESS = '¡Se ha realizado con éxito!';
 const MODAL_TITLE_ERROR = '¡Oops, error en la solicitud!';
 const MODAL_TITLE_SIGNOUT = 'Desconexión exitosa.';
@@ -39,6 +40,7 @@ export const constants = Object.freeze({
     GET_PRODUCTS_BY_CATEGORY,
     GET_PRODUCT_BY_ID,
     GET_ALL_PRODUCTS,
+    GET_CART_PRODUCTS,
     MODAL_TITLE_SUCCCESS,
     MODAL_TITLE_ERROR,
     MODAL_TITLE_SIGNOUT,

@@ -17,9 +17,9 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
     return (
         <>
             <div className="d-flex align-items-center mt-2 me-4 bg-light rounded" style={{ height: '15vh' }}>
-                <Form.Check type={'checkbox'} id={'checkbox'} className='ms-2' />
-                <img src={image} className="rounded ms-2" alt="" style={{ width: '5vw' }} />
-                <div className='d-flex flex-column align-items-top ms-2' style={{ height: '5vw', width: '24vw' }}>
+                <Form.Check type={'checkbox'} id={'checkbox'} className='ms-4' defaultChecked />
+                <img src={image} className="rounded ms-4" alt="" style={{ width: '5vw' }} />
+                <div className='d-flex flex-column align-items-top m-5' style={{ height: '5vw', width: '' }}>
                     <h5>{name}</h5>
                     <span className='d-flex mb-2 h-100 align-items-end'>
                         Disponibilidad:
@@ -46,12 +46,12 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
                         </div>
                     }
                 </div>
-                <div className='d-flex'>
-                    <Button variant="outline-secondary" style={{ width: '50px' }}>
+                <div className='d-flex ms-5'>
+                    <Button variant="outline-secondary" style={{ width: '35px' }}>
                         {loadingReqMenos ? <span className="spinner-border spinner-border-sm" aria-hidden="true"></span> : '-'}
                     </Button>
-                    <Form.Control type="text" value={count} readOnly className="mx-2" style={{ width: '50px', textAlign: 'center' }} />
-                    <Button variant="outline-secondary" style={{ width: '50px' }}>
+                    <Form.Control type="text" value={count} readOnly className="mx-2" style={{ width: '35px', textAlign: 'center' }} />
+                    <Button variant="outline-secondary" style={{ width: '35px' }}>
                         {loadingReqMas ? <span className="spinner-border spinner-border-sm" aria-hidden="true"></span> : '+'}
                     </Button>
                 </div>

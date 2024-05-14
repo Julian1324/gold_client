@@ -1,15 +1,24 @@
 import { getCartSlice } from '../../context/store/store';
 import { getUserSlice } from '../../context/store/store';
 import CartItem from '../../components/CartItems/CartItem';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { getCartItems } from '../../helpers/axiosHelper';
+import { getCategorySlice } from "../../context/store/store";
 
 const Cart = () => {
     const { items } = getCartSlice();
     const { headers } = getUserSlice();
-    
+    const { getCategoryImageByID } = getCategorySlice();
+    const [myItems, setMyItems] = useState([]);
+
     useEffect(() => {
-        console.log(items);
-    }, [items]);
+        const getMyCartItems = async () => {
+            const response = await getCartItems({ items });
+            const newItems = response.data.map((product) => ({ ...product, ...getCategoryImageByID(product.category_id) }));
+            setMyItems([...newItems]);
+        }
+        getMyCartItems();
+    }, [items, getCategoryImageByID]);
 
     const CartComponent = () => {
         return (
@@ -18,12 +27,12 @@ const Cart = () => {
                     <h3 className='mt-4'>
                         Carro de compras
                     </h3>
-                    {items.map((item, itemIndex) =>
+                    {myItems.map((item, itemIndex) =>
                         <CartItem
                             _id={item._id}
                             name={item.name}
                             image={item.image}
-                            currentQuantity={item.currentQuantity}
+                            currentQuantity={item.quantity}
                             price={item.price}
                             discount={item.discount}
                             quantityToBuy={item.quantityToBuy}

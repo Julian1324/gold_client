@@ -134,3 +134,18 @@ export const getAllProducts = async ({ page }) => {
         throw error;
     }
 }
+
+export const getCartItems = async ({ items }) => {
+    try {
+        const response = await axiosInstance.post(
+            `${constants.API_URL + constants.GET_CART_PRODUCTS}`,
+            { items }
+        );
+        if (response.status === 200) return {
+            data: response.data,
+            loadingReq: false,
+        }
+    } catch (error) {
+        throw error;
+    }
+}
