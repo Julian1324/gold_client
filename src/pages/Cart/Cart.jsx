@@ -14,11 +14,16 @@ const Cart = () => {
     const [myItems, setMyItems] = useState([]);
 
     useEffect(() => {
+        if (!items.length) return;
         const getMyCartItems = async () => {
             const response = await getCartItems({ items });
             const unifiedArray = response.data.map(item => {
                 const matchingItem = items.find(i => i._id === item._id);
-                if (matchingItem) return { ...item, ...matchingItem }
+                if (matchingItem) return {
+                    ...item,
+                    image: matchingItem.image,
+                    quantityToBuy: matchingItem.quantityToBuy
+                }
                 return item;
             });
             setMyItems([...unifiedArray]);
@@ -51,7 +56,7 @@ const Cart = () => {
                     <h3 className='mt-4'>
                         Resumen de la orden
                     </h3>
-                    <OrderSummary/>
+                    <OrderSummary myItems={myItems}/>
                 </div>
             </div>
         )

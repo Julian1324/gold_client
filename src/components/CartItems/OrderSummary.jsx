@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getCartSlice } from '../../context/store/store';
+import { currencyValue } from '../../helpers/currencyHelper';
+import { constants } from '../../context/constants';
 
-const OrderSummary = () => {
-    const { items } = getCartSlice();
+const OrderSummary = ({ myItems }) => {
     const [discountsSummary, setDiscountsSummary] = useState(
         {
             hasDiscounts: false,
@@ -18,8 +18,9 @@ const OrderSummary = () => {
     );
 
     useEffect(() => {
+        if(!myItems.length) return;
         const calculateDiscounts = () => {
-            const { counter, totalDiscount } = items.reduce((acc, obj) => {
+            const { counter, totalDiscount } = myItems.reduce((acc, obj) => {
                 if (!!obj.discount) {
                     acc = {
                         ...acc,
@@ -38,7 +39,7 @@ const OrderSummary = () => {
             }))
         }
         const calculateProductsSummary = () => {
-            const { counter, totalProducts } = items.reduce((acc, obj) => {
+            const { counter, totalProducts } = myItems.reduce((acc, obj) => {
                 acc = {
                     ...acc,
                     counter: (acc.counter + 1) || 1,
@@ -54,17 +55,21 @@ const OrderSummary = () => {
         }
         calculateProductsSummary();
         calculateDiscounts();
-    }, [items]);
+    }, [myItems]);
 
     return (
         <div className='bg-light rounded v-100 mt-2 flex-column p-3'>
-            <div className='mb-2'>
-                Productos ({productsSummary.counter}) <span>{productsSummary.totalProducts}</span>
+            <div className='d-flex mb-2 justify-content-between'>
+                Productos ({productsSummary.counter})
+                <span>{currencyValue(productsSummary.totalProducts)} {constants.CURRENCY_NAME}</span>
             </div>
-            <hr />
+            <hr className='w-100' />
             {discountsSummary.hasDiscounts
-                && <div className='mt-2'>
-                    Descuentos ({discountsSummary.counter}) <span>{discountsSummary.totalDiscount}</span>
+                && <div className='d-flex mt-2 justify-content-between'>
+                    Descuentos ({discountsSummary.counter})
+                    <span className='text-success'>
+                        {currencyValue(discountsSummary.totalDiscount)} {constants.CURRENCY_NAME}
+                    </span>
                 </div>
             }
         </div>
