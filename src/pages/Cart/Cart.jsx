@@ -47,7 +47,7 @@ const Cart = () => {
         if(!myItems.length) return;
         const updatedItems = getUpdatedItems();
         if (!isEqual(updatedItems, items)) return updateItems(updatedItems);
-    }, [getUpdatedItems, updateItems, myItems, items]);
+    }, [getUpdatedItems, updateItems, myItems]);
 
     const CartComponent = () => {
         return (
