@@ -1,17 +1,28 @@
 import { getCartSlice } from '../../context/store/store';
 import { getUserSlice } from '../../context/store/store';
 import CartItem from '../../components/CartItems/CartItem';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getCartItems } from '../../helpers/axiosHelper';
 import { getCategorySlice } from "../../context/store/store";
 import CarritoSVG from '../../components/CartItems/CarritoSVG';
 import OrderSummary from '../../components/CartItems/OrderSummary';
+import isEqual from 'lodash.isequal';
 
 const Cart = () => {
-    const { items } = getCartSlice();
+    const { items, updateItems } = getCartSlice();
     const { headers } = getUserSlice();
     const { getCategoryImageByID } = getCategorySlice();
     const [myItems, setMyItems] = useState([]);
+    const getUpdatedItems = useCallback(() => {
+        return myItems.map(({_id, name, image, price, discount, quantityToBuy}) => ({
+            _id,
+            name,
+            image,
+            price,
+            discount,
+            quantityToBuy
+        }));
+    }, [myItems]);
 
     useEffect(() => {
         if (!items.length) return;
@@ -31,6 +42,12 @@ const Cart = () => {
         window.scrollTo(0, 0);
         getMyCartItems();
     }, [items, getCategoryImageByID]);
+
+    useEffect(() => {
+        if(!myItems.length) return;
+        const updatedItems = getUpdatedItems();
+        if (!isEqual(updatedItems, items)) return updateItems(updatedItems);
+    }, [getUpdatedItems, updateItems, myItems, items]);
 
     const CartComponent = () => {
         return (
@@ -56,7 +73,7 @@ const Cart = () => {
                     <h3 className='mt-4'>
                         Resumen de la orden
                     </h3>
-                    <OrderSummary myItems={myItems}/>
+                    <OrderSummary myItems={myItems} />
                 </div>
             </div>
         )

@@ -50,8 +50,8 @@ const CartModal = ({ show, items, subtotal, hover, setHover }) => {
                                 <div className="d-flex flex-column align-items-center justify-content-center ms-2 w-100" style={{ fontSize: '0.9rem' }}>
                                     <div>{item.name}</div>
                                     {!item.discount ?
-                                        <div className='text-success'>
-                                            {item.quantityToBuy} x {currencyValue(item.price)} {constants.CURRENCY_NAME}
+                                        <div>
+                                            {item.quantityToBuy} x <span className='text-success'>{currencyValue(item.price)} {constants.CURRENCY_NAME}</span>
                                         </div>
                                         :
                                         <div className="mt-2">

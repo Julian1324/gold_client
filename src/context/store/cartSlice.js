@@ -30,6 +30,7 @@ export const cartSlice = (set, get) => ({
         const updatedItems = state.items.filter(item => item._id !== itemID);
         return { ...state, items: [...updatedItems] }
     }),
+    updateItems: (updatedItems) => set(state => ({ ...state, items: [...updatedItems] })),
     getSubtotal: () => get().items.reduce((acc, item) => {
         acc += (item.price * item.quantityToBuy) - (!!item.discount && item.price * item.quantityToBuy * item.discount / 100);
         return acc;
