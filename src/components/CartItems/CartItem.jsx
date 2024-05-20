@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
@@ -14,6 +14,10 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
     const [count, setCount] = useState(quantityToBuy);
     const [myCurrentQuantity, setMyCurrentQuantity] = useState(currentQuantity);
     const [isChecked, setIsChecked] = useState(true);
+
+    useEffect(() => {
+        console.log('Estas checkeando');
+    },[isChecked]);
 
     const calculateDiscount = (thePrice, theDiscount) => {
         return thePrice - (thePrice * theDiscount / 100);
