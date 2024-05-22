@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
+import Button from 'react-bootstrap/Button';
 
 const OrderSummary = ({ myItems }) => {
     const [discountsSummary, setDiscountsSummary] = useState(
@@ -18,15 +19,15 @@ const OrderSummary = ({ myItems }) => {
     );
 
     useEffect(() => {
-        if(!myItems.length) return;
+        if (!myItems.length) return;
         const calculateDiscounts = () => {
             const { counter, totalDiscount } = myItems.reduce((acc, obj) => {
                 if (!!obj.discount) {
                     acc = {
                         ...acc,
                         counter: (acc.counter + 1) || 1,
-                        totalDiscount: (acc.totalDiscount + (obj.price * obj.discount / 100))
-                            || (obj.price * obj.discount / 100)
+                        totalDiscount: (acc.totalDiscount + ((obj.price * obj.quantityToBuy) * obj.discount / 100))
+                            || ((obj.price * obj.quantityToBuy) * obj.discount / 100)
                     };
                 };
                 return acc;
@@ -43,7 +44,7 @@ const OrderSummary = ({ myItems }) => {
                 acc = {
                     ...acc,
                     counter: (acc.counter + 1) || 1,
-                    totalProducts: (acc.totalProducts + obj.price) || obj.price
+                    totalProducts: (acc.totalProducts + (obj.price * obj.quantityToBuy)) || obj.price * obj.quantityToBuy
                 }
                 return acc;
             }, {});
@@ -65,13 +66,21 @@ const OrderSummary = ({ myItems }) => {
             </div>
             <hr className='w-100' />
             {discountsSummary.hasDiscounts
-                && <div className='d-flex mt-2 justify-content-between'>
+                && <div className='d-flex mb-2 mt-2 justify-content-between'>
                     Descuentos ({discountsSummary.counter})
                     <span className='text-success'>
-                        {currencyValue(discountsSummary.totalDiscount)} {constants.CURRENCY_NAME}
+                        - {currencyValue(discountsSummary.totalDiscount)} {constants.CURRENCY_NAME}
                     </span>
                 </div>
             }
+            <hr className='w-100' />
+            <div className='d-flex mb-2 mt-4 justify-content-between'>
+                Total:
+                <span>{currencyValue(productsSummary.totalProducts - discountsSummary.totalDiscount)} {constants.CURRENCY_NAME}</span>
+            </div>
+            <div className='d-flex w-100 justify-content-center mt-4'>
+                <Button variant="primary" className='w-100'>Continuar compra</Button>
+            </div>
         </div>
     )
 }

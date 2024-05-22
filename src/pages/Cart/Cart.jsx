@@ -69,7 +69,7 @@ const Cart = () => {
                         />
                     )}
                 </div>
-                <div className='d-flex flex-column' style={{ width: '20vw' }}>
+                <div className='d-flex flex-column' style={{ width: '25vw' }}>
                     <h3 className='mt-4'>
                         Resumen de la orden
                     </h3>
