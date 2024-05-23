@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 
 const OrderSummary = ({ myItems }) => {
+    const navigator = useNavigate();
     const [discountsSummary, setDiscountsSummary] = useState(
         {
             hasDiscounts: false,
@@ -58,6 +60,8 @@ const OrderSummary = ({ myItems }) => {
         calculateDiscounts();
     }, [myItems]);
 
+    const onFinishShopping = () => navigator('/purchase');
+
     return (
         <div className='bg-light rounded v-100 mt-2 flex-column p-3'>
             <div className='d-flex mb-2 justify-content-between'>
@@ -79,7 +83,7 @@ const OrderSummary = ({ myItems }) => {
                 <span>{currencyValue(productsSummary.totalProducts - discountsSummary.totalDiscount)} {constants.CURRENCY_NAME}</span>
             </div>
             <div className='d-flex w-100 justify-content-center mt-4'>
-                <Button variant="primary" className='w-100'>Continuar compra</Button>
+                <Button variant="primary" className='w-100' onClick={onFinishShopping}>Continuar compra</Button>
             </div>
         </div>
     )
