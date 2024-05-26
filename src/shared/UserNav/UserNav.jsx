@@ -58,7 +58,7 @@ const UserNav = () => {
           <IconBox />
           <div className='d-flex flex-column align-items-start ms-2' style={filterAndCursorStyle}>
             <span>{userName}</span>
-            <span>Mi cuenta</span>
+            <span>$ 0</span>
           </div>
           <div className={`position-absolute top-100 ${!hover && 'visually-hidden'} dropStyle`}>
             <div className='divOption' onClick={toMyAccount}>Mi cuenta</div>
