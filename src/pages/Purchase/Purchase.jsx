@@ -40,7 +40,7 @@ const Purchase = () => {
 
     return (
         <>
-            <div className="d-flex justify-content-center vh-100 bg-secondary-subtle">
+            <div className="d-flex justify-content-center bg-secondary-subtle">
                 <div className="d-flex flex-column w-50">
                     <h3 className='mt-4'>
                         Tu pedido
@@ -48,7 +48,7 @@ const Purchase = () => {
                     <Table striped="rows" className='mt-2 rounded'>
                         <thead>
                             <tr>
-                                <th className='text-center'>Nombre</th>
+                                <th>Nombre</th>
                                 <th className='text-center'>Cantidad</th>
                                 <th className='text-center'>Precio</th>
                             </tr>
@@ -72,7 +72,7 @@ const Purchase = () => {
                             <div className='text-success'>{currencyValue(getSubtotal())} {constants.CURRENCY_NAME}</div>
                         </div>
                     </div>
-                    <Button variant="primary" style={{ width: '30%' }} onClick={() => navigator('/shop')}><LeftArrow/> Seguir comprando</Button>
+                    <Button variant="primary" style={{ width: '30%' }} onClick={() => navigator('/shop')}><LeftArrow /> Seguir comprando</Button>
                     <h3 className='mt-5'>
                         Detalles de facturación
                     </h3>
@@ -82,8 +82,9 @@ const Purchase = () => {
                     <h3 className='mt-5'>
                         Métodos de pago
                     </h3>
-                    <div className='w-100'>
-                        Metodos
+                    <div className='d-flex flex-column w-100 bg-light rounded p-3 mt-3'>
+                        Lo siento, por el momento no hay métodos de pago disponibles. Por favor ponte en contacto con nosotros.
+                        <Button variant="primary" className='mt-3' style={{ width: '30%' }}>Realizar pedido</Button>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import { getCartSlice } from '../../context/store/store';
 import { getUserSlice } from '../../context/store/store';
 import CartItem from '../../components/CartItems/CartItem';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getCartItems } from '../../helpers/axiosHelper';
 import { getCategorySlice } from "../../context/store/store";
 import CarritoSVG from '../../components/CartItems/CarritoSVG';
@@ -13,8 +13,12 @@ const Cart = () => {
     const { headers } = getUserSlice();
     const { getCategoryImageByID } = getCategorySlice();
     const [myItems, setMyItems] = useState([]);
+    const cartRef = useRef(null);
+    const itemsDivRef = useRef(null);
+    const itemsRef = useRef([]);
+    const [containerHeight, setcontainerHeight] = useState(500);
     const getUpdatedItems = useCallback(() => {
-        return myItems.map(({_id, name, image, price, discount, quantityToBuy}) => ({
+        return myItems.map(({ _id, name, image, price, discount, quantityToBuy }) => ({
             _id,
             name,
             image,
@@ -44,33 +48,49 @@ const Cart = () => {
     }, [items, getCategoryImageByID]);
 
     useEffect(() => {
-        if(!myItems.length) return;
+        if (!myItems.length) return;
         const updatedItems = getUpdatedItems();
         if (!isEqual(updatedItems, items)) return updateItems(updatedItems);
-    }, [getUpdatedItems, updateItems, myItems]);
+        if (!cartRef.current && !itemsDivRef.current && !itemsRef.current.length) return;
+        const firstItemRef = itemsRef.current[0];
+        const proportion = containerHeight / itemsRef.current.length;
+        const recommendedValue = firstItemRef.offsetHeight + firstItemRef.offsetHeight * 20/100;
+        if (proportion < recommendedValue) setcontainerHeight(recommendedValue * itemsRef.current.length);
+    }, [getUpdatedItems, updateItems, myItems, containerHeight]);
 
     const CartComponent = () => {
         return (
-            <div className="d-flex justify-content-center vh-100 bg-secondary-subtle">
-                <div className="d-flex flex-column">
+            <div
+                className="d-flex justify-content-center bg-secondary-subtle"
+                ref={cartRef}
+                style={{ height: (containerHeight + 'px') }}
+            >
+                <div
+                    className="d-flex flex-column h-100"
+                    ref={itemsDivRef}
+                >
                     <h3 className='mt-4'>
                         Carro de compras
                     </h3>
                     {myItems.map((item, itemIndex) =>
-                        <CartItem
-                            _id={item._id}
-                            name={item.name}
-                            image={item.image}
-                            currentQuantity={item.quantity}
-                            price={item.price}
-                            discount={item.discount}
-                            quantityToBuy={item.quantityToBuy}
+                        <div
+                            ref={el => itemsRef.current[itemIndex] = el}
                             key={itemIndex}
-                        />
+                        >
+                            <CartItem
+                                _id={item._id}
+                                name={item.name}
+                                image={item.image}
+                                currentQuantity={item.quantity}
+                                price={item.price}
+                                discount={item.discount}
+                                quantityToBuy={item.quantityToBuy}
+                            />
+                        </div>
                     )}
                 </div>
-                <div className='d-flex flex-column' style={{ width: '25vw' }}>
-                    <h3 className='mt-4'>
+                <div className='d-flex flex-column position-relative' style={{ width: '25vw' }}>
+                    <h3 className='mt-4 position-fixed'>
                         Resumen de la orden
                     </h3>
                     <OrderSummary myItems={myItems} />

@@ -5,7 +5,7 @@ import { constants } from '../../context/constants';
 import Button from 'react-bootstrap/Button';
 import { getCartSlice } from "../../context/store/store";
 import { getProduct } from '../../helpers/axiosHelper';
-import DisabledMask from './DisabledMask';
+// import DisabledMask from './DisabledMask';
 
 const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantityToBuy }) => {
     const { updateQuantity, deleteItem } = getCartSlice();
@@ -14,10 +14,6 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
     const [count, setCount] = useState(quantityToBuy);
     const [myCurrentQuantity, setMyCurrentQuantity] = useState(currentQuantity);
     const [isChecked, setIsChecked] = useState(true);
-
-    useEffect(() => {
-        console.log('Estas checkeando');
-    },[isChecked]);
 
     const calculateDiscount = (thePrice, theDiscount) => {
         return thePrice - (thePrice * theDiscount / 100);
@@ -69,7 +65,7 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
     return (
         <>
             <div className="d-flex align-items-center mt-2 me-4 bg-light rounded position-relative" style={{ height: '18vh' }}>
-                {!isChecked && <DisabledMask />}
+                {/* {!isChecked && <DisabledMask />} */}
                 <Form.Check type={'checkbox'} id={'checkbox'} className='ms-4 z-3' checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
                 <img src={image} className="rounded ms-4" alt="" style={{ width: '5vw' }} />
                 <div className='d-flex flex-column align-items-top m-5' style={{ height: '5vw', width: '' }}>
