@@ -1,4 +1,4 @@
-import { getCartSlice } from '../../context/store/store';
+import { getCartSlice, getUserSlice } from '../../context/store/store';
 import PurchaseItem from '../../components/CartItems/PurchaseItem';
 import { useEffect, useState } from 'react';
 import { getCartItems } from '../../helpers/axiosHelper';
@@ -12,6 +12,7 @@ import { constants } from '../../context/constants';
 const Purchase = () => {
     const navigator = useNavigate();
     const { items, getSubtotal } = getCartSlice();
+    const { headers, getWallet, updateWallet } = getUserSlice();
     const [myItems, setMyItems] = useState([]);
 
     useEffect(() => {
@@ -38,10 +39,14 @@ const Purchase = () => {
         )
     }
 
+    const onPurchase = () => {
+        updateWallet(getWallet() - getSubtotal());
+    }
+
     return (
         <>
             <div className="d-flex justify-content-center bg-secondary-subtle">
-                <div className="d-flex flex-column w-50">
+                <div className="d-flex flex-column w-50 mb-5">
                     <h3 className='mt-4'>
                         Tu pedido
                     </h3>
@@ -82,9 +87,27 @@ const Purchase = () => {
                     <h3 className='mt-5'>
                         Métodos de pago
                     </h3>
-                    <div className='d-flex flex-column w-100 bg-light rounded p-3 mt-3'>
-                        Lo siento, por el momento no hay métodos de pago disponibles. Por favor ponte en contacto con nosotros.
-                        <Button variant="primary" className='mt-3' style={{ width: '30%' }}>Realizar pedido</Button>
+                    <div className='d-flex flex-column w-100 bg-light rounded p-3 mt-3 mb-4'>
+                        {!Object.keys(headers).length
+                            ? <> Lo siento, por el momento no hay métodos de pago disponibles. Por favor ponte en contacto con nosotros o inicie sesión.
+                                <Button disabled={true} variant="primary" className='mt-3' style={{ width: '30%' }}>Realizar compra</Button>
+                            </>
+                            : <div className='d-flex flex-column'>
+                                <div>
+                                    Pago disponible mediante saldo en monedero | Saldo : <span className='text-success'>{currencyValue(getWallet())} {constants.CURRENCY_NAME}</span>
+                                </div>
+                                {(getSubtotal() > getWallet()) && <span className='text-danger'>No tienes suficiente saldo para realizar la compra. Por favor recarga.</span>}
+                                <Button
+                                    disabled={getSubtotal() > getWallet()}
+                                    variant="primary"
+                                    className='mt-3'
+                                    style={{ width: '30%' }}
+                                    onClick={onPurchase}
+                                >
+                                    Realizar compra
+                                </Button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

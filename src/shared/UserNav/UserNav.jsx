@@ -3,11 +3,12 @@ import { getUserSlice } from '../../context/store/store';
 import { AlertModal } from '../../shared/Modal/AlertModal';
 import { constants } from '../../context/constants';
 import { useNavigate } from 'react-router-dom';
+import { currencyValue } from '../../helpers/currencyHelper';
 
 const UserNav = () => {
   const navigator = useNavigate();
   const [hover, setHover] = useState(false);
-  const { userName, headers, updateUserName, updateHeaders } = getUserSlice();
+  const { userName, headers, updateUserName, updateHeaders, getWallet } = getUserSlice();
   const [alertModalShow, setAlertModalShow] = useState(false);
   const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
 
@@ -58,7 +59,7 @@ const UserNav = () => {
           <IconBox />
           <div className='d-flex flex-column align-items-start ms-2' style={filterAndCursorStyle}>
             <span>{userName}</span>
-            <span>$ 0</span>
+            <span>{currencyValue(getWallet())}</span>
           </div>
           <div className={`position-absolute top-100 ${!hover && 'visually-hidden'} dropStyle`}>
             <div className='divOption' onClick={toMyAccount}>Mi cuenta</div>
