@@ -14,6 +14,8 @@ const Purchase = () => {
     const { items, getSubtotal } = getCartSlice();
     const { headers, getWallet, updateWallet } = getUserSlice();
     const [myItems, setMyItems] = useState([]);
+    const wallet = getWallet();
+    const subtotal = getSubtotal();
 
     useEffect(() => {
         if (!items.length) return navigator('/cart');
@@ -40,7 +42,8 @@ const Purchase = () => {
     }
 
     const onPurchase = () => {
-        updateWallet(getWallet() - getSubtotal());
+        updateWallet(wallet - subtotal);
+        navigator('/purchaseSummary');
     }
 
     return (
@@ -74,7 +77,7 @@ const Purchase = () => {
                     <div className='d-flex w-100 justify-content-end'>
                         <div className='d-flex justify-content-evenly align-items-center bg-white rounded' style={{ width: '40%', height: '6vh' }}>
                             <div className='fw-bolder'>Total:</div>
-                            <div className='text-success'>{currencyValue(getSubtotal())} {constants.CURRENCY_NAME}</div>
+                            <div className='text-success'>{currencyValue(subtotal)} {constants.CURRENCY_NAME}</div>
                         </div>
                     </div>
                     <Button variant="primary" style={{ width: '30%' }} onClick={() => navigator('/shop')}><LeftArrow /> Seguir comprando</Button>
@@ -94,11 +97,11 @@ const Purchase = () => {
                             </>
                             : <div className='d-flex flex-column'>
                                 <div>
-                                    Pago disponible mediante saldo en monedero | Saldo : <span className='text-success'>{currencyValue(getWallet())} {constants.CURRENCY_NAME}</span>
+                                    Pago disponible mediante saldo en monedero | Saldo : <span className='text-success'>{currencyValue(wallet)} {constants.CURRENCY_NAME}</span>
                                 </div>
-                                {(getSubtotal() > getWallet()) && <span className='text-danger'>No tienes suficiente saldo para realizar la compra. Por favor recarga.</span>}
+                                {(subtotal > wallet) && <span className='text-danger'>No tienes suficiente saldo para realizar la compra. Por favor recarga.</span>}
                                 <Button
-                                    disabled={getSubtotal() > getWallet()}
+                                    disabled={subtotal > wallet}
                                     variant="primary"
                                     className='mt-3'
                                     style={{ width: '30%' }}
