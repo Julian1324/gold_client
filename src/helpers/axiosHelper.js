@@ -149,3 +149,35 @@ export const getCartItems = async ({ items }) => {
         throw error;
     }
 }
+
+export const setCart = async ({ headers, newCart }) => {
+    try {
+        const response = await axiosInstance.post(
+            `${constants.API_URL + constants.USER_UPDATE_CART}`,
+            { newCart },
+            { headers }
+        );
+        if (response.status === 200) return {
+            data: response.data,
+            loadingReq: false,
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const purchaseItems = async ({ headers }) => {
+    try {
+        const response = await axiosInstance.post(
+            `${constants.API_URL + constants.USER_PURCHASE}`,
+            {},
+            { headers }
+        );
+        if (response.status === 200) return {
+            data: response.data,
+            loadingReq: false,
+        }
+    } catch (error) {
+        throw error;
+    }
+}

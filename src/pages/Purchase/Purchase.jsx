@@ -1,7 +1,7 @@
 import { getCartSlice, getUserSlice } from '../../context/store/store';
 import PurchaseItem from '../../components/CartItems/PurchaseItem';
 import { useEffect, useState } from 'react';
-import { getCartItems } from '../../helpers/axiosHelper';
+import { getCartItems, purchaseItems, setCart } from '../../helpers/axiosHelper';
 import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
@@ -14,6 +14,7 @@ const Purchase = () => {
     const { items, getSubtotal } = getCartSlice();
     const { headers, getWallet, updateWallet } = getUserSlice();
     const [myItems, setMyItems] = useState([]);
+    const [loadingReq, setLoadingReq] = useState(false);
     const wallet = getWallet();
     const subtotal = getSubtotal();
 
@@ -41,9 +42,14 @@ const Purchase = () => {
         )
     }
 
-    const onPurchase = () => {
-        updateWallet(wallet - subtotal);
-        navigator('/purchaseSummary');
+    const onPurchase = async () => {
+        // updateWallet(wallet - subtotal);
+        // navigator('/purchaseSummary');
+        setLoadingReq(true);
+        const cartUpdated = await setCart({ headers, newCart: myItems });
+        if (!cartUpdated.data.modifiedCount) console.log('no modifico');
+        const response = await purchaseItems({ headers });
+        setLoadingReq(response.loadingReq);
     }
 
     return (
@@ -107,7 +113,13 @@ const Purchase = () => {
                                     style={{ width: '30%' }}
                                     onClick={onPurchase}
                                 >
-                                    Realizar compra
+                                    {loadingReq ?
+                                        <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                        :
+                                        <div>
+                                            Realizar compra
+                                        </div>
+                                    }
                                 </Button>
                             </div>
                         }

@@ -34,5 +34,6 @@ export const cartSlice = (set, get) => ({
     getSubtotal: () => get().items.reduce((acc, item) => {
         acc += (item.price * item.quantityToBuy) - (!!item.discount && item.price * item.quantityToBuy * item.discount / 100);
         return acc;
-    }, 0)
+    }, 0),
+    getItems: () => get().items
 });

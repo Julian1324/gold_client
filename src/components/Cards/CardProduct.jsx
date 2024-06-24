@@ -5,16 +5,17 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
-import { getCartSlice } from '../../context/store/store';
+import { getCartSlice, getUserSlice } from '../../context/store/store';
 import { AlertModal } from '../../shared/Modal/AlertModal';
-import { getProduct } from '../../helpers/axiosHelper';
+import { getProduct, setCart } from '../../helpers/axiosHelper';
 
 const CardProduct = ({ _id, name, image, body, price, discount, quantity, status }) => {
     const navigator = useNavigate();
     const [productDetailShow, setProductDetailShow] = useState(false);
     const [alertModalShow, setAlertModalShow] = useState(false);
     const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
-    const { addItem, getItemAdded, deleteItem } = getCartSlice();
+    const { addItem, getItemAdded, deleteItem, getItems } = getCartSlice();
+    const { headers } = getUserSlice();
     const [loadingReq, setLoadingReq] = useState(false);
 
     const onAddToCard = async () => {
@@ -28,6 +29,8 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
             return navigator(0);
         }
         addItem({ _id, name, image, price, discount, quantityToBuy: 1 }, response.data);
+        const cartUpdated = await setCart({ headers, newCart: getItems() });
+        console.log('cartUpdated', cartUpdated);
         if (!getItemAdded()) navigator('/cart');
     }
 

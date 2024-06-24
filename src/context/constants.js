@@ -6,6 +6,8 @@ const USER_SETPASSWORD = '/userPassword';
 const USER_CREATED = '¡Usuario creado con éxito! Bienvenido a nuestra comunidad. A continuación puedes ingresar con tu cuenta.';
 const USER_LOGGED = '¡Bienvenid@ a Gold Service!';
 const USER_SESSION_EXPIRED = 'Sesión caducada, por favor inicia sesión otra vez.';
+const USER_UPDATE_CART = '/setCart';
+const USER_PURCHASE = '/purchaseItems';
 const GET_CATEGORIES = '/categories';
 const GET_PRODUCTS_BY_CATEGORY = '/productsByCategory';
 const GET_PRODUCT_BY_ID = '/product';
@@ -54,5 +56,7 @@ export const constants = Object.freeze({
     LANGUAGE_TAG,
     CURRENCY_NAME,
     WHATSAPP_NUMBER,
+    USER_UPDATE_CART,
+    USER_PURCHASE,
     KEY_STORAGE_BASE
 });
