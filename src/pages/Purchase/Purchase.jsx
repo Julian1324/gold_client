@@ -34,7 +34,7 @@ const Purchase = () => {
             setMyItems([...unifiedArray]);
         }
         getMyPurchaseItems();
-    }, [items, navigator, myItems]);
+    }, [items, navigator]);
 
     const LeftArrow = () => {
         return (
