@@ -1,7 +1,7 @@
 export const userSlice = (set, get) => ({
     userName: '',
     headers: {},
-    wallet: 10000,
+    wallet: 50000,
     updateUserName: (currentUserName) => set((state) => ({ ...state, userName: currentUserName })),
     updateHeaders: (currentToken) => set((state) => (
         {

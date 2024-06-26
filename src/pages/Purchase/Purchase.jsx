@@ -49,6 +49,7 @@ const Purchase = () => {
         const cartUpdated = await setCart({ headers, newCart: myItems });
         if (!cartUpdated.data.modifiedCount) console.log('no modifico');
         const response = await purchaseItems({ headers });
+        console.log('response', response);
         setLoadingReq(response.loadingReq);
     }
 
