@@ -29,8 +29,12 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
             return navigator(0);
         }
         addItem({ _id, name, image, price, discount, quantityToBuy: 1 }, response.data);
-        const cartUpdated = await setCart({ headers, newCart: getItems() });
-        console.log('cartUpdated', cartUpdated);
+        const itemsFiltered = getItems().map((item) => ({
+            _id: item._id,
+            id: item.id,
+            quantityToBuy: item.quantityToBuy
+        }));
+        const cartUpdated = await setCart({ headers, newCart: itemsFiltered });
         if (!getItemAdded()) navigator('/cart');
     }
 

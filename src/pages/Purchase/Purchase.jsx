@@ -43,14 +43,23 @@ const Purchase = () => {
     }
 
     const onPurchase = async () => {
-        // updateWallet(wallet - subtotal);
-        // navigator('/purchaseSummary');
-        setLoadingReq(true);
-        const cartUpdated = await setCart({ headers, newCart: myItems });
-        if (!cartUpdated.data.modifiedCount) console.log('no modifico');
-        const response = await purchaseItems({ headers });
-        console.log('response', response);
-        setLoadingReq(response.loadingReq);
+        try {
+            setLoadingReq(true);
+            const itemsFiltered = myItems.map((item) => ({
+                _id: item._id,
+                id: item.id,
+                quantityToBuy: item.quantityToBuy
+            }));
+            const cartUpdated = await setCart({ headers, newCart: itemsFiltered });
+            if (!cartUpdated?.data.modifiedCount) console.log('no modifico');
+            const response = await purchaseItems({ headers });
+            updateWallet(response?.data?.wallet);
+            navigator('/purchaseSummary');
+            setLoadingReq(response?.loadingReq);
+        } catch (error) {
+            console.log('error', error);
+            setLoadingReq(false);
+        }
     }
 
     return (
