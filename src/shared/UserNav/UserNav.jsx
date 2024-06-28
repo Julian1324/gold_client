@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
-import { getUserSlice } from '../../context/store/store';
+import React, { useEffect, useState } from 'react';
+import { getUserSlice, getCartSlice, getCategorySlice } from '../../context/store/store';
 import { AlertModal } from '../../shared/Modal/AlertModal';
 import { constants } from '../../context/constants';
 import { useNavigate } from 'react-router-dom';
 import { currencyValue } from '../../helpers/currencyHelper';
+import { getUser } from '../../helpers/axiosHelper';
 
 const UserNav = () => {
   const navigator = useNavigate();
   const [hover, setHover] = useState(false);
-  const { userName, headers, updateUserName, updateHeaders, getWallet } = getUserSlice();
+  const { userName, headers, updateUserName, updateHeaders, getWallet, updateWallet } = getUserSlice();
+  const { setItems } = getCartSlice();
+  const { getCategoryImageByID } = getCategorySlice();
   const [alertModalShow, setAlertModalShow] = useState(false);
   const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
+
+  useEffect(() => {
+    const getTheUser = async () => {
+      if (!Object.keys(headers).length) return;
+      const theUser = await getUser({ headers });
+      console.log('theUser', theUser);
+      if (theUser?.data?.cart.length) {
+        setItems(theUser?.data?.cart);
+      }
+      updateWallet(theUser?.data?.wallet);
+    }
+    getTheUser();
+  }, []);
 
   const toMyAccount = () => {
     navigator('/account');

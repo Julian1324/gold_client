@@ -35,5 +35,6 @@ export const cartSlice = (set, get) => ({
         acc += (item.price * item.quantityToBuy) - (!!item.discount && item.price * item.quantityToBuy * item.discount / 100);
         return acc;
     }, 0),
+    setItems: (newItems) => set(state => ({ ...state, items: [...newItems] })),
     getItems: () => get().items
 });

@@ -33,7 +33,6 @@ const Signin = () => {
                 setAlertModalShow(response.alertModalShow);
             }
             reset();
-            updateWallet(response?.data?.wallet);
             updateHeaders(response?.data?.token);
             updateUserName(response?.data?.name);
         } catch (error) {
@@ -150,6 +149,7 @@ const Signin = () => {
                 onHide={() => onCloseModal()}
                 title={messagesToModal.title}
                 bodyText={messagesToModal.body}
+                closeButton={0}
             />
         </div>
     );

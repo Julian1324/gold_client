@@ -26,7 +26,7 @@ const Account = () => {
         const getUserInfo = async () => {
             try {
                 setLoadingReq(true);
-                const response = await getUser({headers});
+                const response = await getUser({ headers });
                 setValue('name', response.data.name);
                 setValue('email', response.data.email);
                 setLoadingReq(response.loadingReq);
@@ -136,7 +136,7 @@ const Account = () => {
 
                             <div className='lineDiv'></div>
 
-                            <PasswordForm/>
+                            <PasswordForm />
                         </div>
                     </div>
                 </section>

@@ -17,7 +17,12 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response.status === 401) console.log('JWT EXPIRED');
+        if (error.response.status === 401) {
+            localStorage.clear();
+            alert('La sesión caducó, inicia sesión otra vez');
+            window.location.reload();
+            console.log('JWT EXPIRED');
+        }
         return error;
     }
 );
