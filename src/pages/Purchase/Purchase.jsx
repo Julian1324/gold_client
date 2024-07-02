@@ -11,15 +11,16 @@ import { constants } from '../../context/constants';
 
 const Purchase = () => {
     const navigator = useNavigate();
-    const { items, getSubtotal } = getCartSlice();
+    const { items, setItems, getSubtotal } = getCartSlice();
     const { headers, getWallet, updateWallet } = getUserSlice();
     const [myItems, setMyItems] = useState([]);
     const [loadingReq, setLoadingReq] = useState(false);
+    const [isBuying, setIsBuying] = useState(false);
     const wallet = getWallet();
     const subtotal = getSubtotal();
 
     useEffect(() => {
-        if (!items.length) return navigator('/cart');
+        if (!items.length && !isBuying) return navigator('/cart');
         const getMyPurchaseItems = async () => {
             const response = await getCartItems({ items });
             const unifiedArray = response.data.map(item => {
@@ -34,7 +35,7 @@ const Purchase = () => {
             setMyItems([...unifiedArray]);
         }
         getMyPurchaseItems();
-    }, [items, navigator]);
+    }, [items, navigator, isBuying]);
 
     const LeftArrow = () => {
         return (
@@ -45,6 +46,7 @@ const Purchase = () => {
     const onPurchase = async () => {
         try {
             setLoadingReq(true);
+            setIsBuying(true);
             const itemsFiltered = myItems.map((item) => ({
                 _id: item._id,
                 id: item.id,
@@ -54,8 +56,9 @@ const Purchase = () => {
             if (!cartUpdated?.data.modifiedCount) console.log('no modifico');
             const response = await purchaseItems({ headers });
             updateWallet(response?.data?.wallet);
-            navigator('/purchaseSummary');
             setLoadingReq(response?.loadingReq);
+            setItems([]);
+            navigator('/purchaseSummary');
         } catch (error) {
             console.log('error', error);
             setLoadingReq(false);

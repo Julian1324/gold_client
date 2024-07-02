@@ -19,14 +19,16 @@ const UserNav = () => {
     const getTheUser = async () => {
       if (!Object.keys(headers).length) return;
       const theUser = await getUser({ headers });
-      console.log('theUser', theUser);
       if (theUser?.data?.cart.length) {
-        setItems(theUser?.data?.cart);
+        const userProducts = theUser?.data?.cart.map((product) => ({ ...product, ...getCategoryImageByID(product.category_id) }));
+        setItems(userProducts);
+      } else {
+        setItems([]);
       }
       updateWallet(theUser?.data?.wallet);
     }
     getTheUser();
-  }, []);
+  }, [getCategoryImageByID, setItems, headers, updateWallet]);
 
   const toMyAccount = () => {
     navigator('/account');
