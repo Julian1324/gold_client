@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import BillingForm from '../../components/Forms/BillingForm';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
+import ConfirmModal from '../../shared/Modal/ConfirmModal';
 
 const Purchase = () => {
     const navigator = useNavigate();
@@ -16,6 +17,7 @@ const Purchase = () => {
     const [myItems, setMyItems] = useState([]);
     const [loadingReq, setLoadingReq] = useState(false);
     const [isBuying, setIsBuying] = useState(false);
+    const [confirmModalShow, setConfirmModalShow] = useState(false);
     const wallet = getWallet();
     const subtotal = getSubtotal();
 
@@ -42,6 +44,8 @@ const Purchase = () => {
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M10.589 12.5H15q.213 0 .356-.144t.144-.357t-.144-.356T15 11.5h-4.411l1.765-1.766q.14-.133.14-.34t-.14-.348t-.347-.14q-.208 0-.341.14l-2.389 2.389q-.242.242-.242.565t.242.566l2.389 2.388q.14.14.344.13q.204-.009.344-.15t.14-.347t-.14-.34zm1.414 8.5q-1.866 0-3.51-.708q-1.643-.709-2.859-1.924t-1.925-2.856T3 12.003t.709-3.51Q4.417 6.85 5.63 5.634t2.857-1.925T11.997 3t3.51.709q1.643.708 2.859 1.922t1.925 2.857t.709 3.509t-.708 3.51t-1.924 2.859t-2.856 1.925t-3.509.709M12 20q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8" /></svg>
         )
     }
+
+    const onConfirmModal = () => setConfirmModalShow(true);
 
     const onPurchase = async () => {
         try {
@@ -124,7 +128,7 @@ const Purchase = () => {
                                     variant="primary"
                                     className='mt-3'
                                     style={{ width: '30%' }}
-                                    onClick={onPurchase}
+                                    onClick={onConfirmModal}
                                 >
                                     {loadingReq ?
                                         <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
@@ -139,6 +143,16 @@ const Purchase = () => {
                     </div>
                 </div>
             </div>
+            <ConfirmModal
+                show={confirmModalShow}
+                onHide={() => setConfirmModalShow(false)}
+                title={'Confirmación de compra'}
+                bodyText={'¿Estás seguro que quieres realizar la compra?'}
+                size='md'
+                closeButton={0}
+                onPurchase={onPurchase}
+                loadingReq = {loadingReq}
+            />
         </>
     )
 }
