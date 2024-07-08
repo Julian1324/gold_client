@@ -22,7 +22,7 @@ const ConfirmModal = ({ show, onHide, title, bodyText, size = 'lg', onPurchase, 
             </Modal.Body>
             <Modal.Footer>
                 <Button variant='secondary' onClick={onHide}>Cerrar</Button>
-                <Button onClick={onPurchase} style={{width: '6vw'}}>
+                <Button onClick={onPurchase} style={{width: '8vw'}}>
                     {loadingReq? <span className="spinner-border spinner-border-sm" aria-hidden="true"></span> : 'Confirmar'}
                 </Button>
             </Modal.Footer>

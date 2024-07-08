@@ -18,14 +18,23 @@ const UserNav = () => {
   useEffect(() => {
     const getTheUser = async () => {
       if (!Object.keys(headers).length) return;
-      const theUser = await getUser({ headers });
-      if (theUser?.data?.cart.length) {
-        const userProducts = theUser?.data?.cart.map((product) => ({ ...product, ...getCategoryImageByID(product.category_id) }));
-        setItems(userProducts);
-      } else {
-        setItems([]);
+      try {
+        const theUser = await getUser({ headers });
+        if (theUser?.data?.cart.length) {
+          const userProducts = theUser?.data?.cart.map((product) => ({ ...product, ...getCategoryImageByID(product.category_id) }));
+          setItems(userProducts);
+        } else {
+          setItems([]);
+        }
+        updateWallet(theUser?.data?.wallet);
+      } catch (error) {
+        console.log('error: ', error);
+        let myMessage = error?.response?.data;
+        if (error?.response?.data.includes('jwt')) myMessage = constants.USER_SESSION_EXPIRED;
+        setMessagesToModal({ title: constants.MODAL_TITLE_ERROR, body: myMessage });
+        localStorage.clear();
+        setAlertModalShow(true);
       }
-      updateWallet(theUser?.data?.wallet);
     }
     getTheUser();
   }, [getCategoryImageByID, setItems, headers, updateWallet]);

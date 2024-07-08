@@ -56,8 +56,7 @@ const Purchase = () => {
                 id: item.id,
                 quantityToBuy: item.quantityToBuy
             }));
-            const cartUpdated = await setCart({ headers, newCart: itemsFiltered });
-            if (!cartUpdated?.data.modifiedCount) console.log('no modifico');
+            if (Object.keys(headers).length) await setCart({ headers, newCart: itemsFiltered });
             const response = await purchaseItems({ headers });
             updateWallet(response?.data?.wallet);
             setLoadingReq(response?.loadingReq);

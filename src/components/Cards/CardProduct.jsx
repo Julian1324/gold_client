@@ -34,7 +34,7 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
             id: item.id,
             quantityToBuy: item.quantityToBuy
         }));
-        const cartUpdated = await setCart({ headers, newCart: itemsFiltered });
+        if (Object.keys(headers).length) await setCart({ headers, newCart: itemsFiltered });
         if (!getItemAdded()) navigator('/cart');
     }
 
