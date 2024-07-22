@@ -9,6 +9,7 @@ import BillingForm from '../../components/Forms/BillingForm';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
 import ConfirmModal from '../../shared/Modal/ConfirmModal';
+import { AlertModal } from '../../shared/Modal/AlertModal';
 
 const Purchase = () => {
     const navigator = useNavigate();
@@ -18,6 +19,8 @@ const Purchase = () => {
     const [loadingReq, setLoadingReq] = useState(false);
     const [isBuying, setIsBuying] = useState(false);
     const [confirmModalShow, setConfirmModalShow] = useState(false);
+    const [alertModalShow, setAlertModalShow] = useState(false);
+    const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
     const wallet = getWallet();
     const subtotal = getSubtotal();
 
@@ -64,6 +67,9 @@ const Purchase = () => {
             navigator('/purchaseSummary');
         } catch (error) {
             console.log('error', error);
+            setConfirmModalShow(false);
+            setAlertModalShow(true);
+            setMessagesToModal({ title: constants.MODAL_TITLE_ERROR, body: error.response.data });
             setLoadingReq(false);
         }
     }
@@ -150,7 +156,16 @@ const Purchase = () => {
                 size='md'
                 closeButton={0}
                 onPurchase={onPurchase}
-                loadingReq = {loadingReq}
+                loadingReq={loadingReq}
+            />
+
+            <AlertModal
+                show={alertModalShow}
+                onHide={() => setAlertModalShow(false)}
+                title={messagesToModal.title}
+                bodyText={messagesToModal.body}
+                size='md'
+                closeButton={0}
             />
         </>
     )
