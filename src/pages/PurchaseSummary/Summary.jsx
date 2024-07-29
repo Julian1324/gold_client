@@ -57,7 +57,7 @@ const Summary = () => {
                                         <li>
                                             Correo: <strong>{account.email}</strong> <br />
                                             Contraseña: <strong>{account.password}</strong> <br />
-                                            Perfil: <strong>Perfil 1</strong>
+                                            Perfil: <strong>{account.profiles.map((profile) => profile.name)}</strong>
                                         </li>
                                     </div>
                                 );
