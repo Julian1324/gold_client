@@ -14,7 +14,7 @@ import { AlertModal } from '../../shared/Modal/AlertModal';
 const Purchase = () => {
     const navigator = useNavigate();
     const { items, setItems, getSubtotal } = getCartSlice();
-    const { headers, getWallet, updateWallet } = getUserSlice();
+    const { headers, getWallet, updateWallet, updateLastMovement } = getUserSlice();
     const [myItems, setMyItems] = useState([]);
     const [loadingReq, setLoadingReq] = useState(false);
     const [isBuying, setIsBuying] = useState(false);
@@ -62,6 +62,7 @@ const Purchase = () => {
             if (Object.keys(headers).length) await setCart({ headers, newCart: itemsFiltered });
             const response = await purchaseItems({ headers });
             updateWallet(response?.data?.wallet);
+            updateLastMovement(response?.data?.movement);
             setLoadingReq(response?.loadingReq);
             setItems([]);
             navigator('/purchaseSummary');
