@@ -13,7 +13,6 @@ const Summary = () => {
 
     useEffect(() => {
         if (!Object.keys(headers).length || !Object.keys(getLastMovement()).length) return navigator('/cart');
-        console.log(getLastMovement());
         setMovement(getLastMovement());
     }, [getLastMovement, updateLastMovement, headers, navigator]);
 
@@ -55,9 +54,23 @@ const Summary = () => {
                                 return (
                                     <div key={accountKey} className='mt-2'>
                                         <li>
-                                            Correo: <strong>{account.email}</strong> <br />
+                                            Correo: <strong>
+                                                {account.email}
+                                            </strong> ({movement?.products.find((product) => product._id === account.productID).name}) <br />
                                             Contraseña: <strong>{account.password}</strong> <br />
-                                            Perfil: <strong>{account.profiles.map((profile) => profile.name)}</strong>
+                                            Perfil(es): <strong>
+                                                {account.profiles
+                                                    ? account.profiles.map((profile, profileIndex) => {
+                                                        if ((profileIndex + 1) !== account.profiles.length) return profile.name + ' - ';
+                                                        return profile.name;
+                                                    })
+                                                    : account.profilesResult.map((profile, profileIndex) => {
+                                                        console.log('account', account.profilesResult.length);
+                                                        if ((profileIndex + 1) !== account.profilesResult.length) return profile.name + ' - ';
+                                                        return profile.name;
+                                                    })
+                                                }
+                                            </strong>
                                         </li>
                                     </div>
                                 );
