@@ -63,7 +63,7 @@ const Cart = () => {
             <div
                 className="d-flex justify-content-center bg-secondary-subtle"
                 ref={cartRef}
-                style={{ height: (containerHeight + 'px') }}
+                style={{ height: (containerHeight + 'pt') }}
             >
                 <div
                     className="d-flex flex-column h-100"

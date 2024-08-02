@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { timeFormatter } from '../../helpers/timeZoneHelper';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
+import './Summary.css';
 
 const Summary = () => {
     const navigator = useNavigate();
@@ -14,6 +15,7 @@ const Summary = () => {
     useEffect(() => {
         if (!Object.keys(headers).length || !Object.keys(getLastMovement()).length) return navigator('/cart');
         setMovement(getLastMovement());
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [getLastMovement, updateLastMovement, headers, navigator]);
 
     const calculateDiscount = (thePrice, theDiscount) => {
@@ -21,7 +23,7 @@ const Summary = () => {
     }
 
     return (
-        <Container className='mt-5'>
+        <Container className='mt-5 myContainer'>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="green" className="bi bi-check-circle-fill" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03a.75.75 0 0 0 1.07 0l4-4a.75.75 0 0 0-1.07-1.07L7.5 9.44 5.53 7.47a.75.75 0 1 0-1.06 1.06l2.5 2.5z" />
@@ -40,10 +42,10 @@ const Summary = () => {
                             {movement?.products.map((product, productKey) => {
                                 return (
                                     <div key={productKey}>
-                                        <li>{product?.name}&nbsp;-&nbsp;
+                                        <li>{product?.name} &nbsp;-&nbsp;
                                             {!product?.discount
-                                                ? <strong>{currencyValue(product.price)} {constants.CURRENCY_NAME}</strong>
-                                                : <strong>{currencyValue(calculateDiscount(product.price, product.discount))} {constants.CURRENCY_NAME}</strong>}
+                                                ? <strong>{currencyValue(product.price)} {constants.CURRENCY_NAME} (x{product.quantityToBuy})</strong>
+                                                : <strong>{currencyValue(calculateDiscount(product.price, product.discount))} {constants.CURRENCY_NAME} (x{product.quantityToBuy})</strong>}
                                         </li>
                                     </div>
                                 )
@@ -65,7 +67,6 @@ const Summary = () => {
                                                         return profile.name;
                                                     })
                                                     : account.profilesResult.map((profile, profileIndex) => {
-                                                        console.log('account', account.profilesResult.length);
                                                         if ((profileIndex + 1) !== account.profilesResult.length) return profile.name + ' - ';
                                                         return profile.name;
                                                     })
