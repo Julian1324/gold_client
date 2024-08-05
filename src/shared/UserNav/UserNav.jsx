@@ -43,6 +43,10 @@ const UserNav = () => {
     navigator('/account');
   }
 
+  const toMyMovements = () => {
+    navigator('/movements');
+  }
+
   const onCloseModal = () => {
     setAlertModalShow(false);
     updateHeaders('');
@@ -90,6 +94,7 @@ const UserNav = () => {
           </div>
           <div className={`position-absolute top-100 ${!hover && 'visually-hidden'} dropStyle`}>
             <div className='divOption' onClick={toMyAccount}>Mi cuenta</div>
+            <div className='divOption' onClick={toMyMovements}>Pedidos</div>
             <div className='divOption' onClick={signOut}>Cerrar sesión</div>
           </div>
         </div>

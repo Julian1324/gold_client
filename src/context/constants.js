@@ -8,6 +8,7 @@ const USER_LOGGED = '¡Bienvenid@ a Gold Service!';
 const USER_SESSION_EXPIRED = 'Sesión caducada, por favor inicia sesión otra vez.';
 const USER_UPDATE_CART = '/setCart';
 const USER_PURCHASE = '/purchaseItems';
+const USER_MOVEMENTS = '/myMovements';
 const GET_CATEGORIES = '/categories';
 const GET_PRODUCTS_BY_CATEGORY = '/productsByCategory';
 const GET_PRODUCT_BY_ID = '/product';
@@ -27,6 +28,11 @@ const LANGUAGE_TAG = 'es-CO';
 const CURRENCY_NAME = 'COP';
 const COUNTRY_PREFIX = '57'
 const WHATSAPP_NUMBER = `${COUNTRY_PREFIX}3045991517`;
+const PAYMENT_STATE = {
+    Completed : 'Completado',
+    Pending: 'Pendiente',
+    Cancelled: 'Cancelado'
+};
 const KEY_STORAGE_BASE = 'GLDST0';
 
 export const constants = Object.freeze({
@@ -56,7 +62,9 @@ export const constants = Object.freeze({
     LANGUAGE_TAG,
     CURRENCY_NAME,
     WHATSAPP_NUMBER,
+    PAYMENT_STATE,
     USER_UPDATE_CART,
     USER_PURCHASE,
+    USER_MOVEMENTS,
     KEY_STORAGE_BASE
 });

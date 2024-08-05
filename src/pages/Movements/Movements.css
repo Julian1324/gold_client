@@ -1,0 +1,14 @@
+.movementContainer {
+    display: flex;
+    height: 90dvh;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 5rem;
+}
+
+.tableContainer {
+    display: flex;
+    width: 70%;
+    margin-top: 5rem;
+}
