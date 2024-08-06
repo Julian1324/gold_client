@@ -15,6 +15,7 @@ const Summary = () => {
     useEffect(() => {
         if (!Object.keys(headers).length || !Object.keys(getLastMovement()).length) return navigator('/cart');
         setMovement(getLastMovement());
+        console.log('getLastMovement()', getLastMovement());
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [getLastMovement, updateLastMovement, headers, navigator]);
 
@@ -38,27 +39,23 @@ const Summary = () => {
                 <Card.Body>
                     <Row>
                         <Col>
-                            <h5>Producto(s) pagado(s)</h5>
-                            {movement?.products.map((product, productKey) => {
-                                return (
-                                    <div key={productKey}>
-                                        <li>{product?.name} &nbsp;-&nbsp;
-                                            {!product?.discount
-                                                ? <strong>{currencyValue(product.price)} {constants.CURRENCY_NAME} (x{product.quantityToBuy})</strong>
-                                                : <strong>{currencyValue(calculateDiscount(product.price, product.discount))} {constants.CURRENCY_NAME} (x{product.quantityToBuy})</strong>}
-                                        </li>
-                                    </div>
-                                )
-                            })}
-                            <hr className='w-100 mt-3' />
-                            <h5 className='mt-3'>Cuenta(s)</h5>
                             {movement?.accounts.map((account, accountKey) => {
                                 return (
                                     <div key={accountKey} className='mt-2'>
+                                        <h5>Producto(s) pagado(s)</h5>
+                                        <div>
+                                            <li>{account?.product?.name} &nbsp;-&nbsp;
+                                                {!account?.product?.discount
+                                                    ? <strong>{currencyValue(account.product.price)} {constants.CURRENCY_NAME} (x{account.product.quantityToBuy})</strong>
+                                                    : <strong>{currencyValue(calculateDiscount(account.product.price, account.product.discount))} {constants.CURRENCY_NAME} (x{account.product.quantityToBuy})</strong>}
+                                            </li>
+                                        </div>
+                                        <hr className='w-100 mt-3' />
+                                        <h5 className='mt-3'>Cuenta(s)</h5>
                                         <li>
                                             Correo: <strong>
-                                                {account.email}
-                                            </strong> ({movement?.products.find((product) => product._id === account.productID).name}) <br />
+                                                {account?.email}
+                                            </strong> ({account?.product?.name}) <br />
                                             Contraseña: <strong>{account.password}</strong> <br />
                                             Perfil(es): <strong>
                                                 {account.profiles
@@ -76,8 +73,13 @@ const Summary = () => {
                                     </div>
                                 );
                             })}
-                            <p className='mt-5'>Valor pagado</p>
-                            <h4>{currencyValue(movement?.amount)} {constants.CURRENCY_NAME}</h4>
+                            <h5 className='mt-4'>REGLAS:</h5>
+                            <div className='mt-1'>
+                                No elimines, agregues, ni invadas perfiles 🚫; no compartas la cuenta 🔒; y no cambies datos como imagen, nombre, PIN, correo o contraseña ✋. <br />
+                                <strong>Si incumples, perderás la garantía.</strong>
+                            </div>
+                            <h5 className='mt-4'>Valor pagado</h5>
+                            <h4 className='text-success'>{currencyValue(movement?.amount)} {constants.CURRENCY_NAME}</h4>
                         </Col>
                     </Row>
                     <hr className='w-100' />
