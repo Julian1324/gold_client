@@ -149,6 +149,7 @@ const Signin = () => {
                 onHide={() => onCloseModal()}
                 title={messagesToModal.title}
                 bodyText={messagesToModal.body}
+                size='md'
                 closeButton={0}
             />
         </div>

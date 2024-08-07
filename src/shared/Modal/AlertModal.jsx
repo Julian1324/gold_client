@@ -17,9 +17,7 @@ function AlertModal({ show, onHide, title, bodyText, size = 'lg', closeButton = 
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>
           {bodyText}
-        </p>
       </Modal.Body>
       {!!closeButton &&
         <Modal.Footer>

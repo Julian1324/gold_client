@@ -7,7 +7,7 @@ import { getMyMovements } from "../../helpers/axiosHelper";
 import { useState } from "react";
 import Spinner from 'react-bootstrap/Spinner';
 import { AlertModal } from "../../shared/Modal/AlertModal";
-
+import CardMovement from "../Cards/CardMovement";
 const MovementsComponent = ({ paginator, setPaginator, movements, setMovements }) => {
 
     const { headers } = getUserSlice();
@@ -17,8 +17,10 @@ const MovementsComponent = ({ paginator, setPaginator, movements, setMovements }
 
     const onWatchMovement = (id) => {
         const currentMovement = movements[id];
+        const myTitle = 'Detalles de pedido';
+        const myBody = <CardMovement movement={currentMovement} />;
         setAlertModalShow(true);
-        setMessagesToModal({ title: 'Pedido', body: currentMovement.accounts[0].email });
+        setMessagesToModal({ title: myTitle, body: myBody });
     }
 
     const handlePages = async (event, pageToQuery) => {
@@ -68,7 +70,7 @@ const MovementsComponent = ({ paginator, setPaginator, movements, setMovements }
                                 <td>{timeFormatter(movement?.createdAt)}</td>
                                 <td>{constants?.PAYMENT_STATE[movement?.status]}</td>
                                 <td>{currencyValue(movement?.amount)} {constants.CURRENCY_NAME} &nbsp;
-                                    <span className="fw-bold">para {movement?.accountsIDs?.length} artículo(s)</span>
+                                    <span className="fw-bold">para {movement?.accounts?.length} artículo(s)</span>
                                 </td>
                                 <td onClick={() => onWatchMovement(movementIndex)}>
                                     <Button variant="primary">
@@ -116,8 +118,8 @@ const MovementsComponent = ({ paginator, setPaginator, movements, setMovements }
                 onHide={() => setAlertModalShow(false)}
                 title={messagesToModal.title}
                 bodyText={messagesToModal.body}
-                size='md'
-                closeButton={1}
+                size='lg'
+                closeButton={0}
             />
         </div>
     )

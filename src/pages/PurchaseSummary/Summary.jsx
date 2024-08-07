@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { getUserSlice } from '../../context/store/store';
 import { useNavigate } from 'react-router-dom';
-import { timeFormatter } from '../../helpers/timeZoneHelper';
-import { currencyValue } from '../../helpers/currencyHelper';
-import { constants } from '../../context/constants';
+import CardMovement from '../../components/Cards/CardMovement';
 import './Summary.css';
 
 const Summary = () => {
@@ -19,10 +17,6 @@ const Summary = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [getLastMovement, updateLastMovement, headers, navigator]);
 
-    const calculateDiscount = (thePrice, theDiscount) => {
-        return thePrice - (thePrice * theDiscount / 100);
-    }
-
     return (
         <Container className='mt-5 myContainer'>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -31,66 +25,7 @@ const Summary = () => {
                 </svg>
                 <h4 className='mt-2'>¡Compra exitosa!</h4>
             </div>
-            <Card className="text-center mt-5 mb-5">
-                <Card.Header className="custom-header">
-                    <Card.Title>Transacción No. {movement?.consecutive}</Card.Title>
-                    <Card.Text>{timeFormatter(movement?.createdAt)}</Card.Text>
-                </Card.Header>
-                <Card.Body>
-                    <Row>
-                        <Col>
-                            {movement?.accounts.map((account, accountKey) => {
-                                return (
-                                    <div key={accountKey} className='mt-2'>
-                                        <h5>Producto(s) pagado(s)</h5>
-                                        <div>
-                                            <li>{account?.product?.name} &nbsp;-&nbsp;
-                                                {!account?.product?.discount
-                                                    ? <strong>{currencyValue(account.product.price)} {constants.CURRENCY_NAME} (x{account.product.quantityToBuy})</strong>
-                                                    : <strong>{currencyValue(calculateDiscount(account.product.price, account.product.discount))} {constants.CURRENCY_NAME} (x{account.product.quantityToBuy})</strong>}
-                                            </li>
-                                        </div>
-                                        <hr className='w-100 mt-3' />
-                                        <h5 className='mt-3'>Cuenta(s)</h5>
-                                        <li>
-                                            Correo: <strong>
-                                                {account?.email}
-                                            </strong> ({account?.product?.name}) <br />
-                                            Contraseña: <strong>{account.password}</strong> <br />
-                                            Perfil(es): <strong>
-                                                {account.profiles
-                                                    ? account.profiles.map((profile, profileIndex) => {
-                                                        if ((profileIndex + 1) !== account.profiles.length) return profile.name + ' - ';
-                                                        return profile.name;
-                                                    })
-                                                    : account.profilesResult.map((profile, profileIndex) => {
-                                                        if ((profileIndex + 1) !== account.profilesResult.length) return profile.name + ' - ';
-                                                        return profile.name;
-                                                    })
-                                                }
-                                            </strong>
-                                        </li>
-                                    </div>
-                                );
-                            })}
-                            <h5 className='mt-4'>REGLAS:</h5>
-                            <div className='mt-1'>
-                                No elimines, agregues, ni invadas perfiles 🚫; no compartas la cuenta 🔒; y no cambies datos como imagen, nombre, PIN, correo o contraseña ✋. <br />
-                                <strong>Si incumples, perderás la garantía.</strong>
-                            </div>
-                            <h5 className='mt-4'>Valor pagado</h5>
-                            <h4 className='text-success'>{currencyValue(movement?.amount)} {constants.CURRENCY_NAME}</h4>
-                        </Col>
-                    </Row>
-                    <hr className='w-100' />
-                    <Row className='mt-2'>
-                        <Col>
-                            <h5>Origen pago</h5>
-                            <p>Monedero (saldo en cuenta)</p>
-                        </Col>
-                    </Row>
-                </Card.Body>
-            </Card>
+            <CardMovement movement={movement} />
         </Container>
     );
 }
