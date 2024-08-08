@@ -18,7 +18,7 @@ const MovementsComponent = ({ paginator, setPaginator, movements, setMovements }
     const onWatchMovement = (id) => {
         const currentMovement = movements[id];
         const myTitle = 'Detalles de pedido';
-        const myBody = <CardMovement movement={currentMovement} />;
+        const myBody = <CardMovement movement={currentMovement} daRules={false} />;
         setAlertModalShow(true);
         setMessagesToModal({ title: myTitle, body: myBody });
     }
@@ -69,7 +69,7 @@ const MovementsComponent = ({ paginator, setPaginator, movements, setMovements }
                                 <td>{movement?.consecutive}</td>
                                 <td>{timeFormatter(movement?.createdAt)}</td>
                                 <td>{constants?.PAYMENT_STATE[movement?.status]}</td>
-                                <td>{currencyValue(movement?.amount)} {constants.CURRENCY_NAME} &nbsp;
+                                <td>{currencyValue(movement?.amount)} {constants.CURRENCY_NAME}&nbsp;
                                     <span className="fw-bold">para {movement?.accounts?.length} artículo(s)</span>
                                 </td>
                                 <td onClick={() => onWatchMovement(movementIndex)}>

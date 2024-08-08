@@ -13,7 +13,6 @@ const Summary = () => {
     useEffect(() => {
         if (!Object.keys(headers).length || !Object.keys(getLastMovement()).length) return navigator('/cart');
         setMovement(getLastMovement());
-        console.log('getLastMovement()', getLastMovement());
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [getLastMovement, updateLastMovement, headers, navigator]);
 
@@ -25,7 +24,7 @@ const Summary = () => {
                 </svg>
                 <h4 className='mt-2'>¡Compra exitosa!</h4>
             </div>
-            <CardMovement movement={movement} />
+            <CardMovement movement={movement} daRules={true} />
         </Container>
     );
 }
