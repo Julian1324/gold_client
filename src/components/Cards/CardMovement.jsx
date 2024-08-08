@@ -71,7 +71,7 @@ const CardMovement = ({ movement }) => {
                                                 return (
                                                     <ul key={profileIndex}>
                                                         <li>
-                                                            Perfil: {profile.name}
+                                                            {profile.name}
                                                             {profile.pin && `, PIN: ${profile.pin}`}
                                                         </li>
                                                     </ul>
@@ -81,7 +81,7 @@ const CardMovement = ({ movement }) => {
                                                 return (
                                                     <ul key={profileIndex}>
                                                         <li>
-                                                            Perfil: {profile.name}
+                                                            {profile.name}
                                                             {profile.pin && `, PIN: ${profile.pin}`}
                                                         </li>
                                                     </ul>
@@ -92,6 +92,7 @@ const CardMovement = ({ movement }) => {
                                 </div>
                             );
                         })}
+                        // Poner las reglas
                         <h5 className='mt-4'>Valor pagado</h5>
                         <h4 className='text-success'>{currencyValue(movement?.amount)} {constants.CURRENCY_NAME}</h4>
                     </Col>
