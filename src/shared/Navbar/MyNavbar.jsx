@@ -9,23 +9,13 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import goldServiceLogo from '../../assets/goldServiceLogo.png';
 import './MyNavbar.css';
-import storeIcon from '../../assets/store.png';
-import homeIcon from '../../assets/home.png';
-import netflixIcon from '../../assets/netflix.png';
-import amazonIcon from '../../assets/amazon.png';
-import disneyIcon from '../../assets/disney.png';
-import starIcon from '../../assets/star.png';
-import playIcon from '../../assets/play.png';
-import crunchyrollIcon from '../../assets/crunchyroll.png';
-import IPTVIcon from '../../assets/iptv.png';
-import netflixCategoryPH from '../../assets/netflixCategoryPH.png';
-import amazonCategoryPH from '../../assets/amazonCategoryPH.png';
 import { getCategorySlice, getUserSlice, getCartSlice } from '../../context/store/store';
 import { UserNav } from '../UserNav/UserNav';
 import { getCategories } from '../../helpers/axiosHelper';
 import { currencyValue } from '../../helpers/currencyHelper';
 import CartModal from '../Modal/CartModal';
 import NewProductModal from '../Modal/NewProductModal';
+import { navCategories } from './navBarCategories';
 
 const MyNavbar = () => {
   const navigator = useNavigate();
@@ -36,63 +26,7 @@ const MyNavbar = () => {
   const [hover, setHover] = useState();
 
   const myCategories = useMemo(() => {
-    return [
-      {
-        name: 'Inicio',
-        icon: homeIcon,
-        image: ''
-      },
-      {
-        name: 'Tienda',
-        icon: storeIcon,
-        image: ''
-      },
-      {
-        name: 'Netflix',
-        icon: netflixIcon,
-        image: netflixCategoryPH
-      },
-      {
-        name: 'Amazon',
-        icon: amazonIcon,
-        image: amazonCategoryPH
-      },
-      {
-        name: 'Disney+',
-        icon: disneyIcon,
-        image: ''
-      },
-      {
-        name: 'Star+',
-        icon: starIcon,
-        image: ''
-      },
-      {
-        name: 'HBOMAX',
-        icon: starIcon,
-        image: ''
-      },
-      {
-        name: 'Plex',
-        icon: playIcon,
-        image: ''
-      },
-      {
-        name: 'Crunchyroll',
-        icon: crunchyrollIcon,
-        image: ''
-      },
-      {
-        name: 'Vix',
-        icon: playIcon,
-        image: ''
-      },
-      {
-        name: 'IPTV',
-        icon: IPTVIcon,
-        image: ''
-      },
-    ];
+    return [...navCategories];
   }, []);
 
   useEffect(() => {
@@ -108,12 +42,21 @@ const MyNavbar = () => {
     getMyCategories();
   }, [updateCategories, myCategories]);
 
-  const onCategory = (categoryName) => {
+  const onCategory = (event, categoryName) => {
+    event.preventDefault();
     if (categoryName === 'Inicio') return navigator('/');
     if (categoryName === 'Tienda') return navigator('/shop');
     const categoryFinded = categories.find((currentCategory) => currentCategory.name === categoryName);
     if (!categoryFinded) return;
     navigator('/category/' + categoryFinded._id);
+  }
+
+  const onSearch = (event) => {
+    if (event.type === 'click') {
+      console.log('Dio click');
+    } else {
+      console.log('Escribiendo');
+    }
   }
 
   window.onscroll = function () {
@@ -132,7 +75,7 @@ const MyNavbar = () => {
       navContainer.style.justifyContent = 'center';
       navContainer.style.zIndex = 0;
     }
-  };
+  }
 
   return (
     <>
@@ -143,22 +86,31 @@ const MyNavbar = () => {
           </Navbar.Brand>
           <InputGroup className="d-flex align-items-center w-50">
             <Dropdown>
-              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+              <Dropdown.Toggle variant="light" id="dropdown-basic">
                 Categorías
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="./action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="./action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="./action-3">Something else</Dropdown.Item>
+                {myCategories.map((category, categoryIndex) => {
+                  if (categoryIndex > 1)
+                    return (
+                      <Dropdown.Item
+                        key={categoryIndex}
+                        onClick={(event) => onCategory(event, category.name)}
+                        href=".">{category.name}
+                      </Dropdown.Item>
+                    )
+                  else return '';
+                })}
               </Dropdown.Menu>
             </Dropdown>
             <Form.Control
-              placeholder="Busca por categorías"
-              aria-label="Busca por categorías"
+              placeholder="Busca lo que deseas"
+              aria-label="Busca lo que deseas"
               aria-describedby="basic-addon2"
+              onChange={onSearch}
             />
-            <Button variant="secondary">
+            <Button variant="light" onClick={onSearch}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
               </svg>
@@ -172,7 +124,7 @@ const MyNavbar = () => {
               :
               <UserNav />
             }
-            <NavLink to='/cart' className='d-flex' style={{ cursor: 'pointer' }} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+            <NavLink to='/cart' className='d-flex navCart' style={{ cursor: 'pointer' }} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
               <div className='d-flex align-items-center ms-3'>
                 {!!items.length &&
                   <span className="position-relative top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
@@ -195,7 +147,7 @@ const MyNavbar = () => {
               setHover={setHover}
               subtotal={currencyValue(getSubtotal())}
             />
-            <NewProductModal/>
+            <NewProductModal />
           </div>
         </Container>
         <hr />
@@ -209,7 +161,7 @@ const MyNavbar = () => {
               backgroundPosition: 'center',
             }
             return (
-              <div className='divContainer' key={categoryIndex} onClick={() => onCategory(category.name)}>
+              <div className='divContainer' key={categoryIndex} onClick={(event) => onCategory(event, category.name)}>
                 <div style={imageStyle}></div>
                 <div className='nameStyle'>{category.name}</div>
               </div>
