@@ -118,7 +118,13 @@ const MyNavbar = () => {
           </InputGroup>
           <div className='d-flex text-light w-25 justify-content-around'>
             {!Object.keys(headers).length ?
-              <NavLink to='/signin' className='d-flex onHover' style={{ cursor: 'pointer' }}>
+              <NavLink to='/signin' className='d-flex onHover'
+                style={{
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  color: 'white'
+                }}
+              >
                 <UserNav />
               </NavLink>
               :
