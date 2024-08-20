@@ -11,7 +11,7 @@ import goldServiceLogo from '../../assets/goldServiceLogo.png';
 import './MyNavbar.css';
 import { getCategorySlice, getUserSlice, getCartSlice } from '../../context/store/store';
 import { UserNav } from '../UserNav/UserNav';
-import { getCategories } from '../../helpers/axiosHelper';
+import { getCategories, queryProducts } from '../../helpers/axiosHelper';
 import { currencyValue } from '../../helpers/currencyHelper';
 import CartModal from '../Modal/CartModal';
 import NewProductModal from '../Modal/NewProductModal';
@@ -20,10 +20,13 @@ import { navCategories } from './navBarCategories';
 const MyNavbar = () => {
   const navigator = useNavigate();
   const myNavbarRef = useRef(null);
-  const { headers } = getUserSlice();
+  const { headers, setFindedProducts } = getUserSlice();
   const { categories, updateCategories } = getCategorySlice();
   const { items, getSubtotal } = getCartSlice();
   const [hover, setHover] = useState();
+  const inputRef = useRef(null);
+  const [typingTimeout, setTypingTimeout] = useState(null);
+  const [loadingQuery, setLoadingQuery] = useState(false);
 
   const myCategories = useMemo(() => {
     return [...navCategories];
@@ -31,6 +34,7 @@ const MyNavbar = () => {
 
   useEffect(() => {
     const getMyCategories = async () => {
+      setFindedProducts([]);
       const response = await getCategories();
       const categoriesMap = myCategories.reduce((acc, category) => {
         acc[category.name] = category.image;
@@ -40,7 +44,7 @@ const MyNavbar = () => {
       updateCategories(updatedCategories);
     }
     getMyCategories();
-  }, [updateCategories, myCategories]);
+  }, [updateCategories, myCategories, setFindedProducts]);
 
   const onCategory = (event, categoryName) => {
     event.preventDefault();
@@ -51,11 +55,30 @@ const MyNavbar = () => {
     navigator('/category/' + categoryFinded._id);
   }
 
+  const onStopTyping = async () => {
+    setLoadingQuery(true);
+    const query = inputRef.current.value;
+    const response = await queryProducts({ query });
+    setLoadingQuery(response.loadingReq);
+    setFindedProducts(response.data);
+  }
+
   const onSearch = (event) => {
+  
     if (event.type === 'click') {
-      console.log('Dio click');
+      onStopTyping();
     } else {
-      console.log('Escribiendo');
+      if (!event.target.value) return clearTimeout(typingTimeout);
+
+      if (typingTimeout) {
+        clearTimeout(typingTimeout);
+      }
+
+      setTypingTimeout(
+        setTimeout(() => {
+          onStopTyping();
+        }, 1000)
+      );
     }
   }
 
@@ -109,11 +132,16 @@ const MyNavbar = () => {
               aria-label="Busca lo que deseas"
               aria-describedby="basic-addon2"
               onChange={onSearch}
+              ref={inputRef}
             />
             <Button variant="light" onClick={onSearch}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-              </svg>
+              {loadingQuery
+                ? <svg className='spinner-border spinner-border-sm'></svg>
+                : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg>
+              }
+
             </Button>
           </InputGroup>
           <div className='d-flex text-light w-25 justify-content-around'>

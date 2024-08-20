@@ -3,6 +3,7 @@ export const userSlice = (set, get) => ({
     headers: {},
     wallet: 50000,
     lastMovement: {},
+    findedProducts: [],
     updateUserName: (currentUserName) => set((state) => ({ ...state, userName: currentUserName })),
     updateHeaders: (currentToken) => set((state) => (
         {
@@ -14,5 +15,7 @@ export const userSlice = (set, get) => ({
     updateWallet: (newWallet) => set((state) => ({ ...state, wallet: newWallet })),
     updateLastMovement: (newLastMovemet) => set((state) => ({ ...state, lastMovement: newLastMovemet })),
     getWallet: () => get().wallet,
-    getLastMovement: () => get().lastMovement
+    getLastMovement: () => get().lastMovement,
+    setFindedProducts: (products) => set((state) => ({ ...state, findedProducts: products })),
+    getFindedProducts: () => get().findedProducts
 });

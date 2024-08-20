@@ -196,3 +196,17 @@ export const getMyMovements = async ({ headers, page }) => {
         throw error;
     }
 }
+
+export const queryProducts = async ({ query }) => {
+    try {
+        const response = await axiosInstance.get(
+            `${constants.API_URL + constants.QUERY_PRODUCTS}?${constants.PARAMS_QUERY_PRODUCT + query}`,
+        );
+        if (response.status === 200) return {
+            data: response.data,
+            loadingReq: false,
+        }
+    } catch (error) {
+        throw error;
+    }
+}
