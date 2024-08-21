@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image';
@@ -27,6 +27,7 @@ const MyNavbar = () => {
   const inputRef = useRef(null);
   const [typingTimeout, setTypingTimeout] = useState(null);
   const [loadingQuery, setLoadingQuery] = useState(false);
+  const location = useLocation();
 
   const myCategories = useMemo(() => {
     return [...navCategories];
@@ -35,6 +36,7 @@ const MyNavbar = () => {
   useEffect(() => {
     const getMyCategories = async () => {
       setFindedProducts([]);
+      inputRef.current.value = '';
       const response = await getCategories();
       const categoriesMap = myCategories.reduce((acc, category) => {
         acc[category.name] = category.image;
@@ -64,22 +66,27 @@ const MyNavbar = () => {
   }
 
   const onSearch = (event) => {
-  
-    if (event.type === 'click') {
-      onStopTyping();
-    } else {
-      if (!event.target.value) return clearTimeout(typingTimeout);
 
-      if (typingTimeout) {
-        clearTimeout(typingTimeout);
+    if (!location.pathname.includes('/shop') && !location.pathname.includes('/category')) navigator('/shop');
+
+      if (event.type === 'click') {
+        onStopTyping();
+      } else {
+        if (!event.target.value) {
+          setFindedProducts([]);
+          return clearTimeout(typingTimeout);
+        }
+
+        if (typingTimeout) {
+          clearTimeout(typingTimeout);
+        }
+
+        setTypingTimeout(
+          setTimeout(() => {
+            onStopTyping();
+          }, 1000)
+        );
       }
-
-      setTypingTimeout(
-        setTimeout(() => {
-          onStopTyping();
-        }, 1000)
-      );
-    }
   }
 
   window.onscroll = function () {

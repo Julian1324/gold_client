@@ -1,23 +1,31 @@
 import { useEffect, useState } from "react";
 import { getAllProducts } from "../../helpers/axiosHelper";
 import CardProduct from "../../components/Cards/CardProduct";
-import { getCategorySlice } from "../../context/store/store";
+import { getCategorySlice, getUserSlice } from "../../context/store/store";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [paginator, setPaginator] = useState({});
     const { getCategoryImageByID } = getCategorySlice();
+    const { getFindedProducts } = getUserSlice();
+    const findedProducts = getFindedProducts();
 
     useEffect(() => {
         const getProducts = async () => {
-            const response = await getAllProducts({ page: 1 });
-            setProducts(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(product.category_id) })));
-            delete response.data.docs;
-            setPaginator(response.data);
+
+            const mappedProducts = (product) => ({ ...product, ...getCategoryImageByID(product.category_id) });
+            if (findedProducts.length) {
+                setProducts(findedProducts.map(mappedProducts));
+            } else {
+                const response = await getAllProducts({ page: 1 });
+                setProducts(response.data.docs.map(mappedProducts));
+                delete response.data.docs;
+                setPaginator(response.data);
+            }
         }
         getProducts();
-    }, [getCategoryImageByID]);
+    }, [getCategoryImageByID, findedProducts]);
 
     const onScrollProducts = async (nextPage) => {
         const response = await getAllProducts({ page: nextPage });

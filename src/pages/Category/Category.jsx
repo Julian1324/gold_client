@@ -20,7 +20,7 @@ const Category = () => {
                 setProducts(findedProducts.map(mappedProducts));
             } else {
                 const response = await getProductsByCategory({ category_id, page: 1 });
-                setProducts(response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(category_id) })));
+                setProducts(response.data.docs.map(mappedProducts));
                 delete response.data.docs;
                 setPaginator(response.data);
             }
