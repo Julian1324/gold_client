@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
-import goldServiceLogo from '../../assets/goldServiceLogo.png';
+import goldServiceLogo from '../../assets/servicioGold.webp';
 import './MyNavbar.css';
 import { getCategorySlice, getUserSlice, getCartSlice } from '../../context/store/store';
 import { UserNav } from '../UserNav/UserNav';
@@ -17,11 +17,14 @@ import CartModal from '../Modal/CartModal';
 import NewProductModal from '../Modal/NewProductModal';
 import { navCategories } from './navBarCategories';
 import { AlertModal } from '../Modal/AlertModal';
+import { constants } from '../../context/constants';
+import MyNavbarMobile from './MyNavbarMobile';
+import FixedNavbarMobile from './FixedNavbarMobile';
 
 const MyNavbar = () => {
   const navigator = useNavigate();
   const myNavbarRef = useRef(null);
-  const { headers, setFindedProducts } = getUserSlice();
+  const { headers, setFindedProducts, setMobileDevice, getMobileDevice } = getUserSlice();
   const { categories, updateCategories } = getCategorySlice();
   const { items, getSubtotal } = getCartSlice();
   const [hover, setHover] = useState();
@@ -31,6 +34,8 @@ const MyNavbar = () => {
   const location = useLocation();
   const [alertModalShow, setAlertModalShow] = useState(false);
   const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
+  const isMobileDevice = getMobileDevice();
+  const [toggleMenu, setToggleMenu] = useState(false);
 
   const myCategories = useMemo(() => {
     return [...navCategories];
@@ -40,6 +45,9 @@ const MyNavbar = () => {
     const getMyCategories = async () => {
       setFindedProducts([]);
       inputRef.current.value = '';
+
+      if (window.innerWidth < constants.WIDTH_MOBILE) setMobileDevice(true);
+
       const response = await getCategories();
       const categoriesMap = myCategories.reduce((acc, category) => {
         acc[category.name] = category.image;
@@ -49,7 +57,7 @@ const MyNavbar = () => {
       updateCategories(updatedCategories);
     }
     getMyCategories();
-  }, [updateCategories, myCategories, setFindedProducts]);
+  }, [updateCategories, myCategories, setFindedProducts, setMobileDevice]);
 
   const onCategory = (event, categoryName) => {
     event.preventDefault();
@@ -114,14 +122,22 @@ const MyNavbar = () => {
     }
   }
 
+  const MaterialMenu = () => {
+    return <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 24 24"><path fill="#ffffff" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z" /></svg>
+  }
+
   return (
     <>
       <Navbar expand="lg" className="d-flex background-color-dark flex-column">
-        <Container>
+        <Container className='contResponsive'>
           <Navbar.Brand href="/" className='d-flex text-light cont'>
             <Image src={goldServiceLogo} rounded className='goldServiceLogo' />
           </Navbar.Brand>
-          <InputGroup className="d-flex align-items-center w-50">
+          <InputGroup
+            className={
+              `d-flex align-items-center ${isMobileDevice ? 'inputResponsive mt-3' : 'w-50'}`
+            }
+          >
             <Dropdown>
               <Dropdown.Toggle variant="light" id="dropdown-basic">
                 Categorías
@@ -142,8 +158,8 @@ const MyNavbar = () => {
               </Dropdown.Menu>
             </Dropdown>
             <Form.Control
-              placeholder="Busca lo que deseas"
-              aria-label="Busca lo que deseas"
+              placeholder="Buscar"
+              aria-label="Buscar"
               aria-describedby="basic-addon2"
               onChange={onSearch}
               ref={inputRef}
@@ -158,7 +174,11 @@ const MyNavbar = () => {
 
             </Button>
           </InputGroup>
-          <div className='d-flex text-light w-25 justify-content-around'>
+          <div
+            className={
+              `d-flex text-light ${isMobileDevice ? 'w-100 justify-content-center mt-4 mb-4' : 'w-25 justify-content-around'}`
+            }
+          >
             {!Object.keys(headers).length ?
               <NavLink to='/signin' className='d-flex onHover'
                 style={{
@@ -172,7 +192,13 @@ const MyNavbar = () => {
               :
               <UserNav />
             }
-            <NavLink to='/cart' className='d-flex navCart' style={{ cursor: 'pointer' }} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+            <NavLink
+              to='/cart'
+              className='d-flex navCart'
+              style={{ cursor: 'pointer' }}
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
               <div className='d-flex align-items-center ms-3'>
                 {!!items.length &&
                   <span className="position-relative top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
@@ -198,24 +224,27 @@ const MyNavbar = () => {
             <NewProductModal />
           </div>
         </Container>
-        <hr />
-        <Container className='navContainer background-color-dark' ref={myNavbarRef} >
-          {myCategories.map((category, categoryIndex) => {
-            const imageStyle = {
-              width: '2.5rem',
-              height: '2.5rem',
-              backgroundImage: `url(${category.icon})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }
-            return (
-              <div className='divContainer' key={categoryIndex} onClick={(event) => onCategory(event, category.name)}>
-                <div style={imageStyle}></div>
-                <div className='nameStyle'>{category.name}</div>
-              </div>
-            );
-          })}
-        </Container>
+        {!isMobileDevice &&
+          <Container className='navContainer background-color-dark' ref={myNavbarRef} >
+            <hr />
+            {myCategories.map((category, categoryIndex) => {
+              const imageStyle = {
+                width: '2.5rem',
+                height: '2.5rem',
+                backgroundImage: `url(${category.icon})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }
+              return (
+                <div className='divContainer' key={categoryIndex} onClick={(event) => onCategory(event, category.name)}>
+                  <div style={imageStyle}></div>
+                  <div className='nameStyle'>{category.name}</div>
+                </div>
+              );
+            })}
+          </Container>
+        }
+
       </Navbar>
       <AlertModal
         show={alertModalShow}

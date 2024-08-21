@@ -35,6 +35,7 @@ const PAYMENT_STATE = {
     Pending: 'Pendiente',
     Cancelled: 'Cancelado'
 };
+const WIDTH_MOBILE = 500;
 const KEY_STORAGE_BASE = 'GLDST0';
 
 export const constants = Object.freeze({
@@ -70,5 +71,6 @@ export const constants = Object.freeze({
     USER_UPDATE_CART,
     USER_PURCHASE,
     USER_MOVEMENTS,
+    WIDTH_MOBILE,
     KEY_STORAGE_BASE
 });

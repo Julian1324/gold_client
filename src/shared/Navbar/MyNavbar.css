@@ -17,9 +17,9 @@ hr {
 }
 
 .goldServiceLogo {
-    margin-top: -1.1rem;
-    width: 8rem;
-    height: 8rem;
+    margin-top: -3.9rem;
+    width: 100%;
+    height: 12rem;
     background-size: cover;
 }
 
@@ -79,4 +79,17 @@ hr {
 
 .bg-color-black {
     background-color: #111410;
+}
+
+/* Responsive navbar */
+
+@media only screen and (max-width: 435px) {
+    .contResponsive {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+    }
+
+    .inputResponsive {
+        width: 84vw !important;
+    }
 }
