@@ -16,6 +16,7 @@ import { currencyValue } from '../../helpers/currencyHelper';
 import CartModal from '../Modal/CartModal';
 import NewProductModal from '../Modal/NewProductModal';
 import { navCategories } from './navBarCategories';
+import { AlertModal } from '../Modal/AlertModal';
 
 const MyNavbar = () => {
   const navigator = useNavigate();
@@ -28,6 +29,8 @@ const MyNavbar = () => {
   const [typingTimeout, setTypingTimeout] = useState(null);
   const [loadingQuery, setLoadingQuery] = useState(false);
   const location = useLocation();
+  const [alertModalShow, setAlertModalShow] = useState(false);
+  const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
 
   const myCategories = useMemo(() => {
     return [...navCategories];
@@ -62,6 +65,10 @@ const MyNavbar = () => {
     const query = inputRef.current.value;
     const response = await queryProducts({ query });
     setLoadingQuery(response.loadingReq);
+    if (!response.data.length) {
+      setAlertModalShow(true);
+      setMessagesToModal({ title: 'Resultado de busqueda', body: `No se encontraron productos "${query}".` });
+    }
     setFindedProducts(response.data);
   }
 
@@ -69,24 +76,24 @@ const MyNavbar = () => {
 
     if (!location.pathname.includes('/shop') && !location.pathname.includes('/category')) navigator('/shop');
 
-      if (event.type === 'click') {
-        onStopTyping();
-      } else {
-        if (!event.target.value) {
-          setFindedProducts([]);
-          return clearTimeout(typingTimeout);
-        }
-
-        if (typingTimeout) {
-          clearTimeout(typingTimeout);
-        }
-
-        setTypingTimeout(
-          setTimeout(() => {
-            onStopTyping();
-          }, 1000)
-        );
+    if (event.type === 'click') {
+      onStopTyping();
+    } else {
+      if (!event.target.value) {
+        setFindedProducts([]);
+        return clearTimeout(typingTimeout);
       }
+
+      if (typingTimeout) {
+        clearTimeout(typingTimeout);
+      }
+
+      setTypingTimeout(
+        setTimeout(() => {
+          onStopTyping();
+        }, 1000)
+      );
+    }
   }
 
   window.onscroll = function () {
@@ -141,7 +148,7 @@ const MyNavbar = () => {
               onChange={onSearch}
               ref={inputRef}
             />
-            <Button variant="light" onClick={onSearch}>
+            <Button variant="light" onClick={onSearch} disabled={loadingQuery}>
               {loadingQuery
                 ? <svg className='spinner-border spinner-border-sm'></svg>
                 : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
@@ -210,6 +217,14 @@ const MyNavbar = () => {
           })}
         </Container>
       </Navbar>
+      <AlertModal
+        show={alertModalShow}
+        onHide={() => setAlertModalShow(false)}
+        title={messagesToModal.title}
+        bodyText={messagesToModal.body}
+        size='md'
+        closeButton={0}
+      />
     </>
   );
 }

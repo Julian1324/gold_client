@@ -77,7 +77,7 @@ const Purchase = () => {
 
     return (
         <>
-            <div className="d-flex justify-content-center bg-secondary-subtle">
+            <div className="d-flex justify-content-center bg-secondary-subtle" style={{height: '90dvh'}}>
                 <div className="d-flex flex-column w-50 mb-5">
                     <h3 className='mt-4'>
                         Tu pedido

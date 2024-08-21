@@ -42,7 +42,8 @@ const Category = () => {
             next={() => onScrollProducts(paginator.nextPage)}
             hasMore={paginator.hasNextPage}
             loader={<div>Loading......................................</div>}
-            className="d-flex p-5 flex-wrap justify-content-center"
+            className="d-flex p-5 flex-wrap justify-content-center align-items-end"
+            style={{height: '70dvh'}}
         >
             {products.map((product, productIndex) => {
                 return (
