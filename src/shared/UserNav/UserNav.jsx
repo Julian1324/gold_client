@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { getUser } from '../../helpers/axiosHelper';
 
-const UserNav = () => {
+const UserNav = ({ letters }) => {
   const navigator = useNavigate();
   const [hover, setHover] = useState(false);
   const { userName, headers, updateUserName, updateHeaders, getWallet, updateWallet } = getUserSlice();
@@ -80,10 +80,12 @@ const UserNav = () => {
       {!Object.keys(headers).length ?
         <div className='d-flex'>
           <IconBox />
-          <div className='d-flex flex-column align-items-start ms-2'>
-            <span>Inicia sesión</span>
-            <span>a tu cuenta</span>
-          </div>
+          {letters &&
+            <div className='d-flex flex-column align-items-start ms-2'>
+              <span>Inicia sesión</span>
+              <span>a tu cuenta</span>
+            </div>
+          }
         </div>
         :
         <div className='d-flex'>
