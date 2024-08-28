@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
-import goldServiceLogo from '../../assets/servicioGold.webp';
+import goldServiceLogo from '../../assets/servicioGold2.webp';
 import './MyNavbar.css';
 import { getCategorySlice, getUserSlice, getCartSlice } from '../../context/store/store';
 import { UserNav } from '../UserNav/UserNav';
@@ -122,15 +122,11 @@ const MyNavbar = () => {
     }
   }
 
-  const MaterialMenu = () => {
-    return <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 24 24"><path fill="#ffffff" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z" /></svg>
-  }
-
   return (
     <>
       <Navbar expand="lg" className="d-flex background-color-dark flex-column">
         <Container className='contResponsive'>
-          <Navbar.Brand href="/" className='d-flex text-light cont justify-content-between'>
+          <Navbar.Brand href="/" className={`d-flex text-light cont ${isMobileDevice ? 'w-100 justify-content-between mx-3': 'justify-content-center'}`}>
             <Image src={goldServiceLogo} rounded className='goldServiceLogo' />
             {isMobileDevice &&
               <div className='d-flex align-items-center justify-content-between'>
@@ -265,6 +261,7 @@ const MyNavbar = () => {
         }
 
       </Navbar>
+      <FixedNavbarMobile/>
       <AlertModal
         show={alertModalShow}
         onHide={() => setAlertModalShow(false)}

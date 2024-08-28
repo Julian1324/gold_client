@@ -14,12 +14,11 @@ hr {
 .cont {
     height: 6rem;
     overflow: hidden;
+    width: 20%;
 }
 
 .goldServiceLogo {
-    margin-top: -3.9rem;
-    width: 100%;
-    height: 12rem;
+    height: 100%;
     background-size: cover;
 }
 
@@ -87,9 +86,17 @@ hr {
     .contResponsive {
         justify-content: center !important;
         flex-wrap: wrap !important;
+        height: 10rem !important;
+        /* position: fixed;
+        top: 0; */
     }
 
     .inputResponsive {
         width: 84vw !important;
+    }
+
+    .fixedMenu {
+        position: fixed;
+        bottom: 0;
     }
 }

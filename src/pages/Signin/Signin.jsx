@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Signin.css';
 import Spinner from 'react-bootstrap/Spinner';
-import goldServiceLogo from '../../assets/goldServiceLogo.png';
+import goldServiceLogo from '../../assets/Crop_servicioGold.webp';
 import { useForm } from 'react-hook-form';
 import { signInUser } from '../../helpers/axiosHelper';
 import { AlertModal } from '../../shared/Modal/AlertModal';
