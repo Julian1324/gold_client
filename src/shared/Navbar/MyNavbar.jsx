@@ -24,6 +24,7 @@ import FixedNavbarMobile from './FixedNavbarMobile';
 const MyNavbar = () => {
   const navigator = useNavigate();
   const myNavbarRef = useRef(null);
+  const navMobToHide = useRef(null);
   const { headers, setFindedProducts, setMobileDevice, getMobileDevice } = getUserSlice();
   const { categories, updateCategories } = getCategorySlice();
   const { items, getSubtotal } = getCartSlice();
@@ -35,6 +36,7 @@ const MyNavbar = () => {
   const [alertModalShow, setAlertModalShow] = useState(false);
   const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
   const isMobileDevice = getMobileDevice();
+  const [scrollPosition, setScrollPosition] = useState(window.scrollY);
   const [toggleMenu, setToggleMenu] = useState(false);
 
   const myCategories = useMemo(() => {
@@ -105,6 +107,7 @@ const MyNavbar = () => {
   }
 
   window.onscroll = function () {
+    setScrollPosition(window.scrollY);
     if (!myNavbarRef.current) return;
     const currentScrollPos = window.scrollY;
     const navContainer = myNavbarRef.current;
@@ -124,26 +127,28 @@ const MyNavbar = () => {
 
   return (
     <>
-      <Navbar expand="lg" className="d-flex background-color-dark flex-column">
-        <Container className='contResponsive'>
-          <Navbar.Brand href="/" className={`d-flex text-light cont ${isMobileDevice ? 'w-100 justify-content-between mx-3': 'justify-content-center'}`}>
-            <Image src={goldServiceLogo} rounded className='goldServiceLogo' />
-            {isMobileDevice &&
-              <div className='d-flex align-items-center justify-content-between'>
-                <UserNav letters={false} />
-                <div className='d-flex align-items-center ms-3'>
-                  {!!items.length &&
-                    <span className="position-relative top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
-                      {items.length}
-                    </span>
-                  }
-                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-cart2" viewBox="0 0 16 16">
-                    <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
-                  </svg>
+      <Navbar expand="lg" className={`d-flex background-color-dark flex-column ${isMobileDevice && 'position-fixed w-100 z-3'}`}>
+        <Container className={`contResponsive ${(isMobileDevice && (scrollPosition < 150)) && 'h-50'}`}>
+          {(scrollPosition < 150) &&
+            <Navbar.Brand href="/" className={`d-flex text-light cont ${isMobileDevice ? 'w-100 justify-content-between mx-3' : 'justify-content-center'}`}>
+              <Image src={goldServiceLogo} rounded className='goldServiceLogo' />
+              {isMobileDevice &&
+                <div className='d-flex align-items-center justify-content-between'>
+                  <UserNav letters={false} />
+                  <div className='d-flex align-items-center ms-3'>
+                    {!!items.length &&
+                      <span className="position-relative top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
+                        {items.length}
+                      </span>
+                    }
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-cart2" viewBox="0 0 16 16">
+                      <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-            }
-          </Navbar.Brand>
+              }
+            </Navbar.Brand>
+          }
           <InputGroup
             className={
               `d-flex align-items-center ${isMobileDevice ? 'inputResponsive mt-3' : 'w-50'}`
@@ -261,7 +266,7 @@ const MyNavbar = () => {
         }
 
       </Navbar>
-      <FixedNavbarMobile/>
+      {isMobileDevice && <FixedNavbarMobile />}
       <AlertModal
         show={alertModalShow}
         onHide={() => setAlertModalShow(false)}

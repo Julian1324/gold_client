@@ -21,7 +21,8 @@ const AutoScrollSplide = () => {
             pauseOnFocus: false,
             rewind: false,
             speed: 1,
-        }
+        },
+        lazyLoad: 'nearby'
     }
 
     useEffect(() => {
