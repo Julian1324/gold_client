@@ -80,6 +80,14 @@ hr {
     background-color: #111410;
 }
 
+.modalResponsive {
+    width: 17vw;
+}
+
+.detailImg {
+    width: 5vw;
+}
+
 /* Responsive navbar */
 
 @media only screen and (max-width: 435px) {
@@ -96,6 +104,14 @@ hr {
     .fixedMenu {
         position: fixed;
         bottom: 0;
+    }
+
+    .modalResponsive {
+        width: 70vw;
+    }
+
+    .detailImg {
+        width: 15vw !important;
     }
 }
 

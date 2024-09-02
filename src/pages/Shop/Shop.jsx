@@ -3,6 +3,7 @@ import { getAllProducts } from "../../helpers/axiosHelper";
 import CardProduct from "../../components/Cards/CardProduct";
 import { getCategorySlice, getUserSlice } from "../../context/store/store";
 import InfiniteScroll from "react-infinite-scroll-component";
+import './Shop.css'
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -41,8 +42,7 @@ const Shop = () => {
             next={() => onScrollProducts(paginator.nextPage)}
             hasMore={paginator.hasNextPage}
             loader={<div>Loading......................................</div>}
-            className="d-flex p-5 flex-wrap justify-content-center align-items-end"
-            style={{height: '70dvh'}}
+            className="d-flex p-5 flex-wrap justify-content-center align-items-end infinityResponsive"
         >
             {products.map((product, productIndex) => {
                 return (

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getProductsByCategory } from "../../helpers/axiosHelper";
 import { getCategorySlice, getUserSlice } from "../../context/store/store";
 import InfiniteScroll from "react-infinite-scroll-component";
+import '../Category/Category.css';
 
 const Category = () => {
     const [products, setProducts] = useState([]);
@@ -42,8 +43,7 @@ const Category = () => {
             next={() => onScrollProducts(paginator.nextPage)}
             hasMore={paginator.hasNextPage}
             loader={<div>Loading......................................</div>}
-            className="d-flex p-5 flex-wrap justify-content-center align-items-end"
-            style={{height: '70dvh'}}
+            className="d-flex p-5 flex-wrap justify-content-center align-items-end infinityResponsive"
         >
             {products.map((product, productIndex) => {
                 return (
