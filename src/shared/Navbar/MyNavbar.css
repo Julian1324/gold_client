@@ -98,3 +98,9 @@ hr {
         bottom: 0;
     }
 }
+
+@media only screen and (max-width: 800px) {
+    .divContainer {
+        width: auto;
+    }
+}

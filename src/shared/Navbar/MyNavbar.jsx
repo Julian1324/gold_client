@@ -18,13 +18,12 @@ import NewProductModal from '../Modal/NewProductModal';
 import { navCategories } from './navBarCategories';
 import { AlertModal } from '../Modal/AlertModal';
 import { constants } from '../../context/constants';
-import MyNavbarMobile from './MyNavbarMobile';
+// import MyNavbarMobile from './MyNavbarMobile';
 import FixedNavbarMobile from './FixedNavbarMobile';
 
 const MyNavbar = () => {
   const navigator = useNavigate();
   const myNavbarRef = useRef(null);
-  const navMobToHide = useRef(null);
   const { headers, setFindedProducts, setMobileDevice, getMobileDevice } = getUserSlice();
   const { categories, updateCategories } = getCategorySlice();
   const { items, getSubtotal } = getCartSlice();
@@ -37,7 +36,7 @@ const MyNavbar = () => {
   const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
   const isMobileDevice = getMobileDevice();
   const [scrollPosition, setScrollPosition] = useState(window.scrollY);
-  const [toggleMenu, setToggleMenu] = useState(false);
+  // const [toggleMenu, setToggleMenu] = useState(false);
 
   const myCategories = useMemo(() => {
     return [...navCategories];
@@ -127,7 +126,10 @@ const MyNavbar = () => {
 
   return (
     <>
-      <Navbar expand="lg" className={`d-flex background-color-dark flex-column ${isMobileDevice && 'position-fixed w-100 z-3'}`}>
+      <Navbar
+        expand="lg"
+        className={`d-flex background-color-dark flex-column ${isMobileDevice && 'position-fixed w-100 z-3'}`}
+      >
         <Container className={`contResponsive ${(isMobileDevice && (scrollPosition < 150)) && 'h-50'}`}>
           {(scrollPosition < 150) &&
             <Navbar.Brand href="/" className={`d-flex text-light cont ${isMobileDevice ? 'w-100 justify-content-between mx-3' : 'justify-content-center'}`}>

@@ -22,6 +22,17 @@ const AutoScrollSplide = () => {
             rewind: false,
             speed: 1,
         },
+        breakpoints: {
+            1024: {
+                perPage: 3,
+            },
+            768: {
+                perPage: 2,
+            },
+            500: {
+                perPage: 1
+            }
+        },
         lazyLoad: 'nearby'
     }
 
