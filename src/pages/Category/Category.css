@@ -13,9 +13,12 @@
 }
 
 @media only screen and (max-width: 500px) {
+    .cardProduct:first-child {
+        margin-top: 31vh;
+    }
+
     .cardProduct {
         width: auto;
-        margin-top: 31vh;
         z-index: 1;
     }
     

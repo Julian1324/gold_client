@@ -113,6 +113,11 @@ hr {
     .detailImg {
         width: 15vw !important;
     }
+
+    .notification {
+        left: 1.3rem;
+        top: 1rem;
+    }
 }
 
 @media only screen and (max-width: 800px) {

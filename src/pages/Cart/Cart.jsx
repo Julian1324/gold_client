@@ -7,6 +7,7 @@ import { getCategorySlice } from "../../context/store/store";
 import CarritoSVG from '../../components/CartItems/CarritoSVG';
 import OrderSummary from '../../components/CartItems/OrderSummary';
 import isEqual from 'lodash.isequal';
+import './Cart.css';
 
 const Cart = () => {
     const { items, updateItems } = getCartSlice();
@@ -101,8 +102,8 @@ const Cart = () => {
 
     const NoItemsComponent = () => {
         return (
-            <div className="d-flex justify-content-center bg-secondary-subtle" style={{ height: '70vh' }}>
-                <div className='d-flex mt-5' style={{ height: '10vw' }}>
+            <div className="d-flex justify-content-center bg-secondary-subtle noItmsResponsive">
+                <div className='d-flex containerResponsive'>
                     <CarritoSVG />
                     <div className='d-flex flex-column justify-content-center'>
                         <h5>Tu Carrito está vacío</h5>

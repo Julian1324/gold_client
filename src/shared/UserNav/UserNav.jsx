@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { getUser } from '../../helpers/axiosHelper';
 
-const UserNav = ({ letters }) => {
+const UserNav = ({ letters, fixedMobile }) => {
   const navigator = useNavigate();
   const [hover, setHover] = useState(false);
   const { userName, headers, updateUserName, updateHeaders, getWallet, updateWallet } = getUserSlice();
@@ -89,11 +89,26 @@ const UserNav = ({ letters }) => {
         </div>
         :
         <div className='d-flex'>
-          <IconBox />
+          {fixedMobile
+            ? <>
+              <div className='d-flex flex-column align-items-center ms-2' style={filterAndCursorStyle}>
+                <IconBox />
+                <span>{currencyValue(getWallet())}</span>
+              </div>
+            </>
+            : <>
+              <IconBox />
+              <div className='d-flex flex-column align-items-start ms-2' style={filterAndCursorStyle}>
+                <span>{userName}</span>
+                <span>{currencyValue(getWallet())}</span>
+              </div>
+            </>
+          }
+          {/* <IconBox />
           <div className='d-flex flex-column align-items-start ms-2' style={filterAndCursorStyle}>
             <span>{userName}</span>
             <span>{currencyValue(getWallet())}</span>
-          </div>
+          </div> */}
           <div className={`position-absolute top-100 ${!hover && 'visually-hidden'} dropStyle`}>
             <div className='divOption' onClick={toMyAccount}>Mi cuenta</div>
             <div className='divOption' onClick={toMyMovements}>Pedidos</div>

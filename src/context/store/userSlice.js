@@ -1,7 +1,7 @@
 export const userSlice = (set, get) => ({
     userName: '',
     headers: {},
-    wallet: 50000,
+    wallet: 0,
     lastMovement: {},
     findedProducts: [],
     mobileDevice: false,

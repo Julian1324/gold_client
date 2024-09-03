@@ -1,22 +1,21 @@
+import { useNavigate } from 'react-router-dom';
+import { getUserSlice, getCartSlice } from '../../context/store/store';
+import { currencyValue } from '../../helpers/currencyHelper';
+import { UserNav } from '../UserNav/UserNav';
+
 const FixedNavbarMobile = () => {
 
-    const IconBox = () => {
-        return (
-            <div className={'d-flex align-items-center'}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                </svg>
-            </div>
-        );
-    }
+    const navigator = useNavigate();
+    const { items, getSubtotal } = getCartSlice();
+    const { getWallet } = getUserSlice();
 
-    const MaterialMenu = () => {
+    const Shop = () => {
         return (
-            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="currentColor" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M4 7h16v16H4zm4 2V5c0-2.21 1.795-4 4-4h0c2.21 0 4 1.795 4 4v4" /></svg>
         )
     }
 
-    const repeatedStyle = "d-flex flex-column align-items-center justify-content-center";
+    const repeatedStyle = "d-flex flex-column align-items-center justify-content-end";
 
     const Home = () => {
         return (
@@ -39,24 +38,30 @@ const FixedNavbarMobile = () => {
         >
             <div className="d-flex w-100 h-100 justify-content-around" style={{ fontSize: '0.85rem' }}>
 
-                <div className={repeatedStyle}>
+                <div className={repeatedStyle} onClick={() => navigator('/')}>
                     <Home />
                     <span>Inicio</span>
                 </div>
 
-                <div className={repeatedStyle}>
-                    <IconBox />
-                    <span>Ingreso</span>
+                <div className={repeatedStyle} onClick={() => navigator('/signin')}>
+                    <UserNav letters={false} fixedMobile={true} />
+                    {getWallet() === 0 && 'Ingreso'}
                 </div>
 
-                <div className={repeatedStyle}>
-                    <MaterialMenu />
-                    <span>Menú</span>
+                <div className={repeatedStyle} onClick={() => navigator('/shop')}>
+                    <Shop />
+                    <span>Tienda</span>
                 </div>
 
-                <div className={repeatedStyle}>
+                <div className={repeatedStyle} onClick={() => navigator('/cart')}>
+                    {!!items.length &&
+                        <span className="position-relative translate-middle badge rounded-pill text-bg-danger notification">
+                            {items.length}
+                        </span>
+                    }
                     <Cart />
-                    <span>$0</span>
+                    <span>{currencyValue(getSubtotal())}</span>
+                    {/* <span>$0</span> */}
                 </div>
             </div>
         </div>
