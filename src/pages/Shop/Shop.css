@@ -14,7 +14,7 @@
 
 @media only screen and (max-width: 500px) {
     .cardProduct:first-child {
-        margin-top: 27vh;
+        margin-top: 24vh;
     }
 
     .cardProduct {
@@ -23,7 +23,7 @@
     }
     
     .infinityResponsive {
-        height: 95dvh !important;
+        height: auto;
     }
 
     .disabledMask {
