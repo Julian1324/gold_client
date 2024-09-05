@@ -26,4 +26,17 @@
         width: 10rem;
         height: 10rem;
     }
+
+    .cartResponsive {
+        flex-direction: column;
+    }
+
+    .contCartResponsive {
+        margin-top: 24dvh;
+    }
+
+    .itemResponsive {
+        flex-direction: column;
+        height: auto !important;
+    }
 }

@@ -11,13 +11,14 @@ import './Cart.css';
 
 const Cart = () => {
     const { items, updateItems } = getCartSlice();
-    const { headers } = getUserSlice();
+    const { headers, getMobileDevice } = getUserSlice();
     const { getCategoryImageByID } = getCategorySlice();
     const [myItems, setMyItems] = useState([]);
     const cartRef = useRef(null);
     const itemsDivRef = useRef(null);
     const itemsRef = useRef([]);
     const [containerHeight, setcontainerHeight] = useState(500);
+    const isMobileDevice = getMobileDevice();
     const getUpdatedItems = useCallback(() => {
         return myItems.map(({ _id, name, image, price, discount, quantityToBuy }) => ({
             _id,
@@ -55,19 +56,19 @@ const Cart = () => {
         if (!cartRef.current && !itemsDivRef.current && !itemsRef.current.length) return;
         const firstItemRef = itemsRef.current[0];
         const proportion = containerHeight / itemsRef.current.length;
-        const recommendedValue = firstItemRef.offsetHeight + firstItemRef.offsetHeight * 20/100;
+        const recommendedValue = firstItemRef.offsetHeight + firstItemRef.offsetHeight * 20 / 100;
         if (proportion < recommendedValue) setcontainerHeight(recommendedValue * itemsRef.current.length);
     }, [getUpdatedItems, updateItems, myItems, containerHeight]);
 
     const CartComponent = () => {
         return (
             <div
-                className="d-flex justify-content-center bg-secondary-subtle"
+                className="d-flex justify-content-center bg-secondary-subtle cartResponsive"
                 ref={cartRef}
                 style={{ height: (containerHeight + 'pt') }}
             >
                 <div
-                    className="d-flex flex-column h-100"
+                    className="d-flex flex-column h-100 contCartResponsive"
                     ref={itemsDivRef}
                 >
                     <h3 className='mt-4'>
@@ -75,6 +76,7 @@ const Cart = () => {
                     </h3>
                     {myItems.map((item, itemIndex) =>
                         <div
+                            className='d-flex'
                             ref={el => itemsRef.current[itemIndex] = el}
                             key={itemIndex}
                         >
@@ -91,9 +93,11 @@ const Cart = () => {
                     )}
                 </div>
                 <div className='d-flex flex-column position-relative' style={{ width: '25vw' }}>
-                    <h3 className='mt-4 position-fixed'>
-                        Resumen de la orden
-                    </h3>
+                    {!isMobileDevice &&
+                        <h3 className='mt-4 position-fixed'>
+                            Resumen de la orden
+                        </h3>
+                    }
                     <OrderSummary myItems={myItems} />
                 </div>
             </div>
