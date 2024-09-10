@@ -76,7 +76,7 @@ const Cart = () => {
                     </h3>
                     {myItems.map((item, itemIndex) =>
                         <div
-                            className='d-flex'
+                            className='d-flex justify-content-center'
                             ref={el => itemsRef.current[itemIndex] = el}
                             key={itemIndex}
                         >
@@ -88,6 +88,7 @@ const Cart = () => {
                                 price={item.price}
                                 discount={item.discount}
                                 quantityToBuy={item.quantityToBuy}
+                                isMobileDevice={isMobileDevice}
                             />
                         </div>
                     )}

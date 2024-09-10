@@ -7,7 +7,7 @@ import { getCartSlice } from "../../context/store/store";
 import { getProduct } from '../../helpers/axiosHelper';
 // import DisabledMask from './DisabledMask';
 
-const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantityToBuy }) => {
+const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantityToBuy, isMobileDevice }) => {
     const { updateQuantity, deleteItem } = getCartSlice();
     const [loadingReqMas, setLoadingReqMas] = useState(false);
     const [loadingReqMenos, setLoadingReqMenos] = useState(false);
@@ -64,10 +64,12 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
 
     return (
         <>
-            <div className="d-flex align-items-center mt-2 me-4 bg-light rounded position-relative itemResponsive" style={{ height: '18vh' }}>
+            <div className="d-flex align-items-center mt-2 bg-light rounded position-relative itemResponsive" style={{ height: '18vh' }}>
                 {/* {!isChecked && <DisabledMask />} */}
                 <div className='d-flex align-items-center bg-light rounded position-relative' style={{ height: '18vh' }}>
-                    <Form.Check type={'checkbox'} id={'checkbox'} className='ms-4 z-3' checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
+                    {!isMobileDevice &&
+                        <Form.Check type={'checkbox'} id={'checkbox'} className='ms-4 z-3' checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
+                    }
                     <img src={image} className="rounded ms-4" alt="" style={{ width: '5vw' }} />
                     <div className='d-flex flex-column align-items-top m-5' style={{ height: '5vw', width: '' }}>
                         <h5>{name}</h5>
