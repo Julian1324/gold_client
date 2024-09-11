@@ -17,6 +17,22 @@
     width: 98%;
 }
 
+.counterResponsive {
+    height: 100%;
+}
+
+.headerResponsive {
+    height: 18vh;
+}
+
+.imgMobile {
+    margin-left: 1.5rem;
+}
+
+.summaryResponsive {
+    margin-top: 4.5rem;
+}
+
 @media only screen and (max-width: 500px) {
     .containerResponsive {
         margin-top: 18rem;
@@ -44,5 +60,25 @@
         flex-direction: column;
         height: auto !important;
         margin-right: 0rem !important;
+    }
+
+    .counterResponsive {
+        height: 5rem !important;
+    }
+
+    .headerResponsive {
+        height: 11vh;
+        width: 100%;
+    }
+
+    .imgMobile {
+        margin-top: 2rem !important;
+        width: 11vw !important;
+    }
+
+    .summaryResponsive {
+        margin-top: -7.2rem !important;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        width: 100%;
     }
 }

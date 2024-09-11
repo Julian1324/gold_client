@@ -66,11 +66,11 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
         <>
             <div className="d-flex align-items-center mt-2 bg-light rounded position-relative itemResponsive" style={{ height: '18vh' }}>
                 {/* {!isChecked && <DisabledMask />} */}
-                <div className='d-flex align-items-center bg-light rounded position-relative' style={{ height: '18vh' }}>
+                <div className='d-flex align-items-center bg-light rounded position-relative headerResponsive'>
                     {!isMobileDevice &&
                         <Form.Check type={'checkbox'} id={'checkbox'} className='ms-4 z-3' checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
                     }
-                    <img src={image} className="rounded ms-4" alt="" style={{ width: '5vw' }} />
+                    <img src={image} className="rounded imgMobile" alt="" style={{ width: '5vw' }} />
                     <div className='d-flex flex-column align-items-top m-5' style={{ height: '5vw', width: '' }}>
                         <h5>{name}</h5>
                         <span className='d-flex mb-2 h-100 align-items-end'>
@@ -83,7 +83,7 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
                         </span>
                     </div>
                 </div>
-                <div className='d-flex align-items-center h-100'>
+                <div className='d-flex align-items-center counterResponsive'>
                     <div>
                         {!discount ?
                             <div className='text-success'>

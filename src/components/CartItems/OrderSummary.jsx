@@ -63,7 +63,7 @@ const OrderSummary = ({ myItems }) => {
     const onFinishShopping = () => navigator('/purchase');
 
     return (
-        <div className='bg-light rounded v-100 flex-column p-3 position-fixed' style={{marginTop: '4.5rem'}}>
+        <div className='bg-light rounded v-100 flex-column p-3 position-fixed summaryResponsive'>
             <div className='d-flex mb-2 justify-content-between'>
                 Productos ({productsSummary.counter})
                 <span>{currencyValue(productsSummary.totalProducts)} {constants.CURRENCY_NAME}</span>
