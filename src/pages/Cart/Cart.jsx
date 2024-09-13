@@ -56,9 +56,10 @@ const Cart = () => {
         if (!cartRef.current && !itemsDivRef.current && !itemsRef.current.length) return;
         const firstItemRef = itemsRef.current[0];
         const proportion = containerHeight / itemsRef.current.length;
-        const recommendedValue = firstItemRef.offsetHeight + firstItemRef.offsetHeight * 20 / 100;
+        const mobileUnits = isMobileDevice ? 70 : 20; // Revisar responsive mobile
+        const recommendedValue = firstItemRef.offsetHeight + firstItemRef.offsetHeight * mobileUnits / 100;
         if (proportion < recommendedValue) setcontainerHeight(recommendedValue * itemsRef.current.length);
-    }, [getUpdatedItems, updateItems, myItems, containerHeight]);
+    }, [getUpdatedItems, updateItems, myItems, containerHeight, isMobileDevice]);
 
     const CartComponent = () => {
         return (

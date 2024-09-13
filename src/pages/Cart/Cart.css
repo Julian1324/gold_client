@@ -50,6 +50,7 @@
 
     .cartResponsive {
         flex-direction: column;
+        /* height: 625pt !important; */
     }
 
     .contCartResponsive {
@@ -77,7 +78,7 @@
     }
 
     .summaryResponsive {
-        margin-top: -7.2rem !important;
+        top: 31rem;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         width: 100%;
     }
