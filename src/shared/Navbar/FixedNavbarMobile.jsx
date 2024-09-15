@@ -2,13 +2,20 @@ import { useNavigate } from 'react-router-dom';
 import { getUserSlice, getCartSlice } from '../../context/store/store';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { UserNav } from '../UserNav/UserNav';
+import { useState } from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { constants } from '../../context/constants';
+import { AlertModal } from '../Modal/AlertModal';
 
 const FixedNavbarMobile = () => {
 
     const navigator = useNavigate();
     const { items, getSubtotal } = getCartSlice();
-    const { headers } = getUserSlice();
+    const { headers, updateUserName, updateHeaders } = getUserSlice();
     const isLogged = Boolean(Object.keys(headers).length);
+    const [userOptions, setUserOptions] = useState(false);
+    const [alertModalShow, setAlertModalShow] = useState(false);
+    const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
 
     const Shop = () => {
         return (
@@ -34,43 +41,78 @@ const FixedNavbarMobile = () => {
 
     const onClickUserNav = () => {
         if (!isLogged) return navigator('/signin');
-        navigator('/movements');
+        setUserOptions((prevState) => !prevState);
+    }
+
+    const onCloseModal = () => {
+        setAlertModalShow(false);
+        updateHeaders('');
+        updateUserName('');
+        navigator('/');
+    }
+
+    const signOut = () => {
+        localStorage.clear();
+        setAlertModalShow(true);
+        setMessagesToModal({ title: constants.MODAL_TITLE_SIGNOUT, body: constants.MODAL_BODY_SIGNOUT });
+    }
+
+    const UserOptions = () => {
+        return (
+            <Dropdown.Menu show className='position-relative bottom-50'>
+                <Dropdown.Item eventKey="1" onClick={() => navigator('/account')}>Mi cuenta</Dropdown.Item>
+                <Dropdown.Item eventKey="2" onClick={() => navigator('/movements')}>Pedidos</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item eventKey="3" onClick={signOut}>Cerrar sesión</Dropdown.Item>
+            </Dropdown.Menu>
+        )
     }
 
     return (
-        <div
-            className="bg-light fixedMenu"
-            style={{ height: '9vh', width: '100dvw', zIndex: '99' }}
-        >
-            <div className="d-flex w-100 h-100 justify-content-around" style={{ fontSize: '0.85rem' }}>
+        <>
 
-                <div className={repeatedStyle} onClick={() => navigator('/')}>
-                    <Home />
-                    <span>Inicio</span>
-                </div>
+            <div
+                className="bg-light fixedMenu"
+                style={{ height: '9vh', width: '100dvw', zIndex: '99' }}
+            >
+                <div className="d-flex w-100 h-100 justify-content-around" style={{ fontSize: '0.85rem' }}>
 
-                <div className={repeatedStyle} onClick={onClickUserNav}>
-                    <UserNav letters={false} fixedMobile={true} />
-                    {!isLogged && 'Ingreso'}
-                </div>
+                    <div className={repeatedStyle} onClick={() => navigator('/')}>
+                        <Home />
+                        <span>Inicio</span>
+                    </div>
 
-                <div className={repeatedStyle} onClick={() => navigator('/shop')}>
-                    <Shop />
-                    <span>Tienda</span>
-                </div>
+                    <div className={repeatedStyle} onClick={onClickUserNav}>
+                        {userOptions && <UserOptions />}
+                        <UserNav letters={false} fixedMobile={true} />
+                        {!isLogged && 'Ingreso'}
+                    </div>
 
-                <div className={repeatedStyle} onClick={() => navigator('/cart')}>
-                    {!!items.length &&
-                        <span className="position-relative translate-middle badge rounded-pill text-bg-danger notification">
-                            {items.length}
-                        </span>
-                    }
-                    <Cart />
-                    <span>{currencyValue(getSubtotal())}</span>
-                    {/* <span>$0</span> */}
+                    <div className={repeatedStyle} onClick={() => navigator('/shop')}>
+                        <Shop />
+                        <span>Tienda</span>
+                    </div>
+
+                    <div className={repeatedStyle} onClick={() => navigator('/cart')}>
+                        {!!items.length &&
+                            <span className="position-relative translate-middle badge rounded-pill text-bg-danger notification">
+                                {items.length}
+                            </span>
+                        }
+                        <Cart />
+                        <span>{currencyValue(getSubtotal())}</span>
+                    </div>
                 </div>
             </div>
-        </div>
+            <AlertModal
+                show={alertModalShow}
+                onHide={() => onCloseModal()}
+                title={messagesToModal.title}
+                bodyText={messagesToModal.body}
+                closeButton={0}
+                timeout={true}
+            />
+        </>
     )
 }
 
