@@ -8,6 +8,7 @@ import { useState } from "react";
 import Spinner from 'react-bootstrap/Spinner';
 import { AlertModal } from "../../shared/Modal/AlertModal";
 import CardMovement from "../Cards/CardMovement";
+
 const MovementsComponent = ({ paginator, setPaginator, movements, setMovements }) => {
 
     const { headers } = getUserSlice();

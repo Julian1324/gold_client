@@ -56,7 +56,7 @@ const Cart = () => {
         if (!cartRef.current && !itemsDivRef.current && !itemsRef.current.length) return;
         const firstItemRef = itemsRef.current[0];
         const proportion = containerHeight / itemsRef.current.length;
-        const mobileUnits = isMobileDevice ? 70 : 20; // Revisar responsive mobile
+        const mobileUnits = isMobileDevice ? 70 + (myItems.length / 50) : 20;
         const recommendedValue = firstItemRef.offsetHeight + firstItemRef.offsetHeight * mobileUnits / 100;
         if (proportion < recommendedValue) setcontainerHeight(recommendedValue * itemsRef.current.length);
     }, [getUpdatedItems, updateItems, myItems, containerHeight, isMobileDevice]);

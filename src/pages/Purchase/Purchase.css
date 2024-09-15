@@ -1,0 +1,46 @@
+.pContResponsive {
+    margin-bottom: 3rem !important;
+    width: 50% !important;
+}
+
+.keepBuying {
+    width: 30%;
+}
+
+.totalBox {
+    width: 40%;
+    height: 6vh;
+}
+
+.buyButton {
+    width: 30%;
+    margin-top: 1rem !important;
+}
+
+.confirmButton {
+    width: 8vw;
+}
+
+@media only screen and (max-width: 500px) {
+    .pContResponsive {
+        margin-top: 13rem !important;
+        width: 100% !important;
+    }
+
+    .keepBuying {
+        width: 46%;
+        margin-top: 1rem !important;
+    }
+
+    .totalBox {
+        width: 54%;
+    }
+
+    .buyButton {
+        width: 46% !important;
+    }
+
+    .confirmButton {
+        width: 27vw;
+    }
+}

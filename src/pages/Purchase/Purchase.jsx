@@ -10,6 +10,7 @@ import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
 import ConfirmModal from '../../shared/Modal/ConfirmModal';
 import { AlertModal } from '../../shared/Modal/AlertModal';
+import "./Purchase.css";
 
 const Purchase = () => {
     const navigator = useNavigate();
@@ -77,8 +78,8 @@ const Purchase = () => {
 
     return (
         <>
-            <div className="d-flex justify-content-center bg-secondary-subtle" style={{height: '90dvh'}}>
-                <div className="d-flex flex-column w-50 mb-5">
+            <div className="d-flex justify-content-center bg-secondary-subtle">
+                <div className="d-flex flex-column pContResponsive">
                     <h3 className='mt-4'>
                         Tu pedido
                     </h3>
@@ -104,12 +105,12 @@ const Purchase = () => {
                         </tbody>
                     </Table>
                     <div className='d-flex w-100 justify-content-end'>
-                        <div className='d-flex justify-content-evenly align-items-center bg-white rounded' style={{ width: '40%', height: '6vh' }}>
+                        <div className='d-flex justify-content-evenly align-items-center bg-white rounded totalBox'>
                             <div className='fw-bolder'>Total:</div>
                             <div className='text-success'>{currencyValue(subtotal)} {constants.CURRENCY_NAME}</div>
                         </div>
                     </div>
-                    <Button variant="primary" style={{ width: '30%' }} onClick={() => navigator('/shop')}><LeftArrow /> Seguir comprando</Button>
+                    <Button className='keepBuying' variant="primary" onClick={() => navigator('/shop')}><LeftArrow /> Seguir comprando</Button>
                     <h3 className='mt-5'>
                         Detalles de facturación
                     </h3>
@@ -122,7 +123,7 @@ const Purchase = () => {
                     <div className='d-flex flex-column w-100 bg-light rounded p-3 mt-3 mb-4'>
                         {!Object.keys(headers).length
                             ? <> Lo siento, por el momento no hay métodos de pago disponibles. Por favor ponte en contacto con nosotros o inicie sesión.
-                                <Button disabled={true} variant="primary" className='mt-3' style={{ width: '30%' }}>Realizar compra</Button>
+                                <Button disabled={true} variant="primary" className='buyButton' style={{ width: '30%' }}>Realizar compra</Button>
                             </>
                             : <div className='d-flex flex-column'>
                                 <div>
@@ -132,8 +133,7 @@ const Purchase = () => {
                                 <Button
                                     disabled={subtotal > wallet}
                                     variant="primary"
-                                    className='mt-3'
-                                    style={{ width: '30%' }}
+                                    className='buyButton'
                                     onClick={onConfirmModal}
                                 >
                                     {loadingReq ?

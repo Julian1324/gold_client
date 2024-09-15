@@ -1,3 +1,17 @@
 .custom-header {
   border: none;
 }
+
+.myContainer {
+  max-width: 50rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .myContainer {
+    position: absolute;
+    top: 15rem;
+    margin-top: 0 !important;
+    height: 55rem !important;
+  }
+
+}
