@@ -1,7 +1,14 @@
+import { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function AlertModal({ show, onHide, title, bodyText, size = 'lg', closeButton = 1 }) {
+function AlertModal({ show, onHide, title, bodyText, size = 'lg', closeButton = 1, timeout = false }) {
+
+  useEffect(() => {
+    if (timeout && show) setTimeout(() => {
+      onHide();
+    }, 1500);
+  });
 
   return (
     <Modal

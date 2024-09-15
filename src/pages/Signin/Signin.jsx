@@ -151,6 +151,7 @@ const Signin = () => {
                 bodyText={messagesToModal.body}
                 size='md'
                 closeButton={0}
+                timeout={true}
             />
         </div>
     );
