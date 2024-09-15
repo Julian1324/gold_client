@@ -11,7 +11,7 @@ const NewProductModal = () => {
     useEffect(() => {
         if (itemAdded) setTimeout(() => {
             setItemAdded(false);
-        }, 2000);
+        }, 1500);
     }, [itemAdded, setItemAdded]);
 
     const onGoToCart = () => navigator('/cart');
@@ -19,7 +19,7 @@ const NewProductModal = () => {
     return (
         <>
             {(hover || itemAdded) &&
-                <div className="position-fixed end-0" style={{zIndex: 10}}
+                <div className="position-fixed end-0" style={{ zIndex: 10 }}
                     onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
                 >
                     <div

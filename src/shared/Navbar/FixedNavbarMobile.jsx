@@ -7,7 +7,8 @@ const FixedNavbarMobile = () => {
 
     const navigator = useNavigate();
     const { items, getSubtotal } = getCartSlice();
-    const { getWallet } = getUserSlice();
+    const { headers } = getUserSlice();
+    const isLogged = Boolean(Object.keys(headers).length);
 
     const Shop = () => {
         return (
@@ -31,6 +32,11 @@ const FixedNavbarMobile = () => {
         )
     }
 
+    const onClickUserNav = () => {
+        if (!isLogged) return navigator('/signin');
+        navigator('/movements');
+    }
+
     return (
         <div
             className="bg-light fixedMenu"
@@ -43,9 +49,9 @@ const FixedNavbarMobile = () => {
                     <span>Inicio</span>
                 </div>
 
-                <div className={repeatedStyle} onClick={() => navigator('/signin')}>
+                <div className={repeatedStyle} onClick={onClickUserNav}>
                     <UserNav letters={false} fixedMobile={true} />
-                    {getWallet() === 0 && 'Ingreso'}
+                    {!isLogged && 'Ingreso'}
                 </div>
 
                 <div className={repeatedStyle} onClick={() => navigator('/shop')}>
