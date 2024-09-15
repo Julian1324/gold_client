@@ -17,3 +17,14 @@
     width: 0.1px;
     background-color: rgba(0, 0, 0, 0.169);
 }
+
+@media only screen and (max-width: 500px) {
+    .accResponsive {
+        position: relative;
+        top: 13rem;
+    }
+
+    .cardResponsive {
+        flex-direction: column;
+    }
+}

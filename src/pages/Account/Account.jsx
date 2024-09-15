@@ -68,13 +68,13 @@ const Account = () => {
 
     return (
         <>
-            <main id="main" className="main vh-100">
+            <main id="main" className="main vh-100 accResponsive">
                 <div className="pagetitle">
                     <h1>Información de la cuenta</h1>
                 </div>
                 <section className="container d-flex justify-content-center">
                     <div className="card w-100">
-                        <div className="card-body d-flex">
+                        <div className="card-body d-flex cardResponsive">
                             <form className='d-flex flex-column align-items-center justify-content-center w-100 mt-5' onSubmit={handleSubmit(onSubmitInfo)}>
                                 <div className="col-lg-8">
                                     <label htmlFor="inputName" className="form-label">Nombre</label>
