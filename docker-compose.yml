@@ -1,0 +1,11 @@
+version: '3'
+services:
+  nginx:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      REACT_APP_API_URL: "http://localhost:3001"
+    # Vincula el servicio con el volumen para que Docker pueda acceder a los archivos de la aplicación
+    volumes:
+      - ./build:/usr/share/nginx/html:ro
