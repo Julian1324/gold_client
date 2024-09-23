@@ -29,7 +29,7 @@ const PRODUCT_STATUS_INACTIVE = 'inactive';
 const LANGUAGE_TAG = 'es-CO';
 const CURRENCY_NAME = 'COP';
 const COUNTRY_PREFIX = '57'
-const WHATSAPP_NUMBER = `${COUNTRY_PREFIX}3045991517`;
+const WHATSAPP_NUMBER = `${COUNTRY_PREFIX}3184831432`;
 const PAYMENT_STATE = {
     Completed : 'Completado',
     Pending: 'Pendiente',
