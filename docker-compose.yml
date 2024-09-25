@@ -1,7 +1,6 @@
-version: '3'
 services:
   nginx:
-    build: .
+    image: 6ix6od/nginx_container:latest
     ports:
       - "80:80"
     environment:
