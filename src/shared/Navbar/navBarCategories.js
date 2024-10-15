@@ -27,7 +27,7 @@ export const navCategories = [
         image: netflixCategoryPH
     },
     {
-        name: 'Amazon',
+        name: 'Prime video',
         icon: amazonIcon,
         image: amazonCategoryPH
     },

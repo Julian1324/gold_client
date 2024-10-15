@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import goldServiceLogo from '../../assets/Crop_servicioGold.webp';
+import '../Signin/Signin.css';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AlertModal } from '../../shared/Modal/AlertModal';
