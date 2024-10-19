@@ -17,7 +17,7 @@ const Cart = () => {
     const cartRef = useRef(null);
     const itemsDivRef = useRef(null);
     const itemsRef = useRef([]);
-    const [containerHeight, setcontainerHeight] = useState(500);
+    const [containerHeight, setcontainerHeight] = useState(700);
     const isMobileDevice = getMobileDevice();
     const getUpdatedItems = useCallback(() => {
         return myItems.map(({ _id, name, image, price, discount, quantityToBuy }) => ({

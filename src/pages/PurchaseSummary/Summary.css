@@ -4,6 +4,7 @@
 
 .myContainer {
   max-width: 50rem;
+  height: 100vh;
 }
 
 @media only screen and (max-width: 500px) {

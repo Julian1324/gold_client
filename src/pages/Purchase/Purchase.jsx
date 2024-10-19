@@ -152,7 +152,7 @@ const Purchase = () => {
             <ConfirmModal
                 show={confirmModalShow}
                 onHide={() => setConfirmModalShow(false)}
-                title={'Confirmación de compra'}
+                title={'Confirmaci\u00f3n de compra'}
                 bodyText={'¿Estás seguro que quieres realizar la compra?'}
                 size='md'
                 closeButton={0}
