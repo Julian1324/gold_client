@@ -129,7 +129,7 @@ const MyNavbar = () => {
         expand="lg"
         className={`d-flex background-color-dark flex-column ${isMobileDevice && 'position-fixed w-100 z-3'}`}
       >
-        <Container className={`contResponsive ${(isMobileDevice && (scrollPosition < 150))}`}>
+        <Container className={`contResponsive ${(isMobileDevice && (scrollPosition > 150)) && 'resize'}`}>
           {(scrollPosition < 150) &&
             <Navbar.Brand href="/" className={`d-flex text-light cont ${isMobileDevice ? 'w-100 justify-content-center mx-3' : 'justify-content-center'}`}>
               <Image src={goldServiceLogo} rounded className='goldServiceLogo' />

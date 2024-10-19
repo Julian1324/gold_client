@@ -14,7 +14,11 @@ const NewProductModal = () => {
         }, 1500);
     }, [itemAdded, setItemAdded]);
 
-    const onGoToCart = () => navigator('/cart');
+    const onGoToCart = () => {
+        setItemAdded(false);
+        setHover(false);
+        navigator('/cart');
+    }
 
     return (
         <>

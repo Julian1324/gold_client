@@ -118,6 +118,11 @@ hr {
         left: 1.3rem;
         top: 1rem;
     }
+
+    .resize {
+        margin-top: 0.8rem;
+        height: 3rem !important;
+    }
 }
 
 @media only screen and (max-width: 800px) {
