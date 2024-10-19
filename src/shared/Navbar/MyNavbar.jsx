@@ -129,7 +129,7 @@ const MyNavbar = () => {
         expand="lg"
         className={`d-flex background-color-dark flex-column ${isMobileDevice && 'position-fixed w-100 z-3'}`}
       >
-        <Container className={`contResponsive ${(isMobileDevice && (scrollPosition < 150)) && 'h-50'}`}>
+        <Container className={`contResponsive ${(isMobileDevice && (scrollPosition < 150))}`}>
           {(scrollPosition < 150) &&
             <Navbar.Brand href="/" className={`d-flex text-light cont ${isMobileDevice ? 'w-100 justify-content-center mx-3' : 'justify-content-center'}`}>
               <Image src={goldServiceLogo} rounded className='goldServiceLogo' />
@@ -137,7 +137,7 @@ const MyNavbar = () => {
           }
           <InputGroup
             className={
-              `d-flex align-items-center ${isMobileDevice ? 'inputResponsive mt-3' : 'w-50'}`
+              `d-flex align-items-center ${isMobileDevice ? 'inputResponsive' : 'w-50'}`
             }
           >
             <Dropdown>

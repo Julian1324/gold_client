@@ -72,7 +72,7 @@ const Cart = () => {
                     className="d-flex flex-column h-100 contCartResponsive"
                     ref={itemsDivRef}
                 >
-                    <h3 className='mt-4'>
+                    <h3 className={`${isMobileDevice ? 'mt-1' : 'mt-4'}`}>
                         Carro de compras
                     </h3>
                     {myItems.map((item, itemIndex) =>

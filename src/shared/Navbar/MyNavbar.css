@@ -94,7 +94,7 @@ hr {
     .contResponsive {
         justify-content: center !important;
         flex-wrap: wrap !important;
-        height: 4rem !important;
+        height: 9rem !important;
     }
 
     .inputResponsive {
