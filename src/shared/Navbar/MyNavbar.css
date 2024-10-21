@@ -5,9 +5,10 @@ html {
     box-sizing: border-box;
 }
 
-.stickk {
-    position: sticky;
+.navbarSticky {
+    position: sticky !important;
     top: 0rem;
+    z-index: 9;
 }
 
 hr {

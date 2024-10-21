@@ -63,7 +63,7 @@ const CardMovement = ({ movement, daRules }) => {
                     <Card.Title>Transacción No. {movement?.consecutive}</Card.Title>
                     <Card.Text>{timeFormatter(movement?.createdAt)}</Card.Text>
                 </div>
-                <Button className='position-absolute mt-2 me-2 top-0 end-0' variant='secondary' onClick={onCopyToClipboard} >
+                <Button className='position-absolute mt-2 me-2 top-0 end-0 z-3' variant='secondary' onClick={onCopyToClipboard} >
                     {copiedText
                         ? <> <FaCheck /> <span className='ms-2'>¡Copiado!</span> </>
                         : <TablerCopy />
