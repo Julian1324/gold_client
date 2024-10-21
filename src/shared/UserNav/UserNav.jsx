@@ -14,6 +14,8 @@ const UserNav = ({ letters, fixedMobile }) => {
   const { getCategoryImageByID } = getCategorySlice();
   const [alertModalShow, setAlertModalShow] = useState(false);
   const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
+  const { getMobileDevice } = getUserSlice();
+  const isMobileDevice = getMobileDevice();
 
   useEffect(() => {
     const getTheUser = async () => {
@@ -60,7 +62,7 @@ const UserNav = ({ letters, fixedMobile }) => {
     setMessagesToModal({ title: constants.MODAL_TITLE_SIGNOUT, body: constants.MODAL_BODY_SIGNOUT });
   }
 
-  const filterAndCursorStyle = hover ? {
+  const filterAndCursorStyle = (hover && !isMobileDevice) ? {
     filter: "invert(0.4) sepia(1) hue-rotate(20deg) saturate(100%)",
     cursor: 'pointer'
   } : undefined;
@@ -104,7 +106,7 @@ const UserNav = ({ letters, fixedMobile }) => {
               </div>
             </>
           }
-          <div className={`position-absolute top-100 ${!hover && 'visually-hidden'} dropStyle`}>
+          <div className={`position-absolute top-100 ${!hover && 'visually-hidden'} ${!isMobileDevice && 'dropStyle'}`}>
             <div className='divOption' onClick={toMyAccount}>Mi cuenta</div>
             <div className='divOption' onClick={toMyMovements}>Pedidos</div>
             <div className='divOption' onClick={signOut}>Cerrar sesión</div>

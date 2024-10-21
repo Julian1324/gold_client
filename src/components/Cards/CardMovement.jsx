@@ -26,12 +26,12 @@ const CardMovement = ({ movement, daRules }) => {
     }
 
     const onCopyToClipboard = () => {
+        const textToCopy = `Transacción No. ${movement.consecutive}.\n\nCuenta(s):${movement?.accounts.map((account) => {
+            return `\n\n· Correo: ${account.email} (${account.product.name}), contraseña: ${account.password},${account.profiles
+                ? account.profiles.map((profile) => { return ` ${profile.name} ${profile.pin && `-> PIN: ${profile.pin}`}` })
+                : account.profilesResult.map((profile) => { return ` ${profile.name} ${profile.pin && `-> PIN: ${profile.pin}`}` })}`;
+        })}`;
         if (navigator.clipboard) {
-            const textToCopy = `Transacción No. ${movement.consecutive}.\n\nCuenta(s):${movement?.accounts.map((account) => {
-                return `\n\n· Correo: ${account.email} (${account.product.name}), contraseña: ${account.password},${account.profiles
-                    ? account.profiles.map((profile) => { return ` ${profile.name} ${profile.pin && `-> PIN: ${profile.pin}`}` })
-                    : account.profilesResult.map((profile) => { return ` ${profile.name} ${profile.pin && `-> PIN: ${profile.pin}`}` })}`;
-            })}`;
 
             navigator.clipboard.writeText(textToCopy).then(() => {
                 setCopiedText(true);
@@ -41,6 +41,30 @@ const CardMovement = ({ movement, daRules }) => {
             }).catch(() => {
                 console.log("Error copiando el texto.");
             });
+        } else {
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    setCopiedText(true);
+                    setTimeout(() => {
+                        setCopiedText(false);
+                    }, 2000);
+                } else {
+                    alert("Error copiando el texto.");
+                }
+            } catch (err) {
+                console.error("Fallback: Ocurrió un error al copiar el texto", err);
+            }
+
+            document.body.removeChild(textArea);
         }
     }
 
@@ -63,7 +87,7 @@ const CardMovement = ({ movement, daRules }) => {
                     <Card.Title>Transacción No. {movement?.consecutive}</Card.Title>
                     <Card.Text>{timeFormatter(movement?.createdAt)}</Card.Text>
                 </div>
-                <Button className='position-absolute mt-2 me-2 top-0 end-0 z-3' variant='secondary' onClick={onCopyToClipboard} >
+                <Button className='position-absolute mt-2 me-2 top-0 end-0' variant='secondary' onClick={onCopyToClipboard} >
                     {copiedText
                         ? <> <FaCheck /> <span className='ms-2'>¡Copiado!</span> </>
                         : <TablerCopy />
