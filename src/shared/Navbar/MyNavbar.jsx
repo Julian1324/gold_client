@@ -24,6 +24,7 @@ import FixedNavbarMobile from './FixedNavbarMobile';
 const MyNavbar = () => {
   const navigator = useNavigate();
   const myNavbarRef = useRef(null);
+  const contResponsiveRef = useRef(null);
   const { headers, setFindedProducts, setMobileDevice, getMobileDevice } = getUserSlice();
   const { categories, updateCategories } = getCategorySlice();
   const { items, getSubtotal } = getCartSlice();
@@ -105,22 +106,26 @@ const MyNavbar = () => {
   }
 
   window.onscroll = function () {
-    setScrollPosition(window.scrollY);
-    if (!myNavbarRef.current) return;
-    const currentScrollPos = window.scrollY;
-    const navContainer = myNavbarRef.current;
-    if (currentScrollPos > 110) {
-      navContainer.style.position = "fixed";
-      navContainer.style.zIndex = "9";
-      navContainer.style.top = "0";
-      navContainer.style.maxWidth = "100vw";
-    } else {
-      navContainer.style.display = 'flex';
-      navContainer.style.position = "inherit";
-      navContainer.style.flexWrap = 'wrap';
-      navContainer.style.justifyContent = 'center';
-      navContainer.style.zIndex = 0;
-    }
+    // setScrollPosition(window.scrollY);
+    // if (!myNavbarRef.current || !contResponsiveRef.current) return;
+    // const currentScrollPos = window.scrollY;
+    // const navContainer = myNavbarRef.current;
+    // const contResponsiveHeight = contResponsiveRef.current.offsetHeight;
+    
+    // if (currentScrollPos > contResponsiveHeight) {
+    //   navContainer.style.position = "fixed";
+    //   navContainer.style.zIndex = "9";
+    //   navContainer.style.top = "0";
+    //   navContainer.style.maxWidth = "100vw";
+    //   document.body.style.marginTop = `${contResponsiveHeight}px`;
+    // } else {
+    //   navContainer.style.display = 'flex';
+    //   navContainer.style.position = "inherit";
+    //   navContainer.style.flexWrap = 'wrap';
+    //   navContainer.style.justifyContent = 'center';
+    //   navContainer.style.zIndex = '0';
+    //   document.body.style.marginTop = '0';
+    // }
   }
 
   return (
@@ -129,7 +134,7 @@ const MyNavbar = () => {
         expand="lg"
         className={`d-flex background-color-dark flex-column ${isMobileDevice && 'position-fixed w-100 z-3'}`}
       >
-        <Container className={`contResponsive ${(isMobileDevice && (scrollPosition > 150)) && 'resize'}`}>
+        <Container className={`contResponsive ${(isMobileDevice && (scrollPosition > 150)) && 'resize'}`} ref={contResponsiveRef}>
           {(scrollPosition < 150) &&
             <Navbar.Brand href="/" className={`d-flex text-light cont ${isMobileDevice ? 'w-100 justify-content-center mx-3' : 'justify-content-center'}`}>
               <Image src={goldServiceLogo} rounded className='goldServiceLogo' />
@@ -231,7 +236,7 @@ const MyNavbar = () => {
           </div>
         </Container>
         {!isMobileDevice &&
-          <Container className='navContainer background-color-dark' ref={myNavbarRef} >
+          <Container className='navContainer stickk background-color-dark' ref={myNavbarRef} >
             <hr />
             {myCategories.map((category, categoryIndex) => {
               const imageStyle = {
