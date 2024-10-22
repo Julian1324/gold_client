@@ -68,7 +68,7 @@ const Account = () => {
 
     return (
         <>
-            <main id="main" className="main vh-100 accResponsive">
+            <main id="main" className="main accResponsive">
                 <div className="pagetitle">
                     <h1>Información de la cuenta</h1>
                 </div>

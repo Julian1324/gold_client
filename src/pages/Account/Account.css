@@ -1,7 +1,7 @@
 #main{
     background-color: #0a0b0ef6;
     color: white;
-    height: 80vh;
+    height: 127vh;
 }
 
 .pagetitle{
@@ -21,7 +21,7 @@
 @media only screen and (max-width: 500px) {
     .accResponsive {
         position: relative;
-        top: 13rem;
+        top: 10rem;
     }
 
     .cardResponsive {
