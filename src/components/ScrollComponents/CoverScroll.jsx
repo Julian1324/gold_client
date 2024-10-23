@@ -9,7 +9,7 @@ const CoverScroll = () => {
         focus: 'center',
         gap: '1rem',
         pagination: false,
-        autoplay: false,
+        autoplay: true,
         arrows: false,
         interval: 3000
     };
