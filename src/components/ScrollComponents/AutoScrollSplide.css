@@ -32,11 +32,6 @@
         align-items: center;
     }
 
-    .imgResponsive {
-        height: auto;
-        width: 80%;
-    }
-
     .contentResponsive {
         margin: 3vh 0 0 0 !important;
     }
