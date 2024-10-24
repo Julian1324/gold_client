@@ -1,12 +1,18 @@
 import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 import '@splidejs/splide/dist/css/splide.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import CardBestSeller from '../Cards/CardBestSeller';
 import { useEffect, useState } from 'react';
+import { getCategorySlice, getUserSlice } from "../../context/store/store";
+import { getAllProducts } from "../../helpers/axiosHelper";
+import CardProduct from "../../components/Cards/CardProduct";
+import "./AutoScrollSplide.css";
 
 const AutoScrollSplide = () => {
 
     const [bestSellers, setBestSellers] = useState([]);
+    const { getCategoryImageByID } = getCategorySlice();
+    const { getFindedProducts } = getUserSlice();
+    const findedProducts = getFindedProducts();
 
     const autoScrollOptions = {
         type: 'loop',
@@ -37,18 +43,19 @@ const AutoScrollSplide = () => {
     }
 
     useEffect(() => {
-        const myArregloQuemado = [
-            { image: "https://via.placeholder.com/150", title: 'Nesflis', body: 'Pantalla de 30 días', price: '5000' },
-            { image: "https://via.placeholder.com/150", title: 'Nesflis', body: 'Pantalla de 30 días', price: '5000' },
-            { image: "https://via.placeholder.com/150", title: 'Nesflis', body: 'Pantalla de 30 días', price: '5000' },
-            { image: "https://via.placeholder.com/150", title: 'Nesflis', body: 'Pantalla de 30 días', price: '5000' },
-            { image: "https://via.placeholder.com/150", title: 'Nesflis', body: 'Pantalla de 30 días', price: '5000' },
-            { image: "https://via.placeholder.com/150", title: 'Nesflis', body: 'Pantalla de 30 días', price: '5000' },
-            { image: "https://via.placeholder.com/150", title: 'Nesflis', body: 'Pantalla de 30 días', price: '5000' },
-            { image: "https://via.placeholder.com/150", title: 'Nesflis', body: 'Pantalla de 30 días', price: '5000' },
-        ];
-        setBestSellers(myArregloQuemado);
-    }, []);
+        const getBestSellers = async () => {
+
+            const mappedProducts = (product) => ({ ...product, ...getCategoryImageByID(product.category_id) });
+            if (findedProducts.length) {
+                setBestSellers(findedProducts.map(mappedProducts));
+            } else {
+                const response = await getAllProducts({ page: 1 });
+                setBestSellers(response.data.docs.map(mappedProducts));
+                delete response.data.docs;
+            }
+        }
+        getBestSellers();
+    }, [getCategoryImageByID, findedProducts]);
 
     return (
         <div className='d-flex flex-column mt-5 w-100'>
@@ -57,11 +64,16 @@ const AutoScrollSplide = () => {
                 {bestSellers.map((bestSeller, bsIndex) => {
                     return (
                         <SplideSlide key={bsIndex}>
-                            <CardBestSeller
+                            <CardProduct
+                                _id={bestSeller._id}
+                                name={bestSeller.name}
                                 image={bestSeller.image}
-                                title={bestSeller.title}
-                                body={bestSeller.body}
                                 price={bestSeller.price}
+                                key={bsIndex}
+                                body={bestSeller.description}
+                                discount={bestSeller.discount}
+                                quantity={bestSeller.quantity}
+                                status={bestSeller.status}
                             />
                         </SplideSlide>
                     );
