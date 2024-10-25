@@ -1,7 +1,7 @@
 import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 import '@splidejs/splide/dist/css/splide.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { getCategorySlice, getUserSlice } from "../../context/store/store";
 import { getAllProducts } from "../../helpers/axiosHelper";
 import CardProduct from "../../components/Cards/CardProduct";
@@ -13,15 +13,16 @@ const AutoScrollSplide = () => {
     const { getCategoryImageByID } = getCategorySlice();
     const { getFindedProducts } = getUserSlice();
     const findedProducts = getFindedProducts();
+    const splideRef = useRef(null);
 
     const autoScrollOptions = {
         type: 'loop',
         gap: '10px',
-        drag: 'free',
+        drag: false,
         arrows: false,
         pagination: false,
         perPage: 4,
-        autoStart: true,
+        autoStart: false,
         autoScroll: {
             pauseOnHover: false,
             pauseOnFocus: false,
@@ -55,12 +56,49 @@ const AutoScrollSplide = () => {
             }
         }
         getBestSellers();
+
+        const splideInstance = splideRef.current.splide;
+
+        if (splideInstance) {
+
+            // const splideChildren = splideInstance.Components.Elements.list.children;
+            // console.log('splideInstance.Components', splideInstance.Components);
+            
+            const splideChildNodes = splideInstance.Components.Elements.list.childNodes;
+
+            // splideChildNodes.forEach((slide) => {
+            //     console.log('slide', slide);
+                
+            //     slide.addEventListener('click', () => {
+            //         console.log('Slide clicked:', slide);
+            //     });
+            // });
+
+            splideInstance.on('mounted', () => {
+                console.log('mounted');
+                splideChildNodes.forEach((slide) => {
+                    
+                    slide.addEventListener('click', () => {
+                        console.log('Slide clicked:', slide);
+                    });
+                });
+            });
+
+            return () => {
+                splideChildNodes.forEach((slide) => {
+                    slide.removeEventListener('click', () => {
+                        console.log('Slide clicked:', slide);
+                    });
+                });
+            };
+        }
+
     }, [getCategoryImageByID, findedProducts]);
 
     return (
         <div className='d-flex flex-column mt-5 w-100'>
             <h1 className='d-flex justify-content-center mb-5'>Los más vendidos</h1>
-            <Splide extensions={{ AutoScroll }} options={autoScrollOptions}>
+            <Splide options={autoScrollOptions} ref={splideRef}>
                 {bestSellers.map((bestSeller, bsIndex) => {
                     return (
                         <SplideSlide key={bsIndex}>
