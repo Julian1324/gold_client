@@ -4,5 +4,6 @@ export const categorySlice = (set, get) => ({
     getCategoryImageByID: (categoryID) => get().categories.reduce((acc, category) => {
         if (category._id === categoryID) acc['image'] = category.image;
         return acc;
-    }, {})
+    }, {}),
+    getCategories: () => get().categories
 });

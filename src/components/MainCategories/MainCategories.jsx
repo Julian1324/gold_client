@@ -1,6 +1,10 @@
 import CardCategory from "../Cards/CardCategory";
+import { getCategorySlice } from "../../context/store/store";
 
 const MainCategories = () => {
+
+    const { getCategories } = getCategorySlice();
+    const categoriesIDS = [...getCategories()];
 
     const categoryImages = () => {
         const images = [];
@@ -22,7 +26,7 @@ const MainCategories = () => {
             <div className="d-flex flex-wrap justify-content-evenly w-100 mt-5">
                 {categoryImages().map((category, cIndex) => {
                     return (
-                        <CardCategory image={category} key={cIndex} />
+                        <CardCategory image={category} categoryID={categoriesIDS[cIndex]?._id} key={cIndex} />
                     )
                 })}
             </div>
