@@ -3,8 +3,9 @@
 }
 
 .myBackground{
-    background-image: url(../../assets/loginBackground.jpeg);
+    background-image: url(../../assets/loginBackground.webp);
     background-size: cover;
+    background-position: center;
 }
 
 .myOpacity{
@@ -14,4 +15,10 @@
 a{
     text-decoration: underline;
     color: white;
+}
+
+@media only screen and (max-width: 500px) {
+    .imgLogo{
+        width: 26vw;
+    }
 }
