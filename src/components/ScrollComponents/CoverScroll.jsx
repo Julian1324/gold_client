@@ -21,7 +21,7 @@ const CoverScroll = () => {
         while (imagesBoolean) {
             try {
                 imageCont++;
-                images.push(require(`../../assets/CoverImages/${imageCont}.png`));
+                images.push(require(`../../assets/CoverImages/${imageCont}.webp`));
             } catch (error) {
                 return images;
             }

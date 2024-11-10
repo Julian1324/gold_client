@@ -9,6 +9,9 @@ import crunchyrollIcon from '../../assets/crunchyroll.png';
 import IPTVIcon from '../../assets/iptv.png';
 import netflixCategoryPH from '../../assets/netflixCategoryPH.webp';
 import amazonCategoryPH from '../../assets/amazonCategoryPH.webp';
+import disneyCategoryPH from '../../assets/disneyCategoryPH.webp';
+import plexCategoryPH from '../../assets/plexCategoryPH.webp';
+import crunchyrollPH from '../../assets/crunchyrollPH.webp';
 
 export const navCategories = [
     {
@@ -34,7 +37,7 @@ export const navCategories = [
     {
         name: 'Disney+',
         icon: disneyIcon,
-        image: ''
+        image: disneyCategoryPH
     },
     {
         name: 'Star+',
@@ -49,12 +52,12 @@ export const navCategories = [
     {
         name: 'Plex',
         icon: playIcon,
-        image: ''
+        image: plexCategoryPH
     },
     {
         name: 'Crunchyroll',
         icon: crunchyrollIcon,
-        image: ''
+        image: crunchyrollPH
     },
     {
         name: 'Vix',

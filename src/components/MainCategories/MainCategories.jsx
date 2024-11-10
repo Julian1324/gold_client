@@ -13,7 +13,7 @@ const MainCategories = () => {
         while (imagesBoolean) {
             try {
                 imageCont++;
-                images.push(require(`../../assets/mainCategories/${imageCont}.png`));
+                images.push(require(`../../assets/mainCategories/${imageCont}.webp`));
             } catch (error) {
                 return images;
             }
