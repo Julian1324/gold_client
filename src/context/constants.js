@@ -31,11 +31,13 @@ const CURRENCY_NAME = 'COP';
 const COUNTRY_PREFIX = '57'
 const WHATSAPP_NUMBER = `${COUNTRY_PREFIX}3184831432`;
 const PAYMENT_STATE = {
-    Completed : 'Completado',
+    Completed: 'Completado',
     Pending: 'Pendiente',
     Cancelled: 'Cancelado'
 };
 const WIDTH_MOBILE = 500;
+const FACEBOOK_PAGE = 'https://facebook.com';
+const INSTAGRAM_PAGE = 'https://instagram.com';
 const KEY_STORAGE_BASE = 'GLDST0';
 
 export const constants = Object.freeze({
@@ -72,5 +74,7 @@ export const constants = Object.freeze({
     USER_PURCHASE,
     USER_MOVEMENTS,
     WIDTH_MOBILE,
+    FACEBOOK_PAGE,
+    INSTAGRAM_PAGE,
     KEY_STORAGE_BASE
 });
