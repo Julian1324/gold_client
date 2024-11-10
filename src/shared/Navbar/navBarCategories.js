@@ -7,8 +7,8 @@ import starIcon from '../../assets/star.png';
 import playIcon from '../../assets/play.png';
 import crunchyrollIcon from '../../assets/crunchyroll.png';
 import IPTVIcon from '../../assets/iptv.png';
-import netflixCategoryPH from '../../assets/netflixCategoryPH.png';
-import amazonCategoryPH from '../../assets/amazonCategoryPH.png';
+import netflixCategoryPH from '../../assets/netflixCategoryPH.webp';
+import amazonCategoryPH from '../../assets/amazonCategoryPH.webp';
 
 export const navCategories = [
     {
