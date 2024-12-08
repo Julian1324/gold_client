@@ -30,12 +30,12 @@ export const navCategories = [
         image: netflixCategoryPH
     },
     {
-        name: 'Prime video',
+        name: 'Prime Video',
         icon: amazonIcon,
         image: amazonCategoryPH
     },
     {
-        name: 'Disney+',
+        name: 'Disney +',
         icon: disneyIcon,
         image: disneyCategoryPH
     },
