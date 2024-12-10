@@ -10,6 +10,7 @@ const Cart = lazy(() => import("../pages/Cart/Cart"));
 const Purchase = lazy(() => import("../pages/Purchase/Purchase"));
 const PurchaseSummary = lazy(() => import("../pages/PurchaseSummary/Summary"));
 const Movements = lazy(() => import('../pages/Movements/Movements'));
+const NotFound = lazy(() => import('../pages/NotFound/NotFound'));
 
 const routes = [
     { path: '/', component: Home },
@@ -22,6 +23,7 @@ const routes = [
     { path: '/purchase', component: Purchase },
     { path: '/purchaseSummary', component: PurchaseSummary },
     { path: '/movements', component: Movements },
+    { path: '*', component: NotFound },
 ];
   
 export default routes;
