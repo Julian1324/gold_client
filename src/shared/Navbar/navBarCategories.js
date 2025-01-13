@@ -12,6 +12,9 @@ import amazonCategoryPH from '../../assets/amazonCategoryPH.webp';
 import disneyCategoryPH from '../../assets/disneyCategoryPH.webp';
 import plexCategoryPH from '../../assets/plexCategoryPH.webp';
 import crunchyrollPH from '../../assets/crunchyrollPH.webp';
+import hbomaxPH from '../../assets/hbomaxPH.webp';
+import vixPH from '../../assets/vixPH.webp';
+import iptvPH from '../../assets/iptvPH.webp';
 
 export const navCategories = [
     {
@@ -47,7 +50,7 @@ export const navCategories = [
     {
         name: 'HBOMAX',
         icon: starIcon,
-        image: ''
+        image: hbomaxPH
     },
     {
         name: 'Plex',
@@ -62,11 +65,11 @@ export const navCategories = [
     {
         name: 'Vix',
         icon: playIcon,
-        image: ''
+        image: vixPH
     },
     {
         name: 'IPTV',
         icon: IPTVIcon,
-        image: ''
+        image: iptvPH
     },
 ];
