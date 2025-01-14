@@ -15,6 +15,11 @@ import crunchyrollPH from '../../assets/crunchyrollPH.webp';
 import hbomaxPH from '../../assets/hbomaxPH.webp';
 import vixPH from '../../assets/vixPH.webp';
 import iptvPH from '../../assets/iptvPH.webp';
+import directvPH from '../../assets/directvPH.webp';
+import spotifyPH from '../../assets/spotifyPH.webp';
+import canvaProPH from '../../assets/canvaProPH.webp';
+import youtubePH from '../../assets/youtubePH.webp';
+import rakutenVikiPH from '../../assets/rakutenVikiPH.webp';
 
 export const navCategories = [
     {
@@ -38,7 +43,7 @@ export const navCategories = [
         image: amazonCategoryPH
     },
     {
-        name: 'Disney +',
+        name: 'Disney+',
         icon: disneyIcon,
         image: disneyCategoryPH
     },
@@ -71,5 +76,25 @@ export const navCategories = [
         name: 'IPTV',
         icon: IPTVIcon,
         image: iptvPH
+    },
+    {
+        name: 'Directv',
+        image: directvPH
+    },
+    {
+        name: 'Spotify',
+        image: spotifyPH
+    },
+    {
+        name: 'CanvaPro',
+        image: canvaProPH
+    },
+    {
+        name: 'YouTube Premium',
+        image: youtubePH
+    },
+    {
+        name: 'Rakuten viki',
+        image: rakutenVikiPH
     },
 ];
