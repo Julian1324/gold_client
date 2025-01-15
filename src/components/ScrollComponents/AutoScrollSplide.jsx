@@ -16,7 +16,7 @@ const AutoScrollSplide = () => {
 
     const autoScrollOptions = {
         type: 'loop',
-        gap: '10px',
+        gap: '22em',
         drag: false,
         arrows: false,
         pagination: false,

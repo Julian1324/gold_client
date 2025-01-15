@@ -18,7 +18,6 @@ import NewProductModal from '../Modal/NewProductModal';
 import { navCategories } from './navBarCategories';
 import { AlertModal } from '../Modal/AlertModal';
 import { constants } from '../../context/constants';
-// import MyNavbarMobile from './MyNavbarMobile';
 import FixedNavbarMobile from './FixedNavbarMobile';
 
 const MyNavbar = () => {
@@ -220,6 +219,7 @@ const MyNavbar = () => {
           <Container className='navContainer background-color-dark' ref={myNavbarRef} >
             <hr />
             {myCategories.map((category, categoryIndex) => {
+              if (!category.icon) return;
               const imageStyle = {
                 width: '2.5rem',
                 height: '2.5rem',

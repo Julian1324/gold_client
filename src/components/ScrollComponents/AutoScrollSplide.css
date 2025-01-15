@@ -15,7 +15,7 @@
 @media only screen and (max-width: 500px) {
 
     .cardProduct {
-        width: auto;
+        width: 85vw;
         z-index: 1;
     }
     
@@ -24,7 +24,7 @@
     }
 
     .disabledMask {
-        height: calc(9.5rem + 9.5vh + 9.5dvh);
+        height: calc(10.5rem + 10.5vh + 10.5dvh);
     }
 
     .bodyResponsive {
