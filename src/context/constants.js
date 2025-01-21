@@ -7,6 +7,7 @@ const USER_CREATED = '\u00A1Usuario creado con \u00E9xito! Bienvenido a nuestra 
 const USER_LOGGED = '\u00A1Bienvenid@ a Gold Service!';
 const USER_SESSION_EXPIRED = 'Sesión caducada, por favor inicia sesión otra vez.';
 const USER_UPDATE_CART = '/setCart';
+const DELETE_CART_ITEM = '/deleteCartItem';
 const USER_PURCHASE = '/purchaseItems';
 const USER_MOVEMENTS = '/myMovements';
 const GET_CATEGORIES = '/categories';
@@ -71,6 +72,7 @@ export const constants = Object.freeze({
     WHATSAPP_NUMBER,
     PAYMENT_STATE,
     USER_UPDATE_CART,
+    DELETE_CART_ITEM,
     USER_PURCHASE,
     USER_MOVEMENTS,
     WIDTH_MOBILE,

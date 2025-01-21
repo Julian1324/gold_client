@@ -3,12 +3,12 @@ import Form from 'react-bootstrap/Form';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { constants } from '../../context/constants';
 import Button from 'react-bootstrap/Button';
-import { getCartSlice } from "../../context/store/store";
-import { getProduct } from '../../helpers/axiosHelper';
-// import DisabledMask from './DisabledMask';
+import { getCartSlice, getUserSlice } from "../../context/store/store";
+import { getProduct, deleteCartItem } from '../../helpers/axiosHelper';
 
 const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantityToBuy, isMobileDevice }) => {
     const { updateQuantity, deleteItem } = getCartSlice();
+    const { headers } = getUserSlice();
     const [loadingReqMas, setLoadingReqMas] = useState(false);
     const [loadingReqMenos, setLoadingReqMenos] = useState(false);
     const [count, setCount] = useState(quantityToBuy);
@@ -33,7 +33,14 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
         )
     }
 
-    const onDeleteItem = (_id) => deleteItem(_id);
+    const onDeleteItem = async (_id) => {
+        try {
+            deleteItem(_id);
+            await deleteCartItem({ headers, _id });
+        } catch (error) {
+            console.log('Error deleting item', error);
+        }
+    }
 
     const increment = async () => {
         setLoadingReqMas(true);
