@@ -80,7 +80,7 @@ const OrderSummary = ({ myItems }) => {
             <hr className='w-100' />
             <div className='d-flex mb-2 mt-4 justify-content-between'>
                 Total:
-                <span>{currencyValue(productsSummary.totalProducts - discountsSummary.totalDiscount)} {constants.CURRENCY_NAME}</span>
+                <span>{currencyValue(productsSummary.totalProducts - (discountsSummary.hasDiscounts ? discountsSummary.totalDiscount : 0))} {constants.CURRENCY_NAME}</span>
             </div>
             <div className='d-flex w-100 justify-content-center mt-4'>
                 <Button variant="primary" className='w-100' onClick={onFinishShopping}>Continuar compra</Button>
