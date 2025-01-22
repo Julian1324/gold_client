@@ -168,7 +168,7 @@ export const setCart = async ({ headers, newCart }) => {
 
 export const deleteCartItem = async ({ headers, _id }) => {
     try {
-        const response = await axiosInstance.post(
+        const response = await axiosInstance.put(
             `${constants.API_URL + constants.DELETE_CART_ITEM}`,
             { _id },
             { headers }
