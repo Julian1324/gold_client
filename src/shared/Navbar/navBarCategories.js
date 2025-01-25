@@ -20,6 +20,9 @@ import spotifyPH from '../../assets/spotifyPH.webp';
 import canvaProPH from '../../assets/canvaProPH.webp';
 import youtubePH from '../../assets/youtubePH.webp';
 import rakutenVikiPH from '../../assets/rakutenVikiPH.webp';
+import pornhubPH from '../../assets/pornhubPH.webp';
+import appleTVPH from '../../assets/appleTVPH.webp';
+import paramountPH from '../../assets/paramountPH.webp';
 
 export const navCategories = [
     {
@@ -96,5 +99,17 @@ export const navCategories = [
     {
         name: 'Rakuten viki',
         image: rakutenVikiPH
+    },
+    {
+        name: 'AppleTV',
+        image: appleTVPH
+    },
+    {
+        name: 'Pornhub',
+        image: pornhubPH
+    },
+    {
+        name: 'Paramount',
+        image: paramountPH
     },
 ];
