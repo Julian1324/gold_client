@@ -101,6 +101,10 @@ hr {
     width: 5vw;
 }
 
+.noDisplay {
+    display: inherit;
+}
+
 /* Responsive navbar */
 
 @media only screen and (max-width: 435px) {
@@ -141,5 +145,29 @@ hr {
 @media only screen and (max-width: 800px) {
     .divContainer {
         width: auto;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .divContainer {
+        width: 14.5%;
+    }
+}
+
+@media only screen and (max-width: 1003px) {
+    .noDisplay {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .noCategories {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 737px) {
+    .noCategories {
+        display: none;
     }
 }

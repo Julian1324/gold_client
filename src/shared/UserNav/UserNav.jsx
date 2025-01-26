@@ -5,6 +5,7 @@ import { constants } from '../../context/constants';
 import { useNavigate } from 'react-router-dom';
 import { currencyValue } from '../../helpers/currencyHelper';
 import { getUser } from '../../helpers/axiosHelper';
+import './UserNav.css';
 
 const UserNav = ({ letters, fixedMobile }) => {
   const navigator = useNavigate();
@@ -84,8 +85,8 @@ const UserNav = ({ letters, fixedMobile }) => {
           <IconBox />
           {letters &&
             <div className='d-flex flex-column align-items-start ms-2'>
-              <span>Inicia sesión</span>
-              <span>a tu cuenta</span>
+              <span className='noDisplay'>Inicia sesión</span>
+              <span className='noDisplay'>a tu cuenta</span>
             </div>
           }
         </div>

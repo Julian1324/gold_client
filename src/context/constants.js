@@ -37,7 +37,7 @@ const PAYMENT_STATE = {
     Cancelled: 'Cancelado'
 };
 const WIDTH_MOBILE = 500;
-const FACEBOOK_PAGE = 'https://facebook.com';
+const FACEBOOK_PAGE = 'https://www.facebook.com/profile.php?id=61553049745191&mibextid=kFxxJD';
 const INSTAGRAM_PAGE = 'https://instagram.com';
 const KEY_STORAGE_BASE = 'GLDST0';
 

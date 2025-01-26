@@ -1,7 +1,12 @@
 import '@splidejs/splide/dist/css/splide.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { getUserSlice } from '../../context/store/store';
 
 const CoverScroll = () => {
+
+    const { getMobileDevice } = getUserSlice();
+    const isMobileDevice = getMobileDevice();
+
     const splideOptions = {
         type: 'loop',
         lazyLoad: 'sequential',
@@ -29,7 +34,7 @@ const CoverScroll = () => {
     }
 
     return (
-        <Splide aria-label="Cover" options={splideOptions} className="heightSplide">
+        <Splide aria-label="Cover" options={splideOptions} style={{ marginTop: isMobileDevice ? '10rem' : '0', height: '80vh' }}>
             {coverImages().map((image, imageIndex) => {
                 return (
                     <SplideSlide className="w-100" key={imageIndex}>

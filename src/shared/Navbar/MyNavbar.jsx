@@ -114,7 +114,7 @@ const MyNavbar = () => {
         expand="lg"
         className={`d-flex navbarSticky background-color-dark flex-column ${isMobileDevice && 'position-fixed w-100 z-3'}`}
       >
-        <Container className={`contResponsive ${(isMobileDevice && (scrollPosition > 150)) && 'resize'}`} ref={contResponsiveRef}>
+        <div className={`contResponsive d-flex w-100 ${(isMobileDevice && (scrollPosition > 150)) && 'resize'}`} ref={contResponsiveRef}>
           {(scrollPosition < 150) &&
             <Navbar.Brand href="/" className={`d-flex text-light cont ${isMobileDevice ? 'w-100 justify-content-center mx-3' : 'justify-content-center'}`}>
               <Image src={goldServiceLogo} rounded className='goldServiceLogo' />
@@ -163,7 +163,7 @@ const MyNavbar = () => {
           </InputGroup>
           <div
             className={
-              `d-flex text-light ${isMobileDevice ? 'w-100 justify-content-center mt-4 mb-4' : 'w-25 justify-content-around'}`
+              `d-flex align-items-center text-light ${isMobileDevice ? 'w-100 justify-content-center mt-4 mb-4' : 'w-25 justify-content-around'}`
             }
           >
             {!Object.keys(headers).length ?
@@ -199,7 +199,7 @@ const MyNavbar = () => {
                     </svg>
                   </div>
                   <div className='d-flex flex-column justify-content-center w-100 ms-3'>
-                    <span>Su cesta</span>
+                    <span className='noDisplay'>Su cesta</span>
                     <span>{currencyValue(getSubtotal())}</span>
                   </div>
                 </>
@@ -214,9 +214,9 @@ const MyNavbar = () => {
             />
             <NewProductModal />
           </div>
-        </Container>
+        </div>
         {!isMobileDevice &&
-          <Container className='navContainer background-color-dark' ref={myNavbarRef} >
+          <div className='navContainer d-flex background-color-dark' ref={myNavbarRef} >
             <hr />
             {myCategories.map((category, categoryIndex) => {
               if (!category.icon) return;
@@ -228,13 +228,13 @@ const MyNavbar = () => {
                 backgroundPosition: 'center',
               }
               return (
-                <div className='divContainer' key={categoryIndex} onClick={(event) => onCategory(event, category.name)}>
+                <div className='divContainer noCategories' key={categoryIndex} onClick={(event) => onCategory(event, category.name)}>
                   <div style={imageStyle}></div>
                   <div className='nameStyle'>{category.name}</div>
                 </div>
               );
             })}
-          </Container>
+          </div>
         }
 
       </Navbar>
