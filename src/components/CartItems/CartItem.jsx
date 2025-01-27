@@ -24,7 +24,7 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className='position-absolute top-0 end-0 m-2'
-                style={{ width: '1.5em', height: '1.5em', cursor: 'pointer' }}
+                style={{ width: '24', height: '24', cursor: 'pointer' }}
                 onClick={() => onDeleteItem(_id)}
                 viewBox="0 0 256 256"
             >

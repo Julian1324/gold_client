@@ -20,7 +20,7 @@ const CartModal = ({ show, items, subtotal, hover, setHover }) => {
             <div style={{ marginTop: '-1vh' }}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    style={{ width: '1.5em', height: '1.5em', cursor: 'pointer' }}
+                    style={{ width: '24', height: '24', cursor: 'pointer' }}
                     onClick={() => onDeleteItem(_id)}
                     viewBox="0 0 256 256"
                 >
