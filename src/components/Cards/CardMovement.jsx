@@ -7,9 +7,11 @@ import { useEffect, useState } from 'react';
 const CardMovement = ({ movement, daRules }) => {
 
     const [products, setProducts] = useState([]);
-    const [copiedText, setCopiedText] = useState(false);
+    const [copiedText, setCopiedText] = useState({});
 
     useEffect(() => {
+        if (!movement?.accounts) return;
+
         setProducts(movement?.accounts.map((account) => {
             return {
                 ...account.product,
@@ -19,24 +21,33 @@ const CardMovement = ({ movement, daRules }) => {
             }
         }));
 
+        const copiedTextUpdated = movement.accounts.reduce((acc, _, accountIndex) => {
+            acc[accountIndex + 1] = false;
+            return acc;
+        }, {});
+
+        setCopiedText(copiedTextUpdated);
+
     }, [movement?.accounts]);
 
     const calculateDiscount = (thePrice, theDiscount) => {
         return thePrice - (thePrice * theDiscount / 100);
     }
 
-    const onCopyToClipboard = () => {
-        const textToCopy = `Transacción No. ${movement.consecutive}.\n\nCuenta(s):${movement?.accounts.map((account) => {
-            return `\n\n· Correo: ${account.email} (${account.product.name}), contraseña: ${account.password},${account.profiles
-                ? account.profiles.map((profile) => { return ` ${profile.name} ${profile.pin && `-> PIN: ${profile.pin}`}` })
-                : account.profilesResult.map((profile) => { return ` ${profile.name} ${profile.pin && `-> PIN: ${profile.pin}`}` })}`;
-        })}`;
+    const onCopyToClipboard = (movement, accountIndex) => {
+
+        const currentAccount = movement.accounts[accountIndex - 1];
+
+        const textToCopy = `⚫${currentAccount.product.name}\n\n🔶Correo:\n${currentAccount.email}\n\n🔶Contraseña:\n${currentAccount.password}${currentAccount.profilesResult.map((profile) => {
+            return `\n\n🍿Cliente:\n\n${profile.name}\n🔐Pin:\n${profile.pin}`
+        })}\n\n⏱️Vence:\n${timeFormatter(currentAccount.expiresIn).split('-')[0]}\n\n✨Muchas gracias por su compra✨\n\n🪙SERVICIO GOLD🪙`;
+
         if (navigator.clipboard) {
 
             navigator.clipboard.writeText(textToCopy).then(() => {
-                setCopiedText(true);
+                setCopiedText({ ...copiedText, [accountIndex]: true });
                 setTimeout(() => {
-                    setCopiedText(false);
+                    setCopiedText({ ...copiedText, [accountIndex]: false });
                 }, 2000);
             }).catch(() => {
                 console.log("Error copiando el texto.");
@@ -49,13 +60,13 @@ const CardMovement = ({ movement, daRules }) => {
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
-            
+
             try {
                 const successful = document.execCommand('copy');
                 if (successful) {
-                    setCopiedText(true);
+                    setCopiedText({ ...copiedText, [accountIndex]: true });
                     setTimeout(() => {
-                        setCopiedText(false);
+                        setCopiedText({ ...copiedText, [accountIndex]: false });
                     }, 2000);
                 } else {
                     alert("Error copiando el texto.");
@@ -87,12 +98,6 @@ const CardMovement = ({ movement, daRules }) => {
                     <Card.Title>Transacción No. {movement?.consecutive}</Card.Title>
                     <Card.Text>{timeFormatter(movement?.createdAt)}</Card.Text>
                 </div>
-                <Button className='position-absolute mt-2 me-2 top-0 end-0' variant='secondary' onClick={onCopyToClipboard} >
-                    {copiedText
-                        ? <> <FaCheck /> <span className='ms-2'>¡Copiado!</span> </>
-                        : <TablerCopy />
-                    }
-                </Button>
             </Card.Header>
             <Card.Body>
                 <Row>
@@ -113,7 +118,7 @@ const CardMovement = ({ movement, daRules }) => {
                         <h5 className='mt-3'>Cuenta(s)</h5>
                         {movement?.accounts.map((account, accountIndex) => {
                             return (
-                                <div key={accountIndex} className='mt-2'>
+                                <div key={accountIndex} className='d-flex justify-content-center mt-2'>
                                     <ul className='d-flex flex-column align-items-center p-0'>
                                         <li>
                                             Correo: <strong>
@@ -139,13 +144,19 @@ const CardMovement = ({ movement, daRules }) => {
                                                     <ul key={profileIndex}>
                                                         <li>
                                                             {profile.name}
-                                                            {profile.pin && `, PIN: ${profile.pin}`}
+                                                            {profile.pin && `, PIN: ${profile.pin} `}
                                                         </li>
                                                     </ul>
                                                 )
                                             })
                                         }
                                     </ul>
+                                    <Button className='position-absolute end-0 me-5' variant='secondary' onClick={() => onCopyToClipboard(movement, accountIndex + 1)} >
+                                        {copiedText[accountIndex + 1]
+                                            ? <> <FaCheck /> <span className='ms-2'>¡Copiado!</span> </>
+                                            : <TablerCopy />
+                                        }
+                                    </Button>
                                 </div>
                             );
                         })}
