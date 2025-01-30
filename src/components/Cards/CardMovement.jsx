@@ -38,9 +38,11 @@ const CardMovement = ({ movement, daRules }) => {
 
         const currentAccount = movement.accounts[accountIndex - 1];
 
-        const textToCopy = `⚫${currentAccount.product.name}\n\n🔶Correo:\n${currentAccount.email}\n\n🔶Contraseña:\n${currentAccount.password}${currentAccount.profilesResult.map((profile) => {
+        const accountProfiles = currentAccount.profilesResult || currentAccount.profiles;
+
+        const textToCopy = `⚫${currentAccount.product.name}\n\n🔶Correo:\n${currentAccount.email}\n\n🔶Contraseña:\n${currentAccount.password}${accountProfiles.map((profile) => {
             return `\n\n🍿Cliente:\n${profile.name}\n\n🔐Pin:\n${profile.pin}`
-        })}\n\n⏱️Vence:\n${timeFormatter(currentAccount.expiresIn).split('-')[0]}\n\n✨Muchas gracias por su compra✨\n\n🪙SERVICIO GOLD🪙`;
+        })}\n\n⏱️Fecha de compra:\n${timeFormatter(movement.createdAt).split('-')[0]}\n\n✨Muchas gracias por su compra✨\n\n🪙SERVICIO GOLD🪙`;
 
         if (navigator.clipboard) {
 
