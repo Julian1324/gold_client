@@ -24,9 +24,20 @@ const MainCategories = () => {
         <div className="d-flex flex-column align-items-center">
             <h1>Principales categorías</h1>
             <div className="d-flex flex-wrap justify-content-evenly w-100 mt-5">
-                {categoryImages().map((category, cIndex) => {
+                {categoryImages().map((categoryImg, cIndex) => {
+                    
+                    // This is a temporary solution to get the category ID
+                    const categoriesIndexImg = {
+                        1: categoriesIDS.find(category => category.name === "Disney+")?._id || 'asd123asd',
+                        2: categoriesIDS.find(category => category.name === "Netflix")?._id || 'asd123asd',
+                        3: categoriesIDS.find(category => category.name === "Prime Video")?._id || 'asd123asd',
+                        4: categoriesIDS.find(category => category.name === "Star+")?._id || 'asd123asd',
+                        5: categoriesIDS.find(category => category.name === "Plex")?._id || 'asd123asd',
+                        6: categoriesIDS.find(category => category.name === "HBOMAX")?._id || 'asd123asd',
+                    };
+                    
                     return (
-                        <CardCategory image={category} categoryID={categoriesIDS[cIndex]?._id} key={cIndex} />
+                        <CardCategory image={categoryImg} categoryID={categoriesIndexImg[cIndex + 1]} key={cIndex} />
                     )
                 })}
             </div>
