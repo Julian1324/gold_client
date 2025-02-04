@@ -64,7 +64,7 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
             setMyCurrentQuantity(response.data);
             return setCount(response.data);
         }
-        if (!(count - 1)) return deleteItem(_id);
+        if (!(count - 1)) return onDeleteItem(_id);
         setCount(count - 1);
         updateQuantity(_id, count - 1);
     }

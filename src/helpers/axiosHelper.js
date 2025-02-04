@@ -4,7 +4,7 @@ import axiosInstance from "./axiosInstance";
 export const signUpUser = async ({ name, email, password }) => {
     try {
         const response = await axiosInstance.post(
-            `${constants.API_URL + constants.USER_SIGNUP}`,
+            `${constants.USER_SIGNUP}`,
             { name, email, password }
         );
         if (response.status === 200) return {
@@ -20,7 +20,7 @@ export const signUpUser = async ({ name, email, password }) => {
 export const signInUser = async ({ email, password }) => {
     try {
         const response = await axiosInstance.post(
-            `${constants.API_URL + constants.USER_SIGNIN}`,
+            `${constants.USER_SIGNIN}`,
             { email, password }
         );
         if (response.status === 200) return {
@@ -36,7 +36,7 @@ export const signInUser = async ({ email, password }) => {
 export const getUser = async ({ headers }) => {
     try {
         const response = await axiosInstance.get(
-            `${constants.API_URL + constants.USER_INFO}`,
+            `${constants.USER_INFO}`,
             { headers }
         );
         if (response.status === 200) return {
@@ -51,7 +51,7 @@ export const getUser = async ({ headers }) => {
 export const setUser = async ({ name, email, headers }) => {
     try {
         const response = await axiosInstance.post(
-            `${constants.API_URL + constants.USER_INFO}`,
+            `${constants.USER_INFO}`,
             { name, email },
             { headers }
         );
@@ -67,7 +67,7 @@ export const setUser = async ({ name, email, headers }) => {
 export const setPassword = async ({ currentPassword, newPassword, headers }) => {
     try {
         const response = await axiosInstance.post(
-            `${constants.API_URL + constants.USER_SETPASSWORD}`,
+            `${constants.USER_SETPASSWORD}`,
             { currentPassword, newPassword },
             { headers }
         );
@@ -83,7 +83,7 @@ export const setPassword = async ({ currentPassword, newPassword, headers }) => 
 export const getCategories = async () => {
     try {
         const response = await axiosInstance.get(
-            `${constants.API_URL + constants.GET_CATEGORIES}`
+            `${constants.GET_CATEGORIES}`
         );
         if (response.status === 200) return {
             data: response.data,
@@ -96,7 +96,7 @@ export const getCategories = async () => {
 export const getProductsByCategory = async ({ category_id, page }) => {
     try {
         const response = await axiosInstance.get(
-            `${constants.API_URL + constants.GET_PRODUCTS_BY_CATEGORY}?${constants.PARAMS_CATEGORY_ID + category_id}&${constants.PARAMS_PAGE + page}`,
+            `${constants.GET_PRODUCTS_BY_CATEGORY}?${constants.PARAMS_CATEGORY_ID + category_id}&${constants.PARAMS_PAGE + page}`,
         )
         if (response.status === 200) return {
             data: response.data,
@@ -110,7 +110,7 @@ export const getProductsByCategory = async ({ category_id, page }) => {
 export const getProduct = async ({ _id }) => {
     try {
         const response = await axiosInstance.get(
-            `${constants.API_URL + constants.GET_PRODUCT_BY_ID}?${constants.PARAMS_PRODUCT + _id}`,
+            `${constants.GET_PRODUCT_BY_ID}?${constants.PARAMS_PRODUCT + _id}`,
         )
         if (response.status === 200) return {
             data: response.data,
@@ -124,7 +124,7 @@ export const getProduct = async ({ _id }) => {
 export const getAllProducts = async ({ page }) => {
     try {
         const response = await axiosInstance.get(
-            `${constants.API_URL + constants.GET_ALL_PRODUCTS}?${constants.PARAMS_PAGE + page}`,
+            `${constants.GET_ALL_PRODUCTS}?${constants.PARAMS_PAGE + page}`,
         )
         if (response.status === 200) return {
             data: response.data,
@@ -138,7 +138,7 @@ export const getAllProducts = async ({ page }) => {
 export const getCartItems = async ({ items }) => {
     try {
         const response = await axiosInstance.post(
-            `${constants.API_URL + constants.GET_CART_PRODUCTS}`,
+            `${constants.GET_CART_PRODUCTS}`,
             { items }
         );
         if (response.status === 200) return {
@@ -153,7 +153,7 @@ export const getCartItems = async ({ items }) => {
 export const setCart = async ({ headers, newCart }) => {
     try {
         const response = await axiosInstance.post(
-            `${constants.API_URL + constants.USER_UPDATE_CART}`,
+            `${constants.USER_UPDATE_CART}`,
             { newCart },
             { headers }
         );
@@ -169,7 +169,7 @@ export const setCart = async ({ headers, newCart }) => {
 export const deleteCartItem = async ({ headers, _id }) => {
     try {
         const response = await axiosInstance.put(
-            `${constants.API_URL + constants.DELETE_CART_ITEM}`,
+            `${constants.DELETE_CART_ITEM}`,
             { _id },
             { headers }
         );
@@ -185,7 +185,7 @@ export const deleteCartItem = async ({ headers, _id }) => {
 export const purchaseItems = async ({ headers }) => {
     try {
         const response = await axiosInstance.post(
-            `${constants.API_URL + constants.USER_PURCHASE}`,
+            `${constants.USER_PURCHASE}`,
             {},
             { headers }
         );
@@ -201,7 +201,7 @@ export const purchaseItems = async ({ headers }) => {
 export const getMyMovements = async ({ headers, page }) => {
     try {
         const response = await axiosInstance.get(
-            `${constants.API_URL + constants.USER_MOVEMENTS}?${constants.PARAMS_PAGE + page}`,
+            `${constants.USER_MOVEMENTS}?${constants.PARAMS_PAGE + page}`,
             { headers }
         );
         if (response.status === 200) return {
@@ -216,7 +216,7 @@ export const getMyMovements = async ({ headers, page }) => {
 export const queryProducts = async ({ query }) => {
     try {
         const response = await axiosInstance.get(
-            `${constants.API_URL + constants.QUERY_PRODUCTS}?${constants.PARAMS_QUERY_PRODUCT + query}`,
+            `${constants.QUERY_PRODUCTS}?${constants.PARAMS_QUERY_PRODUCT + query}`,
         );
         if (response.status === 200) return {
             data: response.data,
