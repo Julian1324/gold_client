@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image';
 import Form from 'react-bootstrap/Form';
@@ -219,7 +218,7 @@ const MyNavbar = () => {
           <div className='navContainer d-flex background-color-dark' ref={myNavbarRef} >
             <hr />
             {myCategories.map((category, categoryIndex) => {
-              if (!category.icon) return;
+              if (!category.icon) return null;
               const imageStyle = {
                 width: '2.5rem',
                 height: '2.5rem',

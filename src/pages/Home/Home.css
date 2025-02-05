@@ -8,7 +8,6 @@
 
     .coverImage {
         height: 35vh;
-        margin-top: 160px;
         object-fit: cover;
         object-position: center;
     }

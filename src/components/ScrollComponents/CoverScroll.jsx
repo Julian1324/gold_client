@@ -34,7 +34,7 @@ const CoverScroll = () => {
     }
 
     return (
-        <Splide aria-label="Cover" options={splideOptions} style={{ marginTop: isMobileDevice ? '10rem' : '0', height: '80vh' }}>
+        <Splide aria-label="Cover" options={splideOptions} style={{ marginTop: isMobileDevice ? '10rem' : '0', height: isMobileDevice ? '80vh' : '35vh' }}>
             {coverImages().map((image, imageIndex) => {
                 return (
                     <SplideSlide className="w-100" key={imageIndex}>
