@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import './Signin.css';
 import Spinner from 'react-bootstrap/Spinner';
-import goldServiceLogo from '../../assets/goldServiceLogo.png';
+import goldServiceLogo from '../../assets/Crop_servicioGold.webp';
 import { useForm } from 'react-hook-form';
 import { signInUser } from '../../helpers/axiosHelper';
-import AlertModal from '../../shared/Modal/alertModal';
+import { AlertModal } from '../../shared/Modal/AlertModal';
 import { constants } from '../../context/constants';
 import { useNavigate } from 'react-router-dom';
 import { getUserSlice } from "../../context/store/store.js";
 
 const Signin = () => {
     const navigator = useNavigate();
-    const { updateToken, updateUserName } = getUserSlice();
+    const { updateUserName, updateHeaders } = getUserSlice();
     const [loadingLogin, setLoadingLogin] = useState(false);
     const [alertModalShow, setAlertModalShow] = useState(false);
     const [messagesToModal, setMessagesToModal] = useState({ title: '', body: '' });
@@ -26,22 +26,21 @@ const Signin = () => {
     const onSubmit = async ({ email, password }) => {
         try {
             setLoadingLogin(true);
-            //Optimizar con desestructuración en la respuesta. (Solo sigue si el status es 200 en el helper).
             const response = await signInUser({ email, password });
-            if (!response.loadingLogin) setLoadingLogin(false);
+            setLoadingLogin(response.loadingLogin);
             if (response.alertModalShow) {
                 setMessagesToModal({ title: constants.MODAL_TITLE_SUCCCESS, body: constants.USER_LOGGED });
-                setAlertModalShow(true);
+                setAlertModalShow(response.alertModalShow);
             }
-            if (response.reset) reset();
-            updateToken(response?.data?.token);
+            reset();
+            updateHeaders(response?.data?.token);
             updateUserName(response?.data?.name);
         } catch (error) {
             console.log('error:', error);
-            setMessagesToModal({ title: constants.MODAL_TITLE_ERROR, body: error?.response?.data?.message });
+            setMessagesToModal({ title: constants.MODAL_TITLE_ERROR, body: error?.response?.data });
             setAlertModalShow(true);
         }
-    };
+    }
 
     const onCloseModal = () => {
         if (loadingLogin) {
@@ -150,6 +149,9 @@ const Signin = () => {
                 onHide={() => onCloseModal()}
                 title={messagesToModal.title}
                 bodyText={messagesToModal.body}
+                size='md'
+                closeButton={0}
+                timeout={true}
             />
         </div>
     );

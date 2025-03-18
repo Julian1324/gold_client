@@ -1,11 +1,14 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import secureLocalStorage from "react-secure-storage";
-import { userSlice, cartSlice } from './userSlice.js';
 import { constants } from '../constants.js';
+import { userSlice } from './userSlice.js';
+import { categorySlice } from './categorySlice.js';
+import { cartSlice } from './cartSlice.js';
 
 const mySlices = {
     userSlice,
+    categorySlice,
     cartSlice
 };
 
@@ -29,3 +32,5 @@ const initGoldStore = () => {
 const goldStore = initGoldStore();
 
 export const getUserSlice = goldStore.userSlice;
+export const getCategorySlice = goldStore.categorySlice;
+export const getCartSlice = goldStore.cartSlice;

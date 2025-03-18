@@ -1,0 +1,21 @@
+.imgLogo {
+    width: 10vw;
+}
+
+@media only screen and (max-width: 500px) {
+    .imgLogo {
+        width: 29vw;
+    }
+
+    svg {
+        width: 2rem;
+    }
+
+    .scLogo {
+        margin: 0.7rem !important;
+    }
+
+    .footerCont {
+        margin-bottom: 10vh;
+    }
+}

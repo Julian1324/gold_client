@@ -1,8 +1,24 @@
-.heightSplide{
-    height: 75vh;
+.coverImage {
+    height: 80vh;
+    object-fit: cover;
+    object-position: center;
 }
 
-/* .imagen{
-    height: 200%;
-    background-position: bottom;
-} */
+@media only screen and (max-width: 500px) {
+
+    .coverImage {
+        height: 35vh;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .cardCategory {
+        width: 90dvw !important;
+    }
+}
+
+@media only screen and (min-width: 501px) {
+    .cardCategory {
+        width: 40dvw !important;
+    }
+}
