@@ -77,14 +77,14 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
             {status !== constants.PRODUCT_STATUS_INACTIVE &&
                 <Card style={{ marginLeft: '1vw' }} className='cardProduct'>
                     {!quantity ?
-                        <div className='d-flex flex-column h-100'>
+                        <div className='d-flex flex-column'>
                             <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} />
                             <DisabledMask />
                         </div>
                         :
                         <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} />
                     }
-                    <Card.Body>
+                    <Card.Body className='d-flex flex-column justify-content-center'>
                         <Card.Title>{name}</Card.Title>
                         {!discount ?
                             <Card.Text className='text-success'>
