@@ -48,6 +48,10 @@
         height: 10rem;
     }
 
+    .svgCarrito {
+        width: 37vw;
+    }
+
     .cartResponsive {
         flex-direction: column;
     }
