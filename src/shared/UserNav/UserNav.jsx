@@ -102,7 +102,7 @@ const UserNav = ({ letters, fixedMobile }) => {
             : <>
               <IconBox />
               <div className='d-flex flex-column align-items-start ms-2' style={filterAndCursorStyle}>
-                <span>{userName}</span>
+                <span>{userName.split(' ')[0]}</span>
                 <span>{currencyValue(getWallet())}</span>
               </div>
             </>
