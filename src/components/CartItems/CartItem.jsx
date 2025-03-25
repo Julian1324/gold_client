@@ -78,7 +78,7 @@ const CartItem = ({ _id, name, image, currentQuantity, price, discount, quantity
                         <Form.Check type={'checkbox'} id={'checkbox'} className='ms-4 z-3' checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
                     }
                     <img src={image} className="rounded imgMobile" alt="" style={{ width: '5vw' }} />
-                    <div className='d-flex flex-column align-items-top m-5' style={{ height: '5vw', width: '' }}>
+                    <div className='d-flex flex-column align-items-top ms-4 mt-5'>
                         <h5>{name}</h5>
                         <span className='d-flex mb-2 h-100 align-items-end'>
                             Disponibilidad:
