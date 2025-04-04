@@ -31,6 +31,7 @@ const LANGUAGE_TAG = 'es-CO';
 const CURRENCY_NAME = 'COP';
 const COUNTRY_PREFIX = '57'
 const WHATSAPP_NUMBER = `${COUNTRY_PREFIX}3184831432`;
+const MAX_VISIBLE_PAGES = 5;
 const PAYMENT_STATE = {
     Completed: 'Completado',
     Pending: 'Pendiente',
@@ -70,6 +71,7 @@ export const constants = Object.freeze({
     LANGUAGE_TAG,
     CURRENCY_NAME,
     WHATSAPP_NUMBER,
+    MAX_VISIBLE_PAGES,
     PAYMENT_STATE,
     USER_UPDATE_CART,
     DELETE_CART_ITEM,
