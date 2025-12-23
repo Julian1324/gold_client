@@ -44,7 +44,12 @@ const AutoScrollSplide = () => {
     useEffect(() => {
         const getBestSellers = async () => {
 
-            const mappedProducts = (product) => ({ ...product, ...getCategoryImageByID(product.category_id) });
+            const mappedProducts = (product) => {
+                const categoryData = getCategoryImageByID(product.category_id);
+                const fallbackImage = categoryData?.image;
+                const resolvedImage = product.imageUrl || product.image || fallbackImage;
+                return { ...product, ...categoryData, image: resolvedImage };
+            };
             if (findedProducts.length) {
                 setBestSellers(findedProducts.map(mappedProducts));
             } else {

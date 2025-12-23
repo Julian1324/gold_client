@@ -1,4 +1,4 @@
-import { getCartSlice, getUserSlice } from '../../context/store/store';
+import { getCartSlice, getUserSlice, getCategorySlice } from '../../context/store/store';
 import PurchaseItem from '../../components/CartItems/PurchaseItem';
 import { useEffect, useState } from 'react';
 import { getCartItems, purchaseItems, setCart } from '../../helpers/axiosHelper';
@@ -16,6 +16,7 @@ const Purchase = () => {
     const navigator = useNavigate();
     const { items, setItems, getSubtotal } = getCartSlice();
     const { headers, getWallet, updateWallet, updateLastMovement } = getUserSlice();
+    const { getCategoryImageByID } = getCategorySlice();
     const [myItems, setMyItems] = useState([]);
     const [loadingReq, setLoadingReq] = useState(false);
     const [isBuying, setIsBuying] = useState(false);
@@ -31,12 +32,13 @@ const Purchase = () => {
             const response = await getCartItems({ items });
             const unifiedArray = response.data.map(item => {
                 const matchingItem = items.find(i => i._id === item._id);
+                const categoryImage = matchingItem?.image || item.imageUrl || item.image || getCategoryImageByID(item.category_id)?.image;
                 if (matchingItem) return {
                     ...item,
-                    image: matchingItem.image,
+                    image: categoryImage,
                     quantityToBuy: matchingItem.quantityToBuy
                 }
-                return item;
+                return { ...item, image: categoryImage };
             });
             setMyItems([...unifiedArray]);
         }

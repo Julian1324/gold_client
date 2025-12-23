@@ -36,12 +36,15 @@ const Cart = () => {
             const response = await getCartItems({ items });
             const unifiedArray = response.data.map(item => {
                 const matchingItem = items.find(i => i._id === item._id);
+                const categoryData = getCategoryImageByID(item.category_id);
+                const fallbackImage = categoryData?.image;
+                const resolvedImage = matchingItem?.image || item.imageUrl || item.image || fallbackImage;
                 if (matchingItem) return {
                     ...item,
-                    image: matchingItem.image,
+                    image: resolvedImage,
                     quantityToBuy: matchingItem.quantityToBuy
                 }
-                return item;
+                return { ...item, image: resolvedImage };
             });
             setMyItems([...unifiedArray]);
         }

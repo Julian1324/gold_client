@@ -16,7 +16,12 @@ const Category = () => {
 
     useEffect(() => {
         const getProducts = async () => {
-            const mappedProducts = (product) => ({ ...product, ...getCategoryImageByID(product.category_id) });
+            const mappedProducts = (product) => {
+                const categoryData = getCategoryImageByID(product.category_id);
+                const fallbackImage = categoryData?.image;
+                const resolvedImage = product.imageUrl || product.image || fallbackImage;
+                return { ...product, ...categoryData, image: resolvedImage };
+            };
             if (findedProducts.length) {
                 setProducts(findedProducts.map(mappedProducts));
             } else {
@@ -35,7 +40,12 @@ const Category = () => {
 
     const onScrollProducts = async (nextPage) => {
         const response = await getProductsByCategory({ category_id, page: nextPage });
-        const newProducts = response.data.docs.map((product) => ({ ...product, ...getCategoryImageByID(product.category_id) }));
+        const newProducts = response.data.docs.map((product) => {
+            const categoryData = getCategoryImageByID(product.category_id);
+            const fallbackImage = categoryData?.image;
+            const resolvedImage = product.imageUrl || product.image || fallbackImage;
+            return { ...product, ...categoryData, image: resolvedImage };
+        });
         setProducts([...products, ...newProducts]);
         delete response.data.docs;
         setPaginator(response.data);
