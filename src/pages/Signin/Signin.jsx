@@ -33,6 +33,8 @@ const Signin = () => {
                 setAlertModalShow(response.alertModalShow);
             }
             reset();
+            localStorage.setItem('token', response?.data?.token || '');
+            localStorage.setItem('userName', response?.data?.name || '');
             updateHeaders(response?.data?.token);
             updateUserName(response?.data?.name);
         } catch (error) {

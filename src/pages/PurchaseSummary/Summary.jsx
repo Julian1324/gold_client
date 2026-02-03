@@ -16,6 +16,17 @@ const Summary = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [getLastMovement, updateLastMovement, headers, navigator]);
 
+    if (!movement?.accounts) {
+        return (
+            <Container className='mt-5 myContainer d-flex flex-column align-items-center'>
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Cargando resumen...</span>
+                </div>
+                <div className="mt-2 text-muted">Cargando resumen...</div>
+            </Container>
+        );
+    }
+
     return (
         <Container className='mt-5 myContainer'>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

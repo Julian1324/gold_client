@@ -27,6 +27,10 @@ const Purchase = () => {
     const subtotal = getSubtotal();
 
     useEffect(() => {
+        // Si no hay sesión, redirige a login
+        if (!Object.keys(headers).length) {
+            return navigator('/signin');
+        }
         if (!items.length && !isBuying) return navigator('/cart');
         const getMyPurchaseItems = async () => {
             const response = await getCartItems({ items });
@@ -43,7 +47,7 @@ const Purchase = () => {
             setMyItems([...unifiedArray]);
         }
         getMyPurchaseItems();
-    }, [items, navigator, isBuying]);
+    }, [items, navigator, isBuying, headers]);
 
     const LeftArrow = () => {
         return (
@@ -124,9 +128,12 @@ const Purchase = () => {
                     </h3>
                     <div className='d-flex flex-column w-100 bg-light rounded p-3 mt-3 mb-4'>
                         {!Object.keys(headers).length
-                            ? <> Lo siento, por el momento no hay métodos de pago disponibles. Por favor ponte en contacto con nosotros o inicie sesión.
-                                <Button disabled={true} variant="primary" className='buyButton' style={{ width: '30%' }}>Realizar compra</Button>
-                            </>
+                            ? <div className='d-flex flex-column'>
+                                <div>No has iniciado sesión. Inicia sesión para ver los métodos de pago.</div>
+                                <Button variant="primary" className='buyButton mt-2' onClick={() => navigator('/signin')} style={{ width: '30%' }}>
+                                    Iniciar sesión
+                                </Button>
+                            </div>
                             : <div className='d-flex flex-column'>
                                 <div>
                                     Pago disponible mediante saldo en monedero | Saldo : <span className='text-success'>{currencyValue(wallet)} {constants.CURRENCY_NAME}</span>
