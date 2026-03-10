@@ -13,11 +13,11 @@ const CardMovement = ({ movement, daRules }) => {
         if (!movement?.accounts) return;
 
         setProducts(movement?.accounts.map((account) => {
+            const hasProfiles = Array.isArray(account.profiles);
+            const profilesResultCount = Array.isArray(account.profilesResult) ? account.profilesResult.length : 0;
             return {
                 ...account.product,
-                quantityToBuy: account.profiles
-                    ? 1
-                    : account.profilesResult.length
+                quantityToBuy: hasProfiles ? 1 : (profilesResultCount || 1)
             }
         }));
 
@@ -38,7 +38,9 @@ const CardMovement = ({ movement, daRules }) => {
 
         const currentAccount = movement.accounts[accountIndex - 1];
 
-        const accountProfiles = currentAccount.profilesResult || currentAccount.profiles;
+        const accountProfiles = Array.isArray(currentAccount.profilesResult)
+            ? currentAccount.profilesResult
+            : (Array.isArray(currentAccount.profiles) ? currentAccount.profiles : []);
 
         const textToCopy = `⚫${currentAccount.product.name}\n\n🔶Correo:\n${currentAccount.email}\n\n🔶Contraseña:\n${currentAccount.password}${accountProfiles.map((profile) => {
             return `\n\n🍿Cliente:\n${profile.name}\n\n🔐Pin:\n${profile.pin}`
@@ -130,28 +132,29 @@ const CardMovement = ({ movement, daRules }) => {
                                         <div>
                                             Contraseña: <strong>{account.password}</strong> <br />
                                         </div>
-                                        {account.profiles
-                                            ? account.profiles.map((profile, profileIndex) => {
-                                                return (
-                                                    <ul key={profileIndex}>
-                                                        <li>
-                                                            {profile.name}
-                                                            {profile.pin && `, PIN: ${profile.pin}`}
-                                                        </li>
-                                                    </ul>
-                                                )
-                                            })
-                                            : account.profilesResult.map((profile, profileIndex) => {
-                                                return (
-                                                    <ul key={profileIndex}>
-                                                        <li>
-                                                            {profile.name}
-                                                            {profile.pin && `, PIN: ${profile.pin} `}
-                                                        </li>
-                                                    </ul>
-                                                )
-                                            })
-                                        }
+                                        {Array.isArray(account.profiles) && account.profiles.map((profile, profileIndex) => {
+                                            return (
+                                                <ul key={profileIndex}>
+                                                    <li>
+                                                        {profile.name}
+                                                        {profile.pin && `, PIN: ${profile.pin}`}
+                                                    </li>
+                                                </ul>
+                                            )
+                                        })}
+                                        {!Array.isArray(account.profiles) && Array.isArray(account.profilesResult) && account.profilesResult.map((profile, profileIndex) => {
+                                            return (
+                                                <ul key={profileIndex}>
+                                                    <li>
+                                                        {profile.name}
+                                                        {profile.pin && `, PIN: ${profile.pin} `}
+                                                    </li>
+                                                </ul>
+                                            )
+                                        })}
+                                        {!Array.isArray(account.profiles) && !Array.isArray(account.profilesResult) && (
+                                            <div className='text-muted'>Sin perfiles</div>
+                                        )}
                                     </ul>
                                     <Button className='position-absolute end-0 me-5' variant='secondary' onClick={() => onCopyToClipboard(movement, accountIndex + 1)} >
                                         {copiedText[accountIndex + 1]

@@ -16,6 +16,20 @@ const Summary = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [getLastMovement, updateLastMovement, headers, navigator]);
 
+    // Si viene un error en lugar del movimiento
+    if (typeof movement === 'string') {
+        return (
+            <Container className='mt-5 myContainer d-flex flex-column align-items-center'>
+                <div className="text-danger fw-bold">No se pudo generar el resumen</div>
+                <div className="text-muted mt-1">{movement}</div>
+                <button className="btn btn-primary mt-3" onClick={() => navigator('/cart')}>
+                    Volver al carrito
+                </button>
+            </Container>
+        );
+    }
+
+    // Si aún no hay datos de movimiento, muestra un estado neutral
     if (!movement?.accounts) {
         return (
             <Container className='mt-5 myContainer d-flex flex-column align-items-center'>
@@ -23,6 +37,9 @@ const Summary = () => {
                     <span className="visually-hidden">Cargando resumen...</span>
                 </div>
                 <div className="mt-2 text-muted">Cargando resumen...</div>
+                <button className="btn btn-link mt-3" onClick={() => navigator('/cart')}>
+                    Volver al carrito
+                </button>
             </Container>
         );
     }
