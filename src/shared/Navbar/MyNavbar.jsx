@@ -11,6 +11,7 @@ import './MyNavbar.css';
 import { getCategorySlice, getUserSlice, getCartSlice } from '../../context/store/store';
 import { UserNav } from '../UserNav/UserNav';
 import { getCategories, queryProducts } from '../../helpers/axiosHelper';
+import { sortDepletedProductsLast } from '../../helpers/productSortHelper';
 import { currencyValue } from '../../helpers/currencyHelper';
 import CartModal from '../Modal/CartModal';
 import NewProductModal from '../Modal/NewProductModal';
@@ -76,7 +77,7 @@ const MyNavbar = () => {
       setAlertModalShow(true);
       setMessagesToModal({ title: 'Resultado de busqueda', body: `No se encontraron productos "${query}".` });
     }
-    setFindedProducts(response.data);
+    setFindedProducts(sortDepletedProductsLast(response.data));
   }
 
   const onSearch = (event) => {

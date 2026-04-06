@@ -3,6 +3,7 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { useEffect, useState } from 'react';
 import { getCategorySlice, getUserSlice } from "../../context/store/store";
 import { getAllProducts } from "../../helpers/axiosHelper";
+import { sortDepletedProductsLast } from "../../helpers/productSortHelper";
 import CardProduct from "../../components/Cards/CardProduct";
 import "./AutoScrollSplide.css";
 
@@ -51,10 +52,10 @@ const AutoScrollSplide = () => {
                 return { ...product, ...categoryData, image: resolvedImage };
             };
             if (findedProducts.length) {
-                setBestSellers(findedProducts.map(mappedProducts));
+                setBestSellers(sortDepletedProductsLast(findedProducts.map(mappedProducts)));
             } else {
                 const response = await getAllProducts({ page: 1 });
-                setBestSellers(response.data.docs.map(mappedProducts));
+                setBestSellers(sortDepletedProductsLast(response.data.docs.map(mappedProducts)));
                 delete response.data.docs;
             }
         }

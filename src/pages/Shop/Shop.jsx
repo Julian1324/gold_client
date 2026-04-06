@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllProducts } from "../../helpers/axiosHelper";
+import { sortDepletedProductsLast } from "../../helpers/productSortHelper";
 import CardProduct from "../../components/Cards/CardProduct";
 import { getCategorySlice, getUserSlice } from "../../context/store/store";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -21,10 +22,10 @@ const Shop = () => {
                 return { ...product, ...categoryData, image: resolvedImage };
             };
             if (findedProducts.length) {
-                setProducts(findedProducts.map(mappedProducts));
+                setProducts(sortDepletedProductsLast(findedProducts.map(mappedProducts)));
             } else {
                 const response = await getAllProducts({ page: 1 });
-                setProducts(response.data.docs.map(mappedProducts));
+                setProducts(sortDepletedProductsLast(response.data.docs.map(mappedProducts)));
                 delete response.data.docs;
                 setPaginator(response.data);
             }
@@ -40,7 +41,7 @@ const Shop = () => {
             const resolvedImage = product.imageUrl || product.image || fallbackImage;
             return { ...product, ...categoryData, image: resolvedImage };
         });
-        setProducts([...products, ...newProducts]);
+        setProducts(sortDepletedProductsLast([...products, ...newProducts]));
         delete response.data.docs;
         setPaginator(response.data);
     }

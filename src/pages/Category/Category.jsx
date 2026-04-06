@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CardProduct from "../../components/Cards/CardProduct";
 import { useParams } from 'react-router-dom';
 import { getProductsByCategory } from "../../helpers/axiosHelper";
+import { sortDepletedProductsLast } from "../../helpers/productSortHelper";
 import { getCategorySlice, getUserSlice } from "../../context/store/store";
 import InfiniteScroll from "react-infinite-scroll-component";
 import '../Category/Category.css';
@@ -23,11 +24,11 @@ const Category = () => {
                 return { ...product, ...categoryData, image: resolvedImage };
             };
             if (findedProducts.length) {
-                setProducts(findedProducts.map(mappedProducts));
+                setProducts(sortDepletedProductsLast(findedProducts.map(mappedProducts)));
             } else {
                 try {
                     const response = await getProductsByCategory({ category_id, page: 1 });
-                    setProducts(response.data.docs.map(mappedProducts));
+                    setProducts(sortDepletedProductsLast(response.data.docs.map(mappedProducts)));
                     delete response.data.docs;
                     setPaginator(response.data);
                 } catch (error) {
@@ -46,7 +47,7 @@ const Category = () => {
             const resolvedImage = product.imageUrl || product.image || fallbackImage;
             return { ...product, ...categoryData, image: resolvedImage };
         });
-        setProducts([...products, ...newProducts]);
+        setProducts(sortDepletedProductsLast([...products, ...newProducts]));
         delete response.data.docs;
         setPaginator(response.data);
     }
