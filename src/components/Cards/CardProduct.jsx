@@ -62,7 +62,6 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
         return (
             <div
                 className='d-flex justify-content-center align-items-center z-3 bg-black disabledMask'
-                style={{ marginTop: '-100%', cursor: 'pointer', opacity: '85%' }}
                 onClick={onWatchProduct}
             >
                 <span className='fs-1 text-danger opacity-100'>
@@ -77,7 +76,7 @@ const CardProduct = ({ _id, name, image, body, price, discount, quantity, status
             {status !== constants.PRODUCT_STATUS_INACTIVE &&
                 <Card style={{ marginLeft: '1vw' }} className='cardProduct'>
                     {!quantity ?
-                        <div className='d-flex flex-column'>
+                        <div className='cardProductImageWrap'>
                             <Card.Img src={image} style={{ cursor: 'pointer' }} onClick={onWatchProduct} />
                             <DisabledMask />
                         </div>

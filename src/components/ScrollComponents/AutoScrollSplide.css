@@ -13,8 +13,20 @@
     border-top-right-radius: 0.375rem;
 }
 
+.cardProductImageWrap {
+    position: relative;
+    overflow: hidden;
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+}
+
 .disabledMask {
-    height: 20vw;
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    opacity: 0.85;
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
 }
 
 .imgResponsive {
@@ -33,10 +45,6 @@
         height: auto;
     }
 
-    .disabledMask {
-        height: calc(10.5rem + 10.5vh + 10.5dvh);
-    }
-
     .bodyResponsive {
         flex-direction: column;
         align-items: center;
@@ -53,8 +61,4 @@
 }
 
 @media only screen and (max-width: 360px) {
-
-    .disabledMask {
-        height: 16.2rem;
-    }
 }
