@@ -33,6 +33,14 @@
     margin-top: 4.5rem;
 }
 
+.cartAlert {
+    width: 98%;
+}
+
+.cartEmptyAlert {
+    width: 100%;
+}
+
 @media only screen and (max-width: 500px) {
     .containerResponsive {
         margin-top: 18rem;
@@ -83,6 +91,10 @@
     .summaryResponsive {
         bottom: 8dvh;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        width: 100%;
+    }
+
+    .cartAlert {
         width: 100%;
     }
 

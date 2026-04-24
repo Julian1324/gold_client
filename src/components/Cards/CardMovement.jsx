@@ -10,13 +10,17 @@ const CardMovement = ({ movement, daRules }) => {
     const [copiedText, setCopiedText] = useState({});
 
     useEffect(() => {
-        if (!movement?.accounts) return;
+        if (!Array.isArray(movement?.accounts) || !movement.accounts.length) {
+            setProducts([]);
+            setCopiedText({});
+            return;
+        }
 
-        setProducts(movement?.accounts.map((account) => {
-            const hasProfiles = Array.isArray(account.profiles);
-            const profilesResultCount = Array.isArray(account.profilesResult) ? account.profilesResult.length : 0;
+        setProducts(movement.accounts.map((account) => {
+            const hasProfiles = Array.isArray(account?.profiles);
+            const profilesResultCount = Array.isArray(account?.profilesResult) ? account.profilesResult.length : 0;
             return {
-                ...account.product,
+                ...(account?.product || {}),
                 quantityToBuy: hasProfiles ? 1 : (profilesResultCount || 1)
             }
         }));
@@ -36,15 +40,25 @@ const CardMovement = ({ movement, daRules }) => {
 
     const onCopyToClipboard = (movement, accountIndex) => {
 
+        if (!Array.isArray(movement?.accounts)) return;
+
         const currentAccount = movement.accounts[accountIndex - 1];
+        if (!currentAccount) return;
 
         const accountProfiles = Array.isArray(currentAccount.profilesResult)
             ? currentAccount.profilesResult
             : (Array.isArray(currentAccount.profiles) ? currentAccount.profiles : []);
 
-        const textToCopy = `⚫${currentAccount.product.name}\n\n🔶Correo:\n${currentAccount.email}\n\n🔶Contraseña:\n${currentAccount.password}${accountProfiles.map((profile) => {
-            return `\n\n🍿Cliente:\n${profile.name}\n\n🔐Pin:\n${profile.pin}`
-        })}\n\n⏱️Fecha de compra:\n${timeFormatter(movement.createdAt).split('-')[0]}\n\n✨Muchas gracias por su compra✨\n\n🪙SERVICIO GOLD🪙`;
+        const productName = currentAccount?.product?.name || 'Servicio';
+        const accountEmail = currentAccount?.email || 'No disponible';
+        const accountPassword = currentAccount?.password || 'No disponible';
+        const purchaseDate = movement?.createdAt
+            ? timeFormatter(movement.createdAt).split('-')[0]
+            : 'No disponible';
+
+        const textToCopy = `âš«${productName}\n\nðŸ”¶Correo:\n${accountEmail}\n\nðŸ”¶ContraseÃ±a:\n${accountPassword}${accountProfiles.map((profile) => {
+            return `\n\nðŸ¿Cliente:\n${profile.name}\n\nðŸ”Pin:\n${profile.pin}`
+        })}\n\nâ±ï¸Fecha de compra:\n${purchaseDate}\n\nâœ¨Muchas gracias por su compraâœ¨\n\nðŸª™SERVICIO GOLDðŸª™`;
 
         if (navigator.clipboard) {
 
@@ -76,7 +90,7 @@ const CardMovement = ({ movement, daRules }) => {
                     alert("Error copiando el texto.");
                 }
             } catch (err) {
-                console.error("Fallback: Ocurrió un error al copiar el texto", err);
+                console.error("Fallback: OcurriÃ³ un error al copiar el texto", err);
             }
 
             document.body.removeChild(textArea);
@@ -95,44 +109,64 @@ const CardMovement = ({ movement, daRules }) => {
         )
     }
 
+    if (!movement || !Array.isArray(movement.accounts)) {
+        return (
+            <Card className="text-center mt-5 mb-5">
+                <Card.Body>
+                    <div className='text-muted'>No hay información disponible para este movimiento.</div>
+                </Card.Body>
+            </Card>
+        );
+    }
+
+    if (!movement.accounts.length) {
+        return (
+            <Card className="text-center mt-5 mb-5">
+                <Card.Body>
+                    <div className='text-muted'>No hay cuentas asociadas a este movimiento.</div>
+                </Card.Body>
+            </Card>
+        );
+    }
+
     return (
         <Card className="text-center mt-5 mb-5">
             <Card.Header className="custom-header d-flex justify-content-center position-relative">
                 <div>
-                    <Card.Title>Transacción No. {movement?.consecutive}</Card.Title>
-                    <Card.Text>{timeFormatter(movement?.createdAt)}</Card.Text>
+                    <Card.Title>TransacciÃ³n No. {movement?.consecutive}</Card.Title>
+                    <Card.Text>{movement?.createdAt ? timeFormatter(movement.createdAt) : 'Fecha no disponible'}</Card.Text>
                 </div>
             </Card.Header>
             <Card.Body>
                 <Row>
                     <Col>
                         <h5>Producto(s) pagado(s)</h5>
-                        {products?.length && products.map((product, productIndex) => {
+                        {products.length > 0 ? products.map((product, productIndex) => {
                             return (
                                 <div key={productIndex}>
-                                    <li>{product?.name} &nbsp;-&nbsp;
+                                    <li>{product?.name || 'Servicio'} &nbsp;-&nbsp;
                                         {!product?.discount
-                                            ? <strong>{currencyValue(product.price)} {constants.CURRENCY_NAME} (x{product.quantityToBuy})</strong>
-                                            : <strong>{currencyValue(calculateDiscount(product.price, product.discount))} {constants.CURRENCY_NAME} (x{product.quantityToBuy})</strong>}
+                                            ? <strong>{currencyValue(product?.price || 0)} {constants.CURRENCY_NAME} (x{product?.quantityToBuy || 1})</strong>
+                                            : <strong>{currencyValue(calculateDiscount(product?.price || 0, product?.discount || 0))} {constants.CURRENCY_NAME} (x{product?.quantityToBuy || 1})</strong>}
                                     </li>
                                 </div>
                             )
-                        })}
+                        }) : <div className='text-muted'>No hay productos asociados.</div>}
                         <hr className='w-100 mt-3' />
                         <h5 className='mt-3'>Cuenta(s)</h5>
-                        {movement?.accounts.map((account, accountIndex) => {
+                        {movement.accounts.map((account, accountIndex) => {
                             return (
                                 <div key={accountIndex} className='d-flex justify-content-center mt-2'>
                                     <ul className='d-flex flex-column align-items-center p-0'>
                                         <li>
                                             Correo: <strong>
-                                                {account?.email}
-                                            </strong> ({account?.product?.name}) <br />
+                                                {account?.email || 'No disponible'}
+                                            </strong> ({account?.product?.name || 'Servicio'}) <br />
                                         </li>
                                         <div>
-                                            Contraseña: <strong>{account.password}</strong> <br />
+                                            ContraseÃ±a: <strong>{account?.password || 'No disponible'}</strong> <br />
                                         </div>
-                                        {Array.isArray(account.profiles) && account.profiles.map((profile, profileIndex) => {
+                                        {Array.isArray(account?.profiles) && account.profiles.map((profile, profileIndex) => {
                                             return (
                                                 <ul key={profileIndex}>
                                                     <li>
@@ -142,7 +176,7 @@ const CardMovement = ({ movement, daRules }) => {
                                                 </ul>
                                             )
                                         })}
-                                        {!Array.isArray(account.profiles) && Array.isArray(account.profilesResult) && account.profilesResult.map((profile, profileIndex) => {
+                                        {!Array.isArray(account?.profiles) && Array.isArray(account?.profilesResult) && account.profilesResult.map((profile, profileIndex) => {
                                             return (
                                                 <ul key={profileIndex}>
                                                     <li>
@@ -152,13 +186,13 @@ const CardMovement = ({ movement, daRules }) => {
                                                 </ul>
                                             )
                                         })}
-                                        {!Array.isArray(account.profiles) && !Array.isArray(account.profilesResult) && (
+                                        {!Array.isArray(account?.profiles) && !Array.isArray(account?.profilesResult) && (
                                             <div className='text-muted'>Sin perfiles</div>
                                         )}
                                     </ul>
                                     <Button className='position-absolute end-0 me-5' variant='secondary' onClick={() => onCopyToClipboard(movement, accountIndex + 1)} >
                                         {copiedText[accountIndex + 1]
-                                            ? <> <FaCheck /> <span className='ms-2'>¡Copiado!</span> </>
+                                            ? <> <FaCheck /> <span className='ms-2'>Â¡Copiado!</span> </>
                                             : <TablerCopy />
                                         }
                                     </Button>
@@ -167,19 +201,19 @@ const CardMovement = ({ movement, daRules }) => {
                         })}
                         {daRules &&
                             <>
-                                No elimines, agregues, ni invadas perfiles 🚫; no compartas la cuenta 🔒; y no cambies datos como imagen, nombre, PIN, correo o contraseña ✋. <br />
-                                <strong>Si incumples, perderás la garantía.</strong>
+                                No elimines, agregues, ni invadas perfiles ðŸš«; no compartas la cuenta ðŸ”’; y no cambies datos como imagen, nombre, PIN, correo o contraseÃ±a âœ‹. <br />
+                                <strong>Si incumples, perderÃ¡s la garantÃ­a.</strong>
                             </>
                         }
                         <h5 className='mt-4'>Valor pagado</h5>
-                        <h4 className='text-success'>{currencyValue(movement?.amount)} {constants.CURRENCY_NAME}</h4>
+                        <h4 className='text-success'>{currencyValue(movement?.amount || 0)} {constants.CURRENCY_NAME}</h4>
                     </Col>
                 </Row>
                 <hr className='w-100' />
                 <Row className='mt-2'>
                     <Col>
                         <h5>Origen pago</h5>
-                        <p>{movement?.paymentMethod}</p>
+                        <p>{movement?.paymentMethod || 'No disponible'}</p>
                     </Col>
                 </Row>
             </Card.Body>
