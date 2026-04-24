@@ -96,7 +96,7 @@ export const getCategories = async () => {
 export const getProductsByCategory = async ({ category_id, page }) => {
     try {
         const response = await axiosInstance.get(
-            `${constants.GET_PRODUCTS_BY_CATEGORY}?${constants.PARAMS_CATEGORY_ID + category_id}&${constants.PARAMS_PAGE + page}`,
+            `${constants.GET_PRODUCTS_BY_CATEGORY}?${constants.PARAMS_CATEGORY_ID + category_id}&${constants.PARAMS_PAGE + page}&visibleOnly=true`,
         )
         if (response.status === 200) return {
             data: response.data,
@@ -124,7 +124,7 @@ export const getProduct = async ({ _id }) => {
 export const getAllProducts = async ({ page }) => {
     try {
         const response = await axiosInstance.get(
-            `${constants.GET_ALL_PRODUCTS}?${constants.PARAMS_PAGE + page}`,
+            `${constants.GET_ALL_PRODUCTS}?${constants.PARAMS_PAGE + page}&visibleOnly=true`,
         )
         if (response.status === 200) return {
             data: response.data,
