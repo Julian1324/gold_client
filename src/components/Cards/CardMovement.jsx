@@ -20,9 +20,9 @@ const CardMovement = ({ movement, daRules }) => {
             const hasProfiles = Array.isArray(account?.profiles);
             const profilesResultCount = Array.isArray(account?.profilesResult) ? account.profilesResult.length : 0;
             return {
-                ...(account?.product || {}),
+                ...account.product,
                 quantityToBuy: hasProfiles ? 1 : (profilesResultCount || 1)
-            }
+            };
         }));
 
         const copiedTextUpdated = movement.accounts.reduce((acc, _, accountIndex) => {
@@ -36,29 +36,21 @@ const CardMovement = ({ movement, daRules }) => {
 
     const calculateDiscount = (thePrice, theDiscount) => {
         return thePrice - (thePrice * theDiscount / 100);
-    }
+    };
 
-    const onCopyToClipboard = (movement, accountIndex) => {
+    const onCopyToClipboard = (movementData, accountIndex) => {
+        if (!Array.isArray(movementData?.accounts)) return;
 
-        if (!Array.isArray(movement?.accounts)) return;
-
-        const currentAccount = movement.accounts[accountIndex - 1];
+        const currentAccount = movementData.accounts[accountIndex - 1];
         if (!currentAccount) return;
 
         const accountProfiles = Array.isArray(currentAccount.profilesResult)
             ? currentAccount.profilesResult
             : (Array.isArray(currentAccount.profiles) ? currentAccount.profiles : []);
 
-        const productName = currentAccount?.product?.name || 'Servicio';
-        const accountEmail = currentAccount?.email || 'No disponible';
-        const accountPassword = currentAccount?.password || 'No disponible';
-        const purchaseDate = movement?.createdAt
-            ? timeFormatter(movement.createdAt).split('-')[0]
-            : 'No disponible';
-
-        const textToCopy = `âš«${productName}\n\nðŸ”¶Correo:\n${accountEmail}\n\nðŸ”¶ContraseÃ±a:\n${accountPassword}${accountProfiles.map((profile) => {
-            return `\n\nðŸ¿Cliente:\n${profile.name}\n\nðŸ”Pin:\n${profile.pin}`
-        })}\n\nâ±ï¸Fecha de compra:\n${purchaseDate}\n\nâœ¨Muchas gracias por su compraâœ¨\n\nðŸª™SERVICIO GOLDðŸª™`;
+        const textToCopy = `⚫${currentAccount?.product?.name || 'Servicio'}\n\n🔶Correo:\n${currentAccount?.email || 'No disponible'}\n\n🔶Contraseña:\n${currentAccount?.password || 'No disponible'}${accountProfiles.map((profile) => {
+            return `\n\n🍿Cliente:\n${profile.name}\n\n🔐Pin:\n${profile.pin}`
+        })}\n\n⏱️Fecha de compra:\n${movementData?.createdAt ? timeFormatter(movementData.createdAt).split('-')[0] : 'No disponible'}\n\n✨Muchas gracias por su compra✨\n\n🪙SERVICIO GOLD🪙`;
 
         if (navigator.clipboard) {
 
@@ -90,24 +82,24 @@ const CardMovement = ({ movement, daRules }) => {
                     alert("Error copiando el texto.");
                 }
             } catch (err) {
-                console.error("Fallback: OcurriÃ³ un error al copiar el texto", err);
+                console.error("Fallback: Ocurrió un error al copiar el texto", err);
             }
 
             document.body.removeChild(textArea);
         }
-    }
+    };
 
     const TablerCopy = () => {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" ><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z" /><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1" /></g></svg>
-        )
-    }
+        );
+    };
 
     const FaCheck = () => {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 1600 1280" ><path fill="currentColor" d="M1575 310q0 40-28 68l-724 724l-136 136q-28 28-68 28t-68-28l-136-136L53 740q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295l656-657q28-28 68-28t68 28l136 136q28 28 28 68" /></svg>
-        )
-    }
+        );
+    };
 
     if (!movement || !Array.isArray(movement.accounts)) {
         return (
@@ -133,7 +125,7 @@ const CardMovement = ({ movement, daRules }) => {
         <Card className="text-center mt-5 mb-5">
             <Card.Header className="custom-header d-flex justify-content-center position-relative">
                 <div>
-                    <Card.Title>TransacciÃ³n No. {movement?.consecutive}</Card.Title>
+                    <Card.Title>Transacción No. {movement?.consecutive}</Card.Title>
                     <Card.Text>{movement?.createdAt ? timeFormatter(movement.createdAt) : 'Fecha no disponible'}</Card.Text>
                 </div>
             </Card.Header>
@@ -141,17 +133,17 @@ const CardMovement = ({ movement, daRules }) => {
                 <Row>
                     <Col>
                         <h5>Producto(s) pagado(s)</h5>
-                        {products.length > 0 ? products.map((product, productIndex) => {
+                        {products.length > 0 && products.map((product, productIndex) => {
                             return (
                                 <div key={productIndex}>
-                                    <li>{product?.name || 'Servicio'} &nbsp;-&nbsp;
+                                    <li>{product?.name} &nbsp;-&nbsp;
                                         {!product?.discount
                                             ? <strong>{currencyValue(product?.price || 0)} {constants.CURRENCY_NAME} (x{product?.quantityToBuy || 1})</strong>
                                             : <strong>{currencyValue(calculateDiscount(product?.price || 0, product?.discount || 0))} {constants.CURRENCY_NAME} (x{product?.quantityToBuy || 1})</strong>}
                                     </li>
                                 </div>
-                            )
-                        }) : <div className='text-muted'>No hay productos asociados.</div>}
+                            );
+                        })}
                         <hr className='w-100 mt-3' />
                         <h5 className='mt-3'>Cuenta(s)</h5>
                         {movement.accounts.map((account, accountIndex) => {
@@ -164,7 +156,7 @@ const CardMovement = ({ movement, daRules }) => {
                                             </strong> ({account?.product?.name || 'Servicio'}) <br />
                                         </li>
                                         <div>
-                                            ContraseÃ±a: <strong>{account?.password || 'No disponible'}</strong> <br />
+                                            Contraseña: <strong>{account?.password || 'No disponible'}</strong> <br />
                                         </div>
                                         {Array.isArray(account?.profiles) && account.profiles.map((profile, profileIndex) => {
                                             return (
@@ -174,7 +166,7 @@ const CardMovement = ({ movement, daRules }) => {
                                                         {profile.pin && `, PIN: ${profile.pin}`}
                                                     </li>
                                                 </ul>
-                                            )
+                                            );
                                         })}
                                         {!Array.isArray(account?.profiles) && Array.isArray(account?.profilesResult) && account.profilesResult.map((profile, profileIndex) => {
                                             return (
@@ -184,7 +176,7 @@ const CardMovement = ({ movement, daRules }) => {
                                                         {profile.pin && `, PIN: ${profile.pin} `}
                                                     </li>
                                                 </ul>
-                                            )
+                                            );
                                         })}
                                         {!Array.isArray(account?.profiles) && !Array.isArray(account?.profilesResult) && (
                                             <div className='text-muted'>Sin perfiles</div>
@@ -192,7 +184,7 @@ const CardMovement = ({ movement, daRules }) => {
                                     </ul>
                                     <Button className='position-absolute end-0 me-5' variant='secondary' onClick={() => onCopyToClipboard(movement, accountIndex + 1)} >
                                         {copiedText[accountIndex + 1]
-                                            ? <> <FaCheck /> <span className='ms-2'>Â¡Copiado!</span> </>
+                                            ? <> <FaCheck /> <span className='ms-2'>¡Copiado!</span> </>
                                             : <TablerCopy />
                                         }
                                     </Button>
@@ -201,8 +193,8 @@ const CardMovement = ({ movement, daRules }) => {
                         })}
                         {daRules &&
                             <>
-                                No elimines, agregues, ni invadas perfiles ðŸš«; no compartas la cuenta ðŸ”’; y no cambies datos como imagen, nombre, PIN, correo o contraseÃ±a âœ‹. <br />
-                                <strong>Si incumples, perderÃ¡s la garantÃ­a.</strong>
+                                No elimines, agregues, ni invadas perfiles 🚫; no compartas la cuenta 🔒; y no cambies datos como imagen, nombre, PIN, correo o contraseña ✋. <br />
+                                <strong>Si incumples, perderás la garantía.</strong>
                             </>
                         }
                         <h5 className='mt-4'>Valor pagado</h5>
@@ -218,7 +210,7 @@ const CardMovement = ({ movement, daRules }) => {
                 </Row>
             </Card.Body>
         </Card>
-    )
-}
+    );
+};
 
 export default CardMovement;

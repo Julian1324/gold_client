@@ -7,28 +7,12 @@
   height: 100vh;
 }
 
-.summaryShell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.summaryStateCard,
-.summarySuccessCard {
-  width: 100%;
-}
-
 @media only screen and (max-width: 500px) {
   .myContainer {
     position: relative;
     top: 15rem;
     margin-top: 0 !important;
     height: 55rem !important;
-  }
-
-  .summaryStateCard,
-  .summarySuccessCard {
-    width: 100%;
   }
 
 }
