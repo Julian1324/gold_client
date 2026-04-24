@@ -68,16 +68,22 @@ const Purchase = () => {
             }));
             if (Object.keys(headers).length) await setCart({ headers, newCart: itemsFiltered });
             const response = await purchaseItems({ headers });
-            updateWallet(response?.data?.wallet);
-            updateLastMovement(response?.data?.movement);
-            setLoadingReq(response?.loadingReq);
+            const purchaseResponse = response?.data;
+            const purchaseData = purchaseResponse?.data;
+
+            updateWallet(purchaseData?.wallet);
+            updateLastMovement(purchaseData?.movement);
+            setLoadingReq(false);
             setItems([]);
             navigator('/purchaseSummary');
         } catch (error) {
             console.log('error', error);
             setConfirmModalShow(false);
             setAlertModalShow(true);
-            setMessagesToModal({ title: constants.MODAL_TITLE_ERROR, body: error.response.data });
+            setMessagesToModal({
+                title: constants.MODAL_TITLE_ERROR,
+                body: error?.response?.data?.message || 'No pudimos completar la compra. Intenta nuevamente.'
+            });
             setLoadingReq(false);
         }
     }
